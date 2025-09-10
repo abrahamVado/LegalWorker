@@ -79,7 +79,7 @@ body{
 
 /* === Content split: PDF + Chat === */
 .viewer__content{display:grid; grid-template-columns: 1fr 380px; gap: 12px; padding: 12px}
-.pdf-pane{border:1px solid var(--line); border-radius:14px; background:#fff; overflow:hidden; display:grid; grid-template-rows:auto 1fr}
+
 .chat-pane{border:1px solid var(--line); border-radius:14px; background:#fff; overflow:hidden; display:grid; grid-template-rows:auto 1fr auto}
 
 /* PDF placeholder / canvas */
