@@ -3,6 +3,7 @@ import { useStore } from "@/store/useStore";
 import IntroStep from "@/components/steps/IntroStep";
 import ReviewStep from "@/components/steps/ReviewStep";
 import WorkspaceStep from "@/components/steps/WorkspaceStep";
+import { ErrorBoundary } from '@/components/steps/ErrorBoundary'
 
 /*─────────────────────────────────────────────────────────────────────────────
   #1 — Declare step IDs in one place.
@@ -96,11 +97,13 @@ export default function App() {
 
       case "review":
         return (
-          <ReviewStep
-            files={picked}
-            onBack={!isFirst ? prev : undefined}
-            onContinue={next}
-          />
+          <ErrorBoundary>
+            <ReviewStep
+              files={picked}
+              onBack={!isFirst ? prev : undefined}
+              onContinue={next}
+            />
+          </ErrorBoundary>
         );
 
       case "workspace":

@@ -1,62 +1,412 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { PiMagnifyingGlassDuotone } from 'react-icons/pi'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  PiMagnifyingGlassDuotone,
+  PiPauseCircleDuotone,
+  PiPlayCircleDuotone,
+  PiXCircleDuotone
+} from 'react-icons/pi'
 import './ReviewStep.css'
+/** ===================== Types ===================== */
+export type AnalyzedDoc = {
+  id: string
+  name: string
+  sizeKB: number
+  durationMs: number
+  type: 'Contrato' | 'NDA' | 'Factura' | 'Poder' | 'Aviso de privacidad'
+  counterparties: string[]
+  riskFlags: string[]
+  spellingMistakes: number
+  classification: string
+  lastModifiedISO: string
+}
 
-export default function ReviewStep({ files, onContinue }: { files: File[]; onContinue: () => void }) {
+/** ===================== Utilities ===================== */
+const fmtNum = (n: number, d = 1) => (Number.isFinite(n) ? n.toFixed(d) : '—')
+const median = (arr: number[]) => {
+  if (arr.length === 0) return 0
+  const a = [...arr].sort((x, y) => x - y)
+  const m = Math.floor(a.length / 2)
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2
+}
+
+/**
+ * Cancellable mock analyzer — pass an AbortSignal for graceful cancel.
+ * Replace this with your real API call.
+ */
+async function mockAnalyze(file: File, signal?: AbortSignal): Promise<AnalyzedDoc> {
+  const TYPES: AnalyzedDoc['type'][] = ['Contrato', 'NDA', 'Factura', 'Poder', 'Aviso de privacidad']
+  const CP = ['Empresa A', 'Empresa B', 'Proveedor X', 'Cliente Y', 'Banco Z', 'Notaría 12', 'SPE ABC']
+  const RF = ['Jurisdicción adversa', 'Cláusula penal alta', 'Plazo ambiguo', 'Responsabilidad ilimitada']
+  const possibleClass = ['company_creation', 'association_creation', 'contract_amendment', 'privacy_notice', 'service_agreement']
+  const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)]
+  const pickMany = <T,>(arr: T[], n: number) =>
+    Array.from({ length: n }, () => pick(arr)).filter((v, i, a) => a.indexOf(v) === i)
+
+  const sleep = (ms: number) => new Promise<void>((res, rej) => {
+    const t = setTimeout(res, ms)
+    signal?.addEventListener('abort', () => {
+      clearTimeout(t)
+      rej(new DOMException('Aborted', 'AbortError'))
+    }, { once: true })
+  })
+
+  const duration = 220 + Math.floor(Math.random() * 580)
+  await sleep(duration)
+
+  const lastModifiedISO = file.lastModified
+    ? new Date(file.lastModified).toISOString()
+    : new Date().toISOString()
+
+  return {
+    id: crypto.randomUUID(),
+    name: file.name,
+    sizeKB: Math.max(50, Math.round((file.size || (100 + Math.random() * 500)) / 1024)),
+    durationMs: duration,
+    type: pick(TYPES),
+    counterparties: pickMany(CP, 1 + Math.floor(Math.random() * 2)),
+    riskFlags: Math.random() < 0.45 ? pickMany(RF, 1 + Math.floor(Math.random() * 2)) : [],
+    spellingMistakes: Math.random() < 0.3 ? Math.floor(Math.random() * 6) : 0,
+    classification: pick(possibleClass),
+    lastModifiedISO,
+  }
+}
+
+
+/** ===================== Component ===================== */
+export default function ReviewStep({
+  files,
+  onContinue,
+}: {
+  files: File[]
+  onContinue: () => void
+}) {
+  // #1 Core state
   const total = files.length
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(0)             // number processed
+  const [running, setRunning] = useState(true)      // play/pause
+  const [cancelled, setCancelled] = useState(false) // hard stop
+  const [results, setResults] = useState<AnalyzedDoc[]>([])
+  const [nowTick, setNowTick] = useState(0)         // smoother elapsed/ETA
+
+  const startRef = useRef<number | null>(null)
+  const processingRef = useRef(false)
+  const abortRef = useRef<AbortController | null>(null)
+  const [errors, setErrors] = useState<
+    Array<{ id: string; name: string; reason: string; file: File }>
+  >([])
+
+
+
+  // #2 Keyboard shortcuts (Space = play/pause, Esc = cancel)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === ' ') {
+        e.preventDefault()
+        if (!cancelled && index < total) setRunning(r => !r)
+      }
+      if (e.key === 'Escape') {
+        if (!cancelled && index < total) handleCancel()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [cancelled, index, total])
+
+  // #3 Soft ticker to refresh time-based metrics even when index is steady
+  useEffect(() => {
+    if (!running || cancelled || total === 0) return
+    const t = setInterval(() => setNowTick(Date.now()), 250)
+    return () => clearInterval(t)
+  }, [running, cancelled, total])
+
+  // #4 Derived metrics
   const progressPct = useMemo(
     () => (total === 0 ? 100 : Math.min(100, Math.round((index / total) * 100))),
     [index, total]
   )
+  const elapsedMs = useMemo(
+    () => (startRef.current ? Date.now() - startRef.current : 0),
+    [nowTick, index]
+  )
+  const elapsedMin = Math.max(0.0001, elapsedMs / 60000)
+  const docsPerMin = index > 0 ? index / elapsedMin : 0
+  const docsPerSec = index > 0 ? index / (elapsedMs / 1000) : 0
+  const remaining = Math.max(0, total - index)
+  const etaMin = docsPerMin > 0 ? remaining / docsPerMin : Infinity
 
+  const durations = results.map(r => r.durationMs)
+  const avgMs = durations.length ? durations.reduce((a, b) => a + b, 0) / durations.length : 0
+  const medMs = median(durations)
+
+  const sizesKB = results.map(r => r.sizeKB)
+  const avgKB = sizesKB.length ? sizesKB.reduce((a, b) => a + b, 0) / sizesKB.length : 0
+  const medKB = median(sizesKB)
+  const totalKB = sizesKB.reduce((sum, v) => sum + v, 0)
+  const totalMB = totalKB / 1024
+
+  const uniqueCounterparties = useMemo(() => {
+    const set = new Set<string>()
+    results.forEach(r => r.counterparties.forEach(c => set.add(c)))
+    return set.size
+  }, [results])
+
+  const riskTotal = results.reduce((n, r) => n + r.riskFlags.length, 0)
+  const spellingTotal = results.reduce((n, r) => n + r.spellingMistakes, 0)
+
+  const oldestLM = results.length
+    ? new Date(Math.min(...results.map(r => +new Date(r.lastModifiedISO))))
+    : null
+  const newestLM = results.length
+    ? new Date(Math.max(...results.map(r => +new Date(r.lastModifiedISO))))
+    : null
+
+  // #5 Classification counts
+  const classificationSeeds = useMemo(
+    () => new Set<string>(['company_creation', 'association_creation']),
+    []
+  )
+  const classificationCounts = useMemo(() => {
+    const counts = new Map<string, number>()
+    classificationSeeds.forEach(k => counts.set(k, 0))
+    results.forEach(r => counts.set(r.classification, (counts.get(r.classification) || 0) + 1))
+    return Array.from(counts.entries()).sort((a, b) => b[1] - a[1])
+  }, [results, classificationSeeds])
+
+  // #6 Current file info (pre-analysis)
+  const currentFile = files[Math.min(index, Math.max(total - 1, 0))]
+  const currentLastModified = currentFile?.lastModified
+    ? new Date(currentFile.lastModified).toLocaleString()
+    : '—'
+
+  // #7 Cancel logic
+  const handleCancel = useCallback(() => {
+    setCancelled(true)
+    setRunning(false)
+    abortRef.current?.abort()
+  }, [])
+
+  const retryRow = useCallback(async (rowId: string) => {
+    setErrors(prev => {
+      const row = prev.find(e => e.id === rowId)
+      if (!row) return prev
+      // fire-and-forget; we'll update errors/results after
+      ;(async () => {
+        try {
+          const analyzed = await mockAnalyze(row.file)
+          setResults(r => [...r, analyzed])
+          setErrors(p => p.filter(e => e.id !== rowId))
+        } catch (err: any) {
+          setErrors(p => p.map(e => e.id === rowId ? { ...e, reason: err?.message || 'Unknown error' } : e))
+        }
+      })()
+      return prev
+    })
+  }, [])
+
+  const removeRow = useCallback((rowId: string) => {
+    setErrors(prev => prev.filter(e => e.id !== rowId))
+  }, [])  
+
+  // #8 Core loop
   useEffect(() => {
     if (total === 0) { onContinue(); return }
-    const timer = window.setInterval(() => {
-      setIndex(prev => {
-        const next = prev + 1
-        if (next >= total) {
-          window.setTimeout(onContinue, 250)
-        }
-        return next
-      })
-    }, 280)
-    return () => window.clearInterval(timer)
-  }, [total, onContinue])
+    if (!startRef.current) startRef.current = Date.now()
+    if (!running || cancelled || processingRef.current) return
+    if (index >= total) return
 
+    let stopped = false
+    processingRef.current = true
+
+    const controller = new AbortController()
+    abortRef.current = controller
+
+    const doWork = async () => {
+      try {
+        const file = files[index]
+        const analyzed = await mockAnalyze(file, controller.signal)
+        if (stopped) return
+        setResults(prev => [...prev, analyzed])
+        setIndex(prev => prev + 1)
+      } catch (err: any) {
+        if (err?.name !== 'AbortError') {
+          console.error('Analyze error:', err)
+          // skip file on error
+          setIndex(prev => prev + 1)
+        }
+      } finally {
+        processingRef.current = false
+      }
+    }
+
+    void doWork()
+    return () => {
+      stopped = true
+      controller.abort()
+    }
+  }, [running, cancelled, index, total, files, onContinue])
+
+  // #9 Auto-advance (unless cancelled)
+  useEffect(() => {
+    if (!cancelled && total > 0 && index >= total) {
+      const t = setTimeout(onContinue, 400)
+      return () => clearTimeout(t)
+    }
+  }, [index, total, cancelled, onContinue])
+
+  const status = cancelled ? 'Cancelled' : index < total ? 'Analyzing…' : 'Done'
+
+  // #10 Render
   return (
     <main className="canvas intro">
       <section className="window window--onecol">
         <div className="viewer" style={{ background: 'transparent' }}>
+          {/* === Top Bar === */}
           <div className="viewer__bar">
-            <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <strong>Legal Document Analyzer</strong>
               <div className="crumb" />
             </div>
             <div className="tools">
               <span className="pill">Step 2</span>
-              <span className="muted">Analyzing…</span>
+              <span className="muted">{status}</span>
             </div>
           </div>
 
-          <div className="viewer__content" style={{ gridTemplateColumns: '1fr' }}>
+          {/* === Content === */}
+          <div className="viewer__content_preview">
             <div className="pdf-pane review-pane">
-              <div className="card processing">
+              {/* Centered processing card */}
+              <div className="card processing centered-card">
                 <div className="processing__label">
                   <PiMagnifyingGlassDuotone size={20} />
-                  {total > 0
-                    ? <>Analyzing <strong>{Math.min(index + 1, total)}</strong> / <strong>{total}</strong> PDFs</>
-                    : <>Preparing…</>}
+                  {total > 0 ? (
+                    <>
+                      Analyzing <strong>{Math.min(index, total)}</strong> / <strong>{total}</strong> PDFs
+                    </>
+                  ) : (
+                    <>Preparing…</>
+                  )}
                 </div>
-                <div className="progress">
-                  <span style={{ width: `\${progressPct}%` }} />
+
+                {/* Progress bar (ARIA) */}
+                <div
+                  className="progressalt"
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={progressPct}
+                  aria-label="Overall progress"
+                >
+                  <span style={{ width: `${progressPct}%` }} />
+                </div>
+
+                {/* Controls */}
+                <div className="button-flex-scope controls-row centered-buttons" style={{ marginTop: 12, paddingTop: 12, paddingBottom:12 }}>
+                  <button
+                    className={`button-flex btn--sm has-left-icon ${running ? 'btn--indigo' : 'btn--emerald'}`}
+                    onClick={() => !cancelled && setRunning(v => !v)}
+                    disabled={cancelled || index >= total}
+                    aria-pressed={running}
+                    title={running ? 'Pause' : 'Play'}
+                  >
+                    <span className="button-flex__icon button-flex__icon--left" aria-hidden>
+                      {running
+                        ? <PiPauseCircleDuotone style={{ width: '1em', height: '1em' }} />
+                        : <PiPlayCircleDuotone  style={{ width: '1em', height: '1em' }} />
+                      }
+                    </span>
+                    <span>{running ? 'Pause' : 'Play'}</span>
+                  </button>
+                  <button
+                    className="button-flex btn--violet btn--sm has-left-icon"
+                    onClick={handleCancel}
+                    disabled={cancelled || index >= total}
+                    title="Cancel processing"
+                  >
+                    <span className="button-flex__icon button-flex__icon--left" aria-hidden>
+                      <PiXCircleDuotone style={{ width: '1em', height: '1em' }} />
+                    </span>
+                    <span>Cancel</span>
+                  </button>
+                </div>
+
+                {/* Quick chips */}
+                <div className="chips" style={{ marginTop: 10 }}>
+                  <span className="chip">Progress: <strong>{progressPct}%</strong></span>
+                  <span className="chip">Velocity: <strong>{fmtNum(docsPerMin, 1)}</strong> docs/min</span>
+                  <span className="chip">Throughput: <strong>{fmtNum(docsPerSec, 2)}</strong> docs/s</span>
+                  <span className="chip">ETA: <strong>{Number.isFinite(etaMin) ? fmtNum(etaMin, 1) + ' min' : '—'}</strong></span>
+                  <span className="chip">Elapsed: <strong>{fmtNum(elapsedMs/1000, 1)}s</strong></span>
+                  <span className="chip">Last modified (current): <strong>{currentLastModified}</strong></span>
                 </div>
               </div>
 
-              <div className="chips">
-                <span className="chip">Total: <strong>{total}</strong></span>
-                <span className="chip">Current: <strong>{Math.min(index + 1, total)}</strong></span>
-                <span className="chip">Progress: <strong>{progressPct}%</strong></span>
+              {/* Dashboard */}
+              <div className="dashboard" aria-live="polite" aria-atomic>
+                <header className="dash-head">
+                  <h3>Processing Dashboard</h3>
+                  <small className="muted">Live metrics & classification</small>
+                </header>
+                  {/* KPI grid */}
+                  <div className="kpis">
+                    {/* Successful results */}
+                    <div className="kpi success"><div className="kpi__label">Succeeded</div><div className="kpi__value">{results.length}</div></div>
+                    {/* Still pending */}
+                    <div className="kpi"><div className="kpi__label">Queue</div><div className="kpi__value">{remaining}</div></div>
+
+                    <div className="kpi"><div className="kpi__label">Velocity</div><div className="kpi__value">{fmtNum(docsPerMin)} <span className="kpi__unit">docs/min</span></div></div>
+                    <div className="kpi"><div className="kpi__label">ETA</div><div className="kpi__value">{Number.isFinite(etaMin) ? fmtNum(etaMin) + 'm' : '—'}</div></div>
+                    <div className="kpi"><div className="kpi__label">Elapsed</div><div className="kpi__value">{fmtNum(elapsedMs/1000)}s</div></div>
+                    <div className="kpi"><div className="kpi__label">Output Size</div><div className="kpi__value">{fmtNum(totalMB,2)} <span className="kpi__unit">MB</span></div></div>
+
+                    <div className="kpi"><div className="kpi__label">Unique Counterparties</div><div className="kpi__value">{uniqueCounterparties}</div></div>
+                    <div className="kpi"><div className="kpi__label">Risk Flags</div><div className="kpi__value">{riskTotal}</div></div>
+                    <div className="kpi"><div className="kpi__label">Ortografía</div><div className="kpi__value">{spellingTotal}</div></div>
+
+                    {/* Real error count */}
+                    <div className="kpi error"><div className="kpi__label">Errors</div><div className="kpi__value">{errors.length}</div></div>
+                  </div>
+
+                {/* Classification Table */}
+                <section className="dash-card">
+                  <h4>Clasificación de documentos</h4>
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Clave</th>
+                        <th>Count</th>
+                        <th>Visual</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {classificationCounts.map(([key, count]) => (
+                        <tr key={key}>
+                          <td><code>{key}</code></td>
+                          <td><strong>{count}</strong></td>
+                          <td className="dots" aria-hidden>
+                            {Array.from({ length: count }).map((_, i) => <span key={i} className="dot">•</span>)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {results.length > 0 && (
+                    <p className="muted" style={{ marginTop: 8 }}>
+                      Último: <code>{results.at(-1)!.classification}</code>
+                    </p>
+                  )}
+                </section>
+
+                {results.length > 0 && (
+                  <section className="dash-card">
+                    <h4>Rango de últimas modificaciones</h4>
+                    <p className="muted">
+                      {oldestLM && newestLM
+                        ? <>De <strong>{oldestLM.toLocaleString()}</strong> a <strong>{newestLM.toLocaleString()}</strong></>
+                        : '—'}
+                    </p>
+                  </section>
+                )}
               </div>
             </div>
           </div>
