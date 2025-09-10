@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from '@/store/useStore'
 import { PdfCanvas } from '@/components/PdfCanvas'
-import { QuickDashboard } from '@/components/QuickDashboard'
+import QuickDash from '@components/QuickDash'
 import { ChatPanel } from '@/components/ChatPanel'
 
 export function Viewer(){
@@ -97,7 +97,7 @@ export function Viewer(){
           {doc ? (
             tab === 'qd' ? (
               <div id="panel-qd" role="tabpanel" aria-labelledby="tab-qd">
-                <QuickDashboard docId={doc.id} />
+                <QuickDash docId={doc.id} />
               </div>
             ) : (
               <div id="panel-chat" role="tabpanel" aria-labelledby="tab-chat">

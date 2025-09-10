@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Sidebar } from '@/components/Sidebar'
+
 import { Viewer } from '@/components/Viewer'
 import { useStore } from '@/store/useStore'
 import './WorkspaceStep.css'
+import QuickDash from  '@components/QuickDash'
+import FileTreeSidebar from '@/components/steps/FileTreeSidebar'
 
 export default function WorkspaceStep() {
   const addFiles = useStore(s => s.addFiles)
@@ -33,11 +35,14 @@ export default function WorkspaceStep() {
 
   return (
     <main className="canvas">
-      <section className="window" role="group" aria-label="PDF workspace" style={{ position:'relative' }}>
-        <Sidebar />
-        <Viewer />
+      <section className="window window--workspace" role="group" aria-label="PDF workspace">
+        <FileTreeSidebar />
+        <div className="workspace-center">
+          <Viewer />
+        </div>
+        <QuickDash />
         <div ref={overlayRef} className={`drop-overlay ${isDragging ? 'active' : ''}`}>
-          <div className="box">Drop PDFs anywhere</div>
+          <div className="box">Drop PDFs or folders anywhere</div>
         </div>
       </section>
     </main>

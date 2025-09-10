@@ -1,0 +1,9 @@
+/* /src/components/FileTreeSidebar.css */
+.sidebar.filetree { width: 280px; border-right: 1px solid var(--line,#ececf6); display:flex; flex-direction:column; }
+.ft-head { padding: 10px 12px; font-weight: 700; }
+.ft-scroll { overflow:auto; padding: 6px 6px 12px; }
+.ft-row { display:flex; align-items:center; gap:8px; height:28px; border-radius:8px; cursor:pointer; user-select:none; }
+.ft-row:hover { background: var(--purple-soft,#f1efff); }
+.ft-file.active { background: #e8faf0; }
+.ft-icon { width: 18px; text-align:center; }
+.ft-empty { color: var(--muted,#9aa3b2); padding: 12px; font-size: 12px; }
