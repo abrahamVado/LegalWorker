@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from '@/store/useStore'
 
-export function ChatPanel({ docId }: { docId: string }){
+export default function ChatPanel({ docId }: { docId: string }){
   const [q, setQ] = useState('')
   const msgs = useStore(s => s.messages[docId] || [])
   const send = useStore(s => s.send)

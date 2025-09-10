@@ -1,115 +1,64 @@
-import React, { useState } from 'react'
-import { useStore } from '@/store/useStore'
+import React from 'react'
+import { useStore, buildTreeFromDocs } from '@/store/useStore'
 import { PdfCanvas } from '@/components/PdfCanvas'
-import QuickDash from '@components/QuickDash'
-import { ChatPanel } from '@/components/ChatPanel'
+import FolderTree from '@/components/FolderTree'
+import KpiPanel from '@/components/KpiPanel'
+import '@/components/Viewer.css'
 
-export function Viewer(){
+export function Viewer() {
+  const docs = useStore(s => s.docs)
+  const order = useStore(s => s.order)
   const selectedId = useStore(s => s.selectedId)
-  const doc = useStore(s => (s.selectedId ? s.docs[s.selectedId] : undefined))
-  const [tab, setTab] = useState<'qd' | 'chat'>('qd')
+  const setSelectedId = useStore(s => s.setSelectedId ?? s.select)
 
-  // Yamato button look for tabs
-  const tabClass = (name: 'qd' | 'chat') =>
-    `button-flex ${tab === name ? 'btn--violet' : 'btn--gray'} btn--sm`
-
-  // Keyboard navigation for tabs (ArrowLeft/Right, Home/End)
-  const onTabKey = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    const order: ('qd' | 'chat')[] = ['qd', 'chat']
-    const i = order.indexOf(tab)
-    let next: 'qd' | 'chat' = tab
-
-    if (e.key === 'ArrowRight') next = order[(i + 1) % order.length]
-    if (e.key === 'ArrowLeft')  next = order[(i - 1 + order.length) % order.length]
-    if (e.key === 'Home')       next = 'qd'
-    if (e.key === 'End')        next = 'chat'
-
-    if (next !== tab) {
-      e.preventDefault()
-      setTab(next)
-      // move focus to the newly selected tab
-      requestAnimationFrame(() => {
-        const el = document.getElementById(`tab-${next}`)
-        if (el) (el as HTMLButtonElement).focus()
-      })
-    }
-  }
+  const doc = selectedId ? docs[selectedId] : undefined
+  const treeRoot = buildTreeFromDocs(docs, order)
+  const selectedNodeId = selectedId ? `f:${selectedId}` : undefined
 
   return (
-    <section className="viewer" aria-label="Document">
+    <section className="viewer viewer--3col" aria-label="Document workspace">
       <header className="viewer__bar">
-        <div className="crumb"></div>
+        <div className="crumb" aria-live="polite">Workspace</div>
         <div className="tools">
           <span className="pill">
             {doc ? 1 : 0} <span className="muted">/ {doc ? (doc.pages || '…') : 0}</span>
           </span>
-          {/* no action buttons here */}
         </div>
       </header>
 
-      <div className="viewer__content">
-        <section className="pdf-pane">
-          <div className="pdf-toolbar">
-            <strong>{doc ? doc.name : 'No document selected'}</strong>
-            {/* no action buttons here */}
-          </div>
-          <PdfCanvas blobUrl={doc?.blobUrl} />
-        </section>
+      <div className="viewer__content viewer__content--3col">
+        <aside className="col col--left" aria-label="Folder tree">
+          <FolderTree
+            root={treeRoot}
+            selectedId={selectedNodeId}
+            onSelect={(nodeId: string) => {
+              if (nodeId.startsWith('f:')) setSelectedId(nodeId.slice(2))
+            }}
+          />
+        </aside>
 
-        <aside className="chat-pane">
-          {/* Yamato-styled BUTTON tabs */}
-          <div
-            className="tabs button-flex-scope"
-            role="tablist"
-            aria-label="Modes"
-            aria-orientation="horizontal"
-          >
-            <button
-              type="button"
-              id="tab-qd"
-              role="tab"
-              aria-selected={tab === 'qd'}
-              aria-controls="panel-qd"
-              tabIndex={tab === 'qd' ? 0 : -1}
-              className={tabClass('qd')}
-              onClick={() => setTab('qd')}
-              onKeyDown={onTabKey}
-            >
-              <span>QuickDashboard</span>
-            </button>
-
-            <button
-              type="button"
-              id="tab-chat"
-              role="tab"
-              aria-selected={tab === 'chat'}
-              aria-controls="panel-chat"
-              tabIndex={tab === 'chat' ? 0 : -1}
-              className={tabClass('chat')}
-              onClick={() => setTab('chat')}
-              onKeyDown={onTabKey}
-            >
-              <span>Chat</span>
-            </button>
-          </div>
-
-          {/* Panels */}
-          {doc ? (
-            tab === 'qd' ? (
-              <div id="panel-qd" role="tabpanel" aria-labelledby="tab-qd">
-                <QuickDash docId={doc.id} />
+        <main className="col col--center" aria-label="Report">
+          {!doc ? (
+            <div className="empty empty--center">
+              <div className="card card--ghost">
+                <h3>Select a PDF to access its report</h3>
+                <p className="muted">Choose a file from the folder tree on the left.</p>
               </div>
-            ) : (
-              <div id="panel-chat" role="tabpanel" aria-labelledby="tab-chat">
-                <ChatPanel docId={doc.id} />
-              </div>
-            )
+            </div>
           ) : (
-            <div className="qd"><div className="card">Drop a PDF to begin.</div></div>
+            <section className="report">
+              <div className="report__header">
+                <strong title={doc.name}>{doc.name}</strong>
+              </div>
+              <div className="report__body">
+                <PdfCanvas blobUrl={doc.blobUrl || undefined} />
+              </div>
+            </section>
           )}
+        </main>
 
-          {/* Keep placeholder to preserve grid rows if your CSS expects it */}
-          {tab==='chat' && <div className="composer" style={{display:'none'}}></div>}
+        <aside className="col col--right" aria-label="KPI settings">
+          <KpiPanel docId={doc?.id ?? null} />
         </aside>
       </div>
     </section>

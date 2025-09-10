@@ -12,11 +12,14 @@ export type Doc = {
   blobUrl?: string | null
   overview?: Overview[]
   createdAt: number
-  /** NEW: folder-aware path (webkitRelativePath or fallback to name) */
+  /** folder-aware path (webkitRelativePath or fallback to name) */
   path?: string
 }
 
 type Message = { role: 'user' | 'bot'; text: string }
+
+// handy for TS to accept webkitRelativePath
+type FileWithPath = File & { webkitRelativePath?: string }
 
 type State = {
   docs: Record<string, Doc>
@@ -25,7 +28,9 @@ type State = {
   messages: Record<string, Message[]>
   uploading: { total: number; done: number } | null
 
+  // actions
   select: (id: string) => void
+  setSelectedId?: (id: string) => void // <-- optional alias
   addFiles: (files: File[]) => Promise<void>
   removeDoc: (id: string) => void
   renameDoc: (id: string, name: string) => void
@@ -53,7 +58,7 @@ async function callAsk(doc_id: string, query: string){
   return await res.json() as { answer: string }
 }
 
-/** ===== Helpers you can import in components ===== */
+/** ===== Folder tree helpers (exported) ===== */
 export type TreeNode = {
   id: string
   name: string
@@ -64,22 +69,29 @@ export type TreeNode = {
 }
 
 export function buildTreeFromDocs(docs: Record<string, Doc>, order: string[]): TreeNode {
-  const root: TreeNode = { id: 'root', name: 'root', path: '', type: 'dir', children: [] }
+  const root: TreeNode = { id: 'root', name: 'Workspace', path: '', type: 'dir', children: [] } // name tidier
   const dirMap = new Map<string, TreeNode>([['', root]])
 
-  const ids = [...order] // keep your display order
+  const ids = [...order]
   for (const id of ids) {
     const d = docs[id]
     if (!d) continue
-    const path = (d.path || d.name || '').split('/').filter(Boolean)
+    // prefer folder path; fallback: name at root
+    const parts = (d.path || d.name || '').split('/').filter(Boolean)
+    if (parts.length === 0) {
+      // no path at all -> put file at root
+      root.children!.push({ id: `f:${id}`, name: d.name, path: d.name, type: 'file', fileId: id })
+      continue
+    }
+
     let parent = root
     let cur = ''
-    for (let i = 0; i < path.length; i++) {
-      const part = path[i]
-      const isFile = i === path.length - 1
-
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i]
       cur = cur ? `${cur}/${part}` : part
-      if (isFile && part.toLowerCase().endsWith('.pdf')) {
+      const isLast = i === parts.length - 1
+
+      if (isLast && part.toLowerCase().endsWith('.pdf')) {
         parent.children ||= []
         parent.children.push({ id: `f:${id}`, name: part, path: cur, type: 'file', fileId: id })
       } else {
@@ -108,7 +120,7 @@ export function buildTreeFromDocs(docs: Record<string, Doc>, order: string[]): T
   return root
 }
 
-/** Quick Dashboard adapter: map your Overview[] into dashboard fields */
+/** ===== Quick Dashboard mapper (exported) ===== */
 export type QuickDash = {
   counterparts: string[]
   dates: string[]
@@ -135,13 +147,16 @@ export function mapOverviewToQuick(ov?: Overview[]): QuickDash {
       quick.dates.push(...(a.match(dateRx) || []))
     }
     if (t.includes('monto') || t.includes('cantidad') || t.includes('importe') || t.includes('amount')) {
-      const found = [...a.matchAll(moneyRx)]
-      for (const m of found) {
-        const cur = (m[1] || '').replace('$','USD')
+      for (const m of a.matchAll(moneyRx)) {
+        const sym = (m[1] || '').toUpperCase()
         const raw = (m[2] || '').replace(/[.,](?=[0-9]{3}\b)/g, '').replace(',', '.')
         const amount = Number(raw)
         if (!Number.isFinite(amount)) continue
-        const currency = /MXN/i.test(m[0]) ? 'MXN' : /EUR/i.test(m[0]) ? 'EUR' : /USD/i.test(m[0]) ? 'USD' : 'USD'
+        // prefer explicit code in the text; else map $ -> USD by default
+        const currency = /MXN/i.test(m[0]) ? 'MXN'
+          : /EUR/i.test(m[0]) ? 'EUR'
+          : /USD/i.test(m[0]) ? 'USD'
+          : sym === '$' ? 'USD' : sym
         quick.money.push({ amount, currency })
       }
     }
@@ -153,7 +168,6 @@ export function mapOverviewToQuick(ov?: Overview[]): QuickDash {
     }
   }
 
-  // Dedup
   quick.counterparts = Array.from(new Set(quick.counterparts))
   quick.dates = Array.from(new Set(quick.dates))
   quick.places = Array.from(new Set(quick.places))
@@ -168,10 +182,19 @@ export const useStore = create<State>((set, get) => ({
   uploading: null,
 
   select: (id) => set({ selectedId: id }),
+  setSelectedId: (id) => set({ selectedId: id }), // <-- alias
 
   removeDoc: (id) => set(s => {
-    const { [id]: _, ...rest } = s.docs
-    return { docs: rest, order: s.order.filter(x => x !== id), selectedId: s.selectedId === id ? null : s.selectedId }
+    const { [id]: removed, ...rest } = s.docs
+    // revoke blob url to free memory
+    if (removed?.blobUrl) {
+      try { URL.revokeObjectURL(removed.blobUrl) } catch {}
+    }
+    return {
+      docs: rest,
+      order: s.order.filter(x => x !== id),
+      selectedId: s.selectedId === id ? null : s.selectedId
+    }
   }),
 
   renameDoc: (id, name) => set(s => ({ docs: { ...s.docs, [id]: { ...s.docs[id], name } } })),
@@ -180,12 +203,13 @@ export const useStore = create<State>((set, get) => ({
     if (!files.length) return
     set({ uploading: { total: files.length, done: 0 } })
     for (let i = 0; i < files.length; i++) {
-      const f = files[i]
+      const f = files[i] as FileWithPath
       try {
         const r = await callIngest(f)
         const id = r.doc_id
         const blobUrl = URL.createObjectURL(f)
-        const path = (f as any).webkitRelativePath || f.name // <-- store folder path when available
+        const path = f.webkitRelativePath || f.name // store folder path when available
+
         set(s => ({
           docs: {
             ...s.docs,
