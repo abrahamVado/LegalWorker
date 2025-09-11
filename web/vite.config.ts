@@ -11,5 +11,15 @@ export default defineConfig({
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
     },
   },
-  server: { port: 5173, host: '127.0.0.1' },
+  server: {
+    host: '127.0.0.1',
+    port: 5173,
+    proxy: {
+      // everything under /api goes to FastAPI on 8000
+      '/api': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
+  },
 })

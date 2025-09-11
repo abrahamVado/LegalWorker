@@ -11,6 +11,10 @@ from PyPDF2 import PdfReader
 from app.services.ollama_service import ollama_embed, ollama_chat
 from app.services.pdf_service import get_document_path
 
+from dataclasses import dataclass
+from typing import Optional
+
+
 # -------- Paths --------
 VEC_DIR = Path(__file__).resolve().parent.parent / "storage" / "vectors"
 VEC_DIR.mkdir(parents=True, exist_ok=True)
@@ -89,6 +93,163 @@ def _load_index(doc_id: str) -> Dict[str, Any]:
         return {"texts": [], "pages": [], "embeddings": []}
     return json.loads(path.read_text(encoding="utf-8"))
 
+# --- MMR selection for diversity ---
+def _mmr_indices(E: np.ndarray, qv: np.ndarray, k: int, lam: float = 0.3) -> List[int]:
+    """
+    Maximal Marginal Relevance.
+    E: (N, d) normalized embeddings
+    qv: (d,) normalized query vector
+    k: number to select
+    lam: tradeoff (0->diversity, 1->relevance)
+    """
+    N = E.shape[0]
+    if N == 0: return []
+    k = min(k, N)
+    sims = (E @ qv)  # (N,)
+    selected: List[int] = []
+    candidates = set(range(N))
+    # pick best first
+    i0 = int(np.argmax(sims))
+    selected.append(i0)
+    candidates.remove(i0)
+    while len(selected) < k and candidates:
+        # penalize by max sim to anything already selected
+        max_div = None
+        best = None
+        for j in candidates:
+            # diversity term
+            div = max(float(E[j] @ E[s]) for s in selected)
+            score = lam * float(sims[j]) - (1 - lam) * div
+            if (max_div is None) or (score > max_div):
+                max_div = score
+                best = j
+        selected.append(best)  # type: ignore
+        candidates.remove(best)  # type: ignore
+    return selected
+
+
+# --- LLM re-ranker (optional) ---
+async def _llm_rerank(question: str, texts: List[str], k: int) -> List[int]:
+    """
+    Ask the LLM to rank the candidate chunks for the question.
+    Returns indices into the `texts` array (top-k).
+    """
+    # keep prompt small
+    k = max(1, min(k, len(texts)))
+    NL = "\n"
+    # Build a compact list with ids
+    items = []
+    for i, t in enumerate(texts):
+        t_short = (t[:900] + "…") if len(t) > 900 else t
+        items.append(f"[{i}] {t_short.replace(NL, ' ')}")
+    system = (
+        "Eres un asistente legal. Te daré una pregunta y fragmentos de contexto. "
+        "Devuelve SOLO un JSON con un arreglo 'rank' de índices (0..N-1) del más relevante al menos, "
+        "y limita a los mejores k. No expliques."
+    )
+    user = (
+        f"Pregunta: {question}\n\n"
+        f"Fragmentos:\n{NL.join(items)}\n\n"
+        f"Indica el ranking en JSON con forma: {{\"rank\":[i0,i1,...]}} con máximo {k} elementos."
+    )
+    try:
+        raw = await ollama_chat([
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ])
+        data = _first_json_blob(str(raw))
+        rank = data.get("rank", [])
+        if isinstance(rank, list):
+            # sanitize
+            cand = [int(x) for x in rank if isinstance(x, int) and 0 <= x < len(texts)]
+            # unique & cap
+            out = []
+            seen = set()
+            for x in cand:
+                if x not in seen:
+                    out.append(x)
+                    seen.add(x)
+                if len(out) >= k:
+                    break
+            if out:
+                return out
+    except Exception:
+        pass
+    # fallback: identity
+    return list(range(k))
+
+
+# --- LLM document digest (structured summary) ---
+async def summarize_document_llm(doc_id: str, max_chars: int = 16000) -> Dict[str, Any]:
+    """
+    Produce a compact JSON summary with legal-oriented fields + salient pages.
+    """
+    idx = _load_index(doc_id)
+    texts: List[str] = idx.get("texts", [])
+    pages: List[int] = idx.get("pages", [])
+    if not texts:
+        return {
+            "summary": "",
+            "key_points": [],
+            "salient_pages": [],
+            "entities": {"counterparties": [], "jurisdictions": []},
+            "classification": "unknown",
+            "type": "Contrato",
+        }
+
+    # cap content but preserve chunk boundaries
+    acc = 0
+    chosen: List[Tuple[int, str]] = []
+    for i, t in enumerate(texts):
+        if acc + len(t) > max_chars:
+            break
+        chosen.append((i, t))
+        acc += len(t)
+
+    # include page refs for stronger grounding
+    NL = "\n"
+    snippet_lines = []
+    for i, t in chosen:
+        p = pages[i] if i < len(pages) else None
+        t_short = t.replace(NL, " ")
+        snippet_lines.append(f"(p.{p}) {t_short}")
+
+    system = (
+        "Eres un asistente legal. Lee el texto y responde SOLO JSON compacto con:\n"
+        "type (Contrato/NDA/Factura/Poder/Aviso de privacidad), "
+        "classification (company_creation, association_creation, contract_amendment, privacy_notice, service_agreement), "
+        "summary (<=3 oraciones), key_points (lista de viñetas cortas), "
+        "entities.counterparties (máx 4), entities.jurisdictions (máx 3), "
+        "salient_pages (lista de números de página relevantes)."
+    )
+    user = (
+        "Texto (con páginas):\n---\n" + NL.join(snippet_lines) + "\n---\n"
+        'JSON esperado: {"type":"...","classification":"...","summary":"...","key_points":["..."],'
+        '"entities":{"counterparties":["..."],"jurisdictions":["..."]},"salient_pages":[1,2]}'
+    )
+    try:
+        raw = await ollama_chat([
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ])
+        data = _first_json_blob(str(raw)) or {}
+    except Exception:
+        data = {}
+
+    # sanitize
+    out = {
+        "type": (data.get("type") or "Contrato")[:64],
+        "classification": (data.get("classification") or "unknown")[:64],
+        "summary": (data.get("summary") or "")[:1000],
+        "key_points": [str(x)[:200] for x in (data.get("key_points") or []) if isinstance(x, str)][:8],
+        "entities": {
+            "counterparties": [str(x)[:100] for x in (data.get("entities", {}).get("counterparties") or [])][:4],
+            "jurisdictions": [str(x)[:60] for x in (data.get("entities", {}).get("jurisdictions") or [])][:3],
+        },
+        "salient_pages": [int(x) for x in (data.get("salient_pages") or []) if isinstance(x, int)][:10],
+    }
+    return out
+
 # -------- QA --------
 async def answer_question(doc_id: str, question: str, k: int = 6) -> str:
     idx = _load_index(doc_id)
@@ -125,103 +286,60 @@ async def answer_question(doc_id: str, question: str, k: int = 6) -> str:
     ])
 
 # -------- Digest (per-document) --------
-async def digest_document(doc_id: str, strategy: str = "llm", max_chars: int = 16000) -> Dict[str, Any]:
-    """
-    Returns a single-document digest aligned to the front-end AnalyzedDoc.
-    strategy:
-      - "fast": metadata-only, no LLM pass
-      - "llm" : quick LLM pass over up to `max_chars` of text for richer fields
-    """
+async def answer_question(
+    doc_id: str,
+    question: str,
+    k: int = 6,
+    strategy: str = "mmr",            # "cosine" or "mmr"
+    mmr_lambda: float = 0.3,
+    use_llm_rerank: bool = False,
+) -> str:
     idx = _load_index(doc_id)
     texts: List[str] = idx.get("texts", [])
-    pdf_path = get_document_path(doc_id)
+    embeds = idx.get("embeddings", [])
+    pages: List[int] = idx.get("pages", [])
 
-    # File stats
-    name = Path(pdf_path).name if pdf_path else f"{doc_id}.pdf"
-    size_bytes = Path(pdf_path).stat().st_size if (pdf_path and os.path.exists(pdf_path)) else 0
-    sizeKB = max(1, int(round(size_bytes / 1024))) if size_bytes else 0
-    mtime = Path(pdf_path).stat().st_mtime if (pdf_path and os.path.exists(pdf_path)) else None
-    last_modifiedISO = (
-        datetime.fromtimestamp(mtime, tz=timezone.utc).isoformat()
-        if mtime is not None
-        else datetime.now(tz=timezone.utc).isoformat()
-    )
-
-    digest: Dict[str, Any] = {
-        "id": doc_id,
-        "name": name,
-        "sizeKB": sizeKB,
-        "durationMs": 0,                # fill if you track timings elsewhere
-        "type": "Contrato",
-        "counterparties": [],
-        "riskFlags": [],
-        "spellingMistakes": 0,
-        "classification": "unknown",
-        "lastModifiedISO": last_modifiedISO,
-    }
-
-    if strategy != "llm" or not texts:
-        return digest
-
-    # Build a capped sample of text
-    acc = 0
-    sample_chunks: List[str] = []
-    for t in texts:
-        if acc + len(t) > max_chars:
-            break
-        sample_chunks.append(t)
-        acc += len(t)
-    joined = "\n\n".join(sample_chunks) if sample_chunks else ""
-
-    sys = (
-        "Eres un asistente legal. Lee el texto y devuelve SOLO JSON, sin comentarios. "
-        "Claves: type (Contrato/NDA/Factura/Poder/Aviso de privacidad), "
-        "classification (company_creation, association_creation, contract_amendment, privacy_notice, service_agreement), "
-        "counterparties (hasta 4), riskFlags (0-4), spellingMistakes (int)."
-    )
-    user = (
-        "Texto:\n---\n" + joined[:max_chars] + "\n---\n"
-        "Responde SOLO con JSON con estas claves exactas: "
-        '{"type": "...", "classification": "...", "counterparties": ["..."], "riskFlags": ["..."], "spellingMistakes": 0}'
-    )
-
-    try:
-        raw = await ollama_chat([
+    if not texts or not embeds:
+        sys = "Eres un asistente legal. Si no hay texto indexado, solicita un PDF legible o con OCR."
+        return await ollama_chat([
             {"role": "system", "content": sys},
-            {"role": "user", "content": user},
+            {"role": "user", "content": f"Documento sin índice legible. Pregunta: {question}"},
         ])
-        data = _first_json_blob(str(raw))
 
-        if isinstance(data.get("type"), str):
-            digest["type"] = data["type"][:64]
-        if isinstance(data.get("classification"), str):
-            digest["classification"] = data["classification"][:64]
-        if isinstance(data.get("counterparties"), list):
-            cps = []
-            seen = set()
-            for c in data["counterparties"]:
-                if not isinstance(c, str):
-                    continue
-                c2 = c.strip()
-                if c2 and c2 not in seen:
-                    seen.add(c2)
-                    cps.append(c2)
-            digest["counterparties"] = cps[:4]
-        if isinstance(data.get("riskFlags"), list):
-            rfs = []
-            seen = set()
-            for r in data["riskFlags"]:
-                if not isinstance(r, str):
-                    continue
-                r2 = r.strip()
-                if r2 and r2 not in seen:
-                    seen.add(r2)
-                    rfs.append(r2)
-            digest["riskFlags"] = rfs[:4]
-        if isinstance(data.get("spellingMistakes"), int):
-            digest["spellingMistakes"] = max(0, int(data["spellingMistakes"]))
-    except Exception:
-        # keep defaults if parsing/LLM fails
-        pass
+    E = _norm(np.array(embeds, dtype=np.float32))
+    qv = np.array((await ollama_embed([question]))[0], dtype=np.float32)
+    qv /= (np.linalg.norm(qv) + 1e-9)
 
-    return digest
+    # take a wider candidate set first
+    k = max(1, min(int(k), len(texts)))
+    cand_n = min(max(12, 3 * k), len(texts))
+    # cosine sims
+    sims = (E @ qv)
+    cand = list(np.argsort(-sims)[:cand_n])
+
+    if strategy == "mmr":
+        cand = _mmr_indices(E[cand], qv, k=cand_n, lam=mmr_lambda)
+        # map back to original indices if we used a subset
+        # here we applied to E[cand], so cand are positions in that slice
+        # rebuild absolute ids:
+        cand = [list(np.argsort(-sims)[:cand_n])[i] for i in cand]
+
+    # optional LLM re-rank of candidates (stronger relevance)
+    if use_llm_rerank:
+        cand_texts = [texts[i] for i in cand]
+        reranked_local = await _llm_rerank(question, cand_texts, k=k)
+        cand = [cand[i] for i in reranked_local]
+
+    top = cand[:k]
+    NL = "\n"
+    ctx = [f"(p.{pages[i]}) " + texts[i].strip().replace(NL, " ") for i in top]
+
+    system = (
+        "Eres un abogado asistente. Responde en español, breve y preciso. "
+        "Usa SOLO el contexto; si falta información, dilo. Cita páginas entre paréntesis (p.X)."
+    )
+    user = "Pregunta: " + question + "\n\nCONTEXTOS:\n" + "\n\n".join(ctx)
+    return await ollama_chat([
+        {"role": "system", "content": system},
+        {"role": "user", "content": user},
+    ])

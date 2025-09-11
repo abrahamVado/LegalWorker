@@ -15,6 +15,8 @@ from app.services.rag_service import (
     digest_document,
 )
 
+from typing import Optional, Literal
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api", tags=["frontend-contract"])
@@ -29,11 +31,14 @@ class IngestResponse(BaseModel):
     overview: List[Any] = []
 
 
+# --- extend AskRequest ---
 class AskRequest(BaseModel):
-    doc_id: str = Field(..., description="ID of the previously-ingested document")
-    query: str = Field(..., min_length=1, description="Natural-language question")
-    k: int = Field(6, ge=1, le=25, description="How many chunks to retrieve for RAG")
-
+    doc_id: str
+    query: str
+    k: int = Field(6, ge=1, le=25)
+    strategy: Literal["cosine", "mmr"] = "mmr"
+    mmr_lambda: float = Field(0.3, ge=0.0, le=1.0)
+    use_llm_rerank: bool = False
 
 class AskResponse(BaseModel):
     answer: str
@@ -43,6 +48,7 @@ class DigestRequest(BaseModel):
     doc_id: str
     strategy: Literal["fast", "llm"] = "llm"
     max_chars: int = Field(16000, ge=1000, le=120000)
+
 
 
 class DigestDoc(BaseModel):
@@ -56,13 +62,16 @@ class DigestDoc(BaseModel):
     spellingMistakes: int
     classification: str
     lastModifiedISO: str
+    # LLM fields:
+    summary: Optional[str] = ""
+    key_points: List[str] = []
+    salient_pages: List[int] = []
+    entities: Dict[str, Any] = {}
 
-
-class DigestsRequest(BaseModel):
-    doc_ids: List[str]
+class DigestRequest(BaseModel):
+    doc_id: str
     strategy: Literal["fast", "llm"] = "llm"
     max_chars: int = Field(16000, ge=1000, le=120000)
-
 
 class KpisRequest(BaseModel):
     doc_ids: List[str]
@@ -103,6 +112,34 @@ def _is_pdf_upload(f: UploadFile) -> bool:
 
 
 # ========= Routes =========
+
+@router.post("/digest", response_model=DigestDoc)
+async def digest(req: DigestRequest) -> DigestDoc:
+    # reuse your existing digest_document(...) for non-LLM fields
+    base = await digest_document(req.doc_id, strategy=req.strategy, max_chars=req.max_chars)
+    # add LLM summary
+    llm = await summarize_document_llm(req.doc_id, max_chars=req.max_chars)
+    base["summary"] = llm.get("summary", "")
+    base["key_points"] = llm.get("key_points", [])
+    base["salient_pages"] = llm.get("salient_pages", [])
+    # harmonize type/classification/entities
+    base["type"] = llm.get("type", base.get("type", "Contrato"))
+    base["classification"] = llm.get("classification", base.get("classification", "unknown"))
+    base["entities"] = llm.get("entities", {"counterparties": base.get("counterparties", [])})
+    return DigestDoc(**base)
+
+@router.post("/ask", response_model=AskResponse)
+async def ask(req: AskRequest) -> AskResponse:
+    try:
+        answer_text = await answer_question(
+            req.doc_id, req.query, k=req.k,
+            strategy=req.strategy,
+            mmr_lambda=req.mmr_lambda,
+            use_llm_rerank=req.use_llm_rerank,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to answer question: {e!s}")
+    return AskResponse(answer=str(answer_text or ""))
 
 @router.post("/ingest", response_model=IngestResponse, status_code=status.HTTP_201_CREATED)
 async def ingest(file: UploadFile = File(...)) -> IngestResponse:

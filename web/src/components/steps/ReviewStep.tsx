@@ -1,3 +1,4 @@
+// web/src/components/steps/ReviewStep.tsx
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   PiMagnifyingGlassDuotone,
@@ -30,55 +31,68 @@ const median = (arr: number[]) => {
   return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
 };
 
+/** ===================== Backend integration ===================== */
 /**
- * Cancellable mock analyzer — pass an AbortSignal for graceful cancel.
- * Replace this with your real API call.
+ * Calls FastAPI:
+ *   1) POST /api/ingest  (multipart) -> { ok, doc_id, chunks }
+ *   2) POST /api/digest  (json)      -> AnalyzedDoc-like payload
+ *
+ * NOTE: Do NOT pass AbortSignal to /api/ingest (StrictMode would cancel it).
  */
-async function mockAnalyze(file: File, signal?: AbortSignal): Promise<AnalyzedDoc> {
-  const TYPES: AnalyzedDoc["type"][] = ["Contrato", "NDA", "Factura", "Poder", "Aviso de privacidad"] as const;
-  const CP = ["Empresa A", "Empresa B", "Proveedor X", "Cliente Y", "Banco Z", "Notaría 12", "SPE ABC"] as const;
-  const RF = ["Jurisdicción adversa", "Cláusula penal alta", "Plazo ambiguo", "Responsabilidad ilimitada"] as const;
-  const possibleClass = [
-    "company_creation",
-    "association_creation",
-    "contract_amendment",
-    "privacy_notice",
-    "service_agreement",
-  ] as const;
+async function analyzeViaApi(file: File, signal?: AbortSignal): Promise<AnalyzedDoc> {
+  const t0 = performance.now();
 
-  const pick = <T,>(arr: readonly T[]) => arr[Math.floor(Math.random() * arr.length)];
-  const pickMany = <T,>(arr: readonly T[], n: number) =>
-    Array.from({ length: n }, () => pick(arr)).filter((v, i, a) => a.indexOf(v) === i);
+  // 1) Ingest (no signal on purpose)
+  const fd = new FormData();
+  fd.append("file", file, file.name);
 
-  const sleep = (ms: number) =>
-    new Promise<void>((res, rej) => {
-      const t = setTimeout(res, ms);
-      signal?.addEventListener(
-        "abort",
-        () => {
-          clearTimeout(t);
-          rej(new DOMException("Aborted", "AbortError"));
-        },
-        { once: true }
-      );
-    });
+  const ingestRes = await fetch("/api/ingest", { method: "POST", body: fd });
+  if (!ingestRes.ok) {
+    throw new Error(`ingest failed: ${ingestRes.status} ${await ingestRes.text()}`);
+  }
+  const ingestJson = (await ingestRes.json()) as { ok: boolean; doc_id: string; chunks: number };
+  const doc_id = ingestJson.doc_id;
 
-  const duration = 220 + Math.floor(Math.random() * 580);
-  await sleep(duration);
+  // 2) Digest (safe to abort)
+  const digestRes = await fetch("/api/digest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ doc_id, strategy: "llm", max_chars: 16000 }),
+    signal,
+  });
+  if (!digestRes.ok) {
+    throw new Error(`digest failed: ${digestRes.status} ${await digestRes.text()}`);
+  }
+  const d = await digestRes.json();
 
-  const lastModifiedISO = file.lastModified ? new Date(file.lastModified).toISOString() : new Date().toISOString();
+  const t1 = performance.now();
+
+  // Normalize to AnalyzedDoc
+  const ALLOWED_TYPES = new Set<AnalyzedDoc["type"]>([
+    "Contrato",
+    "NDA",
+    "Factura",
+    "Poder",
+    "Aviso de privacidad",
+  ]);
+  const safeType = (ALLOWED_TYPES.has(d?.type) ? d.type : "Contrato") as AnalyzedDoc["type"];
 
   return {
-    id: crypto.randomUUID(),
-    name: file.name,
-    sizeKB: Math.max(50, Math.round((file.size || 100 + Math.random() * 500) / 1024)),
-    durationMs: duration,
-    type: pick(TYPES),
-    counterparties: pickMany(CP, 1 + Math.floor(Math.random() * 2)),
-    riskFlags: Math.random() < 0.45 ? pickMany(RF, 1 + Math.floor(Math.random() * 2)) : [],
-    spellingMistakes: Math.random() < 0.3 ? Math.floor(Math.random() * 6) : 0,
-    classification: pick(possibleClass),
-    lastModifiedISO,
+    id: String(d?.id ?? doc_id),
+    name: String(d?.name ?? file.name),
+    sizeKB: Number.isFinite(d?.sizeKB) ? Number(d.sizeKB) : Math.max(1, Math.round(file.size / 1024)),
+    durationMs: Math.round(t1 - t0),
+    type: safeType,
+    counterparties: Array.isArray(d?.counterparties) ? d.counterparties.slice(0, 4) : [],
+    riskFlags: Array.isArray(d?.riskFlags) ? d.riskFlags.slice(0, 4) : [],
+    spellingMistakes: Number.isFinite(d?.spellingMistakes) ? Number(d.spellingMistakes) : 0,
+    classification: typeof d?.classification === "string" ? d.classification : "unknown",
+    lastModifiedISO:
+      typeof d?.lastModifiedISO === "string"
+        ? d.lastModifiedISO
+        : file.lastModified
+        ? new Date(file.lastModified).toISOString()
+        : new Date().toISOString(),
   };
 }
 
@@ -105,6 +119,7 @@ export default function ReviewStep({
   // Refs
   const startRef = useRef<number | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const attemptsRef = useRef<Map<number, number>>(new Map()); // retry once on AbortError
 
   // #2 Keyboard shortcuts (Space = play/pause, Esc = cancel)
   useEffect(() => {
@@ -143,7 +158,10 @@ export default function ReviewStep({
     () => (total === 0 ? 100 : Math.min(100, Math.round((index / total) * 100))),
     [index, total]
   );
-  const elapsedMs = useMemo(() => (startRef.current ? Date.now() - (startRef.current ?? Date.now()) : 0), [nowTick, index]);
+  const elapsedMs = useMemo(
+    () => (startRef.current ? Date.now() - (startRef.current ?? Date.now()) : 0),
+    [nowTick, index]
+  );
   const elapsedMin = Math.max(0.0001, elapsedMs / 60000);
   const docsPerMin = index > 0 ? index / elapsedMin : 0;
   const docsPerSec = index > 0 ? index / (elapsedMs / 1000) : 0;
@@ -199,7 +217,7 @@ export default function ReviewStep({
       if (!row) return prev;
       (async () => {
         try {
-          const analyzed = await mockAnalyze(row.file);
+          const analyzed = await analyzeViaApi(row.file);
           setResults((r) => [...r, analyzed]);
           setErrors((p) => p.filter((e) => e.id !== rowId));
         } catch (err: any) {
@@ -232,14 +250,29 @@ export default function ReviewStep({
     const doWork = async () => {
       const file = files[index];
       try {
-        const analyzed = await mockAnalyze(file, controller.signal);
+        const analyzed = await analyzeViaApi(file, controller.signal);
         if (stopped) return;
         setResults((prev) => [...prev, analyzed]);
         setIndex((prev) => prev + 1);
       } catch (err: any) {
-        if (err?.name !== "AbortError") {
+        if (err?.name === "AbortError") {
+          const prev = attemptsRef.current.get(index) ?? 0;
+          attemptsRef.current.set(index, prev + 1);
+          if (prev >= 1) {
+            setErrors((p) => [
+              ...p,
+              {
+                id: crypto.randomUUID(),
+                name: file?.name ?? `#${index}`,
+                reason: "Aborted twice (dev). Skipping.",
+                file,
+              },
+            ]);
+            setIndex((prevIdx) => prevIdx + 1);
+          }
+          // else: allow effect to rerun and retry once
+        } else {
           console.error("Analyze error:", err);
-          // Optionally record error:
           setErrors((p) => [
             ...p,
             {
@@ -261,7 +294,8 @@ export default function ReviewStep({
       stopped = true;
       controller.abort();
     };
-  }, [running, cancelled, inFlight, index, total, files]);
+    // depend on files.length to avoid re-running when parent recreates array
+  }, [running, cancelled, inFlight, index, total, files.length]);
 
   // #9 Auto-advance (unless cancelled)
   useEffect(() => {
