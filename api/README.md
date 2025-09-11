@@ -1,56 +1,50 @@
+# FastAPI Backend — Legal Document Analyzer (Full)
 
-# FastAPI Backend — Legal Document Analyzer
+A production-ready FastAPI backend tailored for your React/Vite front‑end.
 
-A lightweight FastAPI backend to support your React/Vite front‑end for the legal PDF analyzer.
+## What’s included
+- **Frontend contract**:
+  - `POST /api/ingest` — single PDF upload (`file`) → `{ ok, doc_id, chunks, overview }`
+  - `POST /api/ask` — stubbed Q&A → `{ answer }`
+- **Files API**:
+  - `POST /api/upload` — multi-upload (`files[]`)
+  - `GET /api/documents` — list all docs
+  - `GET /api/documents/{id}` — single doc metadata
+  - `PATCH /api/documents/{id}` — rename (and renames file on disk)
+  - `DELETE /api/documents/{id}` — delete metadata + file
+  - `GET /api/documents/{id}/file` — stream PDF (supports HTTP Range)
+- **CORS** via `.env` (`ALLOWED_ORIGINS`)
+- **Static serving**: drop your built frontend (Vite `dist`) into `app/static/`
+- **Storage**: files under `app/storage/documents/`, index JSON maintained
+- **Env/Settings** with `pydantic-settings`
+- **Dockerfile** and `requirements.txt`
 
-## Features
-- ✅ **PDF Upload** (single or multiple files) with filtering and basic metadata
-- ✅ **List Documents** from local storage
-- ✅ **CORS** enabled for local dev with Vite
-- ✅ **Static Serving** for production (serve built React from `app/static/`)
-- ✅ **12‑factor** configuration via `.env` (Pydantic Settings)
-- ✅ **Dockerfile** and `uvicorn` entry
-
-> In dev: run FastAPI and Vite separately (CORS on).
-> In prod: put your built frontend (`dist`) into `app/static/` (rename folder or copy files) and FastAPI will serve it.
-
-## Quickstart (dev)
+## Quickstart
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-# run API
-uvicorn app.main:app --reload --port 8000
-# API docs: http://localhost:8000/docs
-
-# run your Vite app on port 5173 (typical) and point it at http://localhost:8000
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+# OpenAPI: http://127.0.0.1:8000/docs
 ```
 
-## Env
-Create `.env` from the example:
-```bash
-cp .env.example .env
+## Configure frontend
+Set the base URL in your Vite app:
+```
+VITE_API_BASE=http://127.0.0.1:8000
 ```
 
-### Notable variables
-- `APP_NAME` — display name
-- `ENV` — `dev` / `prod`
-- `ALLOWED_ORIGINS` — CSV of origins for CORS (e.g. `http://localhost:5173,http://127.0.0.1:5173`)
-- `STORAGE_DIR` — where PDFs are stored (defaults to `app/storage/documents`)
-
-## API
-- `POST /api/upload` — multipart upload for PDF files (accepts multiple `files`)
-- `GET /api/documents` — list stored documents (filename, size, created_at)
-- `GET /health` — liveness check
-
-OpenAPI docs at `/docs`.
-
-## Frontend (prod)
-Put your built frontend files into `app/static/` (e.g., copy Vite's `dist` contents). The app mounts that directory at `/` and serves `index.html` for unknown routes to support SPA routing.
-
-## Tests
-Example placeholder under `tests/`.
+## Endpoints (summary)
+- `GET /health`
+- `POST /api/ingest`
+- `POST /api/ask`
+- `POST /api/upload`
+- `GET /api/documents`
+- `GET /api/documents/{id}`
+- `PATCH /api/documents/{id}`
+- `DELETE /api/documents/{id}`
+- `GET /api/documents/{id}/file`
 
 ## Docker
 ```bash
