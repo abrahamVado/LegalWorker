@@ -1,56 +1,133 @@
-/* Root block */
-.kpiOnly { display: grid; gap: 12px; padding: 0; }
+/* ===== Micro KPI tiles – condensed ===== */
+.kpiNano { display: grid; gap: 10px; }
 
-/* Cards */
-.kpiOnly-card {
-  background: var(--panel,#fff);
-  border: 1px solid var(--line,#ececf6);
-  border-radius: 12px;
-  padding: 10px;
-  margin: 0;
-}
-.kpiOnly-card--head { display: grid; gap: 8px; }
-
-.kpiOnly-title { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.kpiOnly-sub   { color: var(--muted,#9aa3b2); font-size: 12px; }
-.kpiOnly-empty { color: var(--muted,#9aa3b2); padding: 12px; font-size: 12px; }
-
-/* Grid of sections */
-.kpiOnly-grid {
+/* PACK rows to the top, FIXED 40–44px tiles */
+.kpiNano .kn-grid{
+  --tile: 42px;                 /* tweak: 40–44px works great in a 300px sidebar */
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-}
-@media (min-width: 1240px) {
-  .kpiOnly-grid { grid-template-columns: 1fr 1fr; }
+  grid-template-columns: repeat(auto-fill, var(--tile));
+  grid-auto-rows: var(--tile);  /* fixed row height */
+  gap: 6px;
+  align-content: start;         /* <— prevents “extra space” between rows */
+  justify-content: start;       /* left-justify tiles */
 }
 
-/* Section internals */
-.kpiOnly-card h4 { margin: 0 0 6px; font-size: 13px; font-weight: 700; }
-.kpiOnly-card ul { margin: 0; padding-left: 18px; }
-.kpiOnly .muted  { color: var(--muted,#9aa3b2); }
-.kpiOnly .mono   { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-
-/* Chips */
-.kpiOnly-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.kpiOnly .chip {
-  background: #f0effc;
-  border: 1px solid #e7e3ff;
-  color: #5b5f75;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 12px;
+/* Tiny square button */
+.kpiNano .kn-tile{
+  box-sizing: border-box;
+  width: var(--tile);
+  height: var(--tile);
+  border: 1px solid var(--line,#ececf6);
+  border-radius: 10px;
+  background: #fbfbff;
+  padding: 4px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  place-items: center;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .04s ease, background .15s ease;
 }
-.kpiOnly .chip--warn { background: #fff4f6; border-color: #ffd1d8; color: #a63b4d; }
+.kpiNano .kn-tile:hover     { background:#f3f3ff; }
+.kpiNano .kn-tile.is-active { background:#fff; box-shadow:0 4px 14px rgba(25,25,75,.15); }
+.kpiNano .kn-tile:focus-visible{ outline:none; box-shadow:0 0 0 3px #7b61ff33; }
 
-/* Actions (uses Yamato buttons but keeps icons sane) */
-.kpiOnly-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.kpiOnly .button-flex__icon { width: 1.1em; height: 1.1em; line-height: 1; flex: 0 0 auto; }
-.kpiOnly .button-flex__icon svg { width: 100%; height: 100%; display: block; }
+/* Label + value (big number in a tiny tile) */
+.kpiNano .kn-tag{ font-size: 9px; line-height: 1; color:#667085; letter-spacing:.02em; }
+.kpiNano .kn-val{ font-weight: 800; font-size: 15px; line-height: 1; }
 
-/* “Show more/less” link */
-.kpiOnly .linklike {
-  border: 0; background: none; color: var(--accent,#7b61ff);
-  cursor: pointer; padding: 4px 0 0; font: inherit;
+/* Accents */
+.kpiNano .kn-violet { border-left:3px solid #7b61ff; }
+.kpiNano .kn-indigo { border-left:3px solid #4f46e5; }
+.kpiNano .kn-emerald{ border-left:3px solid #10b981; }
+.kpiNano .kn-teal   { border-left:3px solid #14b8a6; }
+.kpiNano .kn-sky    { border-left:3px solid #0ea5e9; }
+.kpiNano .kn-red    { border-left:3px solid #ef4444; }
+.kpiNano .kn-slate  { border-left:3px solid #475569; }
+.kpiNano .kn-stone  { border-left:3px solid #78716c; }
+.kpiNano .kn-amber  { border-left:3px solid #f59e0b; }
+.kpiNano .kn-orange { border-left:3px solid #f97316; }
+.kpiNano .kn-blue   { border-left:3px solid #2563eb; }
+.kpiNano .kn-green  { border-left:3px solid #22c55e; }
+.kpiNano .kn-cyan   { border-left:3px solid #06b6d4; }
+.kpiNano .kn-rose   { border-left:3px solid #f43f5e; }
+.kpiNano .kn-purple { border-left:3px solid #8b5cf6; }
+
+/* Grid: tiny squares ~40–46px; scales gracefully in a 300px sidebar */
+.kpiNano .kn-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap:6px;
 }
-.kpiOnly .linklike:hover { text-decoration: underline; }
+
+/* Tile base */
+.kpiNano .kn-tile{
+  appearance:none;
+  border:1px solid var(--line,#ececf6);
+  border-radius:10px;
+  background:#fbfbff;
+  padding:4px;
+  width:100%;
+  aspect-ratio:1 / 1;          /* squares, ~40x40+ depending on column width */
+  display:grid;
+  grid-template-rows:auto 1fr;
+  align-items:center;
+  justify-items:center;
+  cursor:pointer;
+  transition: box-shadow .15s ease, transform .04s ease, background .15s ease;
+}
+.kpiNano .kn-tile:hover{ background:#f3f3ff; }
+.kpiNano .kn-tile.is-active{ box-shadow:0 4px 14px rgba(25,25,75,.15); background:#fff; }
+.kpiNano .kn-tile:focus-visible{ outline:none; box-shadow:0 0 0 3px #7b61ff33; }
+
+/* Small tag (top) + big value (center) */
+.kpiNano .kn-tag{
+  font-size:9px; line-height:1;
+  color:#667085; letter-spacing:.02em;
+}
+.kpiNano .kn-val{
+  font-weight:800;
+  font-size:16px;              /* bigger number in a tiny tile */
+  line-height:1;
+}
+
+/* Accents via left border & subtle tint */
+.kpiNano .kn-violet { border-left:3px solid #7b61ff; }
+.kpiNano .kn-indigo { border-left:3px solid #4f46e5; }
+.kpiNano .kn-emerald{ border-left:3px solid #10b981; }
+.kpiNano .kn-teal   { border-left:3px solid #14b8a6; }
+.kpiNano .kn-sky    { border-left:3px solid #0ea5e9; }
+.kpiNano .kn-red    { border-left:3px solid #ef4444; }
+.kpiNano .kn-slate  { border-left:3px solid #475569; }
+.kpiNano .kn-stone  { border-left:3px solid #78716c; }
+.kpiNano .kn-amber  { border-left:3px solid #f59e0b; }
+.kpiNano .kn-orange { border-left:3px solid #f97316; }
+.kpiNano .kn-blue   { border-left:3px solid #2563eb; }
+.kpiNano .kn-green  { border-left:3px solid #22c55e; }
+.kpiNano .kn-cyan   { border-left:3px solid #06b6d4; }
+.kpiNano .kn-rose   { border-left:3px solid #f43f5e; }
+.kpiNano .kn-purple { border-left:3px solid #8b5cf6; }
+
+/* Detail card under the grid */
+.kpiNano .kn-detail{
+  border:1px solid var(--line,#ececf6);
+  border-radius:12px;
+  background:var(--panel,#fff);
+  overflow:hidden;
+  max-height:0; opacity:0; transform:translateY(-4px);
+  transition:max-height .28s ease, opacity .2s ease, transform .2s ease;
+}
+.kpiNano .kn-detail.is-open{ max-height:380px; opacity:1; transform:none; }
+
+.kpiNano .kn-detail__head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 10px; border-bottom:1px solid var(--line,#ececf6);
+  background:linear-gradient(180deg,#fff,#fcfbff);
+}
+.kpiNano .kn-detail__title{ font-weight:700; font-size:12px; }
+.kpiNano .kn-close{ border:0; background:none; font-size:18px; line-height:1; cursor:pointer; color:#8892a6; }
+.kpiNano .kn-close:hover{ color:#475069; }
+
+.kpiNano .kn-detail__body{ padding:10px; }
+.kpiNano .kn-detail__body ul{ margin:0; padding-left:16px; }
+.kpiNano .muted{ color:var(--muted,#9aa3b2); }
+.kpiNano .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
