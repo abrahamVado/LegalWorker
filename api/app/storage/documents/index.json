@@ -20474,6 +20474,87 @@
       "created_at": 1757649214,
       "file": "b599c686174346febe29091308cf608f__company_creation_ES.pdf",
       "overview": []
+    },
+    "d130e907e1d549ef96912c28871e9444": {
+      "id": "d130e907e1d549ef96912c28871e9444",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757650140,
+      "file": "d130e907e1d549ef96912c28871e9444__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "87ed1d99d24b4855bf5e907a9ed35d75": {
+      "id": "87ed1d99d24b4855bf5e907a9ed35d75",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757650140,
+      "file": "87ed1d99d24b4855bf5e907a9ed35d75__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "6e475472209c44b089ef2a529437f039": {
+      "id": "6e475472209c44b089ef2a529437f039",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757650140,
+      "file": "6e475472209c44b089ef2a529437f039__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "7f9de56012b04c2086025363e793ccba": {
+      "id": "7f9de56012b04c2086025363e793ccba",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757650141,
+      "file": "7f9de56012b04c2086025363e793ccba__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "ac841b9ab3e04da788a747c13fd00e9d": {
+      "id": "ac841b9ab3e04da788a747c13fd00e9d",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757650141,
+      "file": "ac841b9ab3e04da788a747c13fd00e9d__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "9820da3d25734daa9d617b25f89488e0": {
+      "id": "9820da3d25734daa9d617b25f89488e0",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757650141,
+      "file": "9820da3d25734daa9d617b25f89488e0__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "a59460e033514ccf8a9360cae2863769": {
+      "id": "a59460e033514ccf8a9360cae2863769",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757650141,
+      "file": "a59460e033514ccf8a9360cae2863769__association_creation_ES.pdf",
+      "overview": []
+    },
+    "d22a84b509c14d038c5e6a037117acc5": {
+      "id": "d22a84b509c14d038c5e6a037117acc5",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757650141,
+      "file": "d22a84b509c14d038c5e6a037117acc5__company_creation_ES.pdf",
+      "overview": []
+    },
+    "bcfe3a5911d04ebda13a88b8720c8011": {
+      "id": "bcfe3a5911d04ebda13a88b8720c8011",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757650141,
+      "file": "bcfe3a5911d04ebda13a88b8720c8011__company_creation_ES.pdf",
+      "overview": []
     }
   }
 }

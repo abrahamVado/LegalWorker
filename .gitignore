@@ -51,3 +51,4 @@ build/
 
 web/node_modules/
 certs/
+api/app/storage/

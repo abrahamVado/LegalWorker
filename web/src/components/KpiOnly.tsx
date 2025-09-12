@@ -5,7 +5,7 @@ import {
   PiClipboardTextDuotone,
   PiDownloadSimpleDuotone,
 } from 'react-icons/pi'
-import './QuickDashboard.css'
+import './KpiOnly.css'
 
 function downloadText(filename: string, text: string) {
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
@@ -38,18 +38,26 @@ type SectionProps = {
   initiallyVisible?: number
   mono?: boolean
 }
-function Section({ title, items, emptyLabel = '—', initiallyVisible = 8, mono = false }: SectionProps) {
+function Section({
+  title,
+  items,
+  emptyLabel = '—',
+  initiallyVisible = 8,
+  mono = false,
+}: SectionProps) {
   const [expanded, setExpanded] = useState(false)
   const display = expanded ? items : items.slice(0, initiallyVisible)
   const canToggle = items.length > initiallyVisible
 
   return (
-    <section className="qd-card">
+    <section className="kpiOnly-card">
       <h4>{title}</h4>
       {items.length ? (
         <>
           <ul className={mono ? 'mono' : undefined}>
-            {display.map((v, i) => <li key={i} title={v}>{v}</li>)}
+            {display.map((v, i) => (
+              <li key={i} title={v}>{v}</li>
+            ))}
           </ul>
           {canToggle && (
             <button
@@ -69,7 +77,7 @@ function Section({ title, items, emptyLabel = '—', initiallyVisible = 8, mono 
   )
 }
 
-export default function QuickDash() {
+export default function KpiOnly() {
   const selectedId = useStore(s => s.selectedId)
   const doc = useStore(s => (selectedId ? s.docs[selectedId] : undefined))
 
@@ -93,6 +101,7 @@ export default function QuickDash() {
     (q.places?.length ?? 0) +
     (q.errors?.length ?? 0) > 0
 
+  // sharable text & CSV
   const kpiText = useMemo(() => {
     if (!doc) return ''
     const parts: string[] = []
@@ -130,22 +139,22 @@ export default function QuickDash() {
   }, [csv, doc?.name])
 
   const onRefresh = useCallback(() => {
-    // hook your own refresh here if needed
+    // wire to your store if you add a refresh action
     console.log('Refresh KPIs for', doc?.id)
   }, [doc?.id])
 
   return (
-    <div className="qd" aria-live="polite">
+    <div className="kpiOnly" aria-live="polite">
       {!doc ? (
-        <div className="qd-empty">Select a PDF</div>
+        <div className="kpiOnly-empty">Select a PDF</div>
       ) : (
         <>
           {/* Header card */}
-          <div className="qd-card qd-card--head">
-            <div className="qd-title" title={doc.name}>{doc.name}</div>
-            <div className="qd-sub">Path: <span className="mono">{doc.path || doc.name}</span></div>
+          <div className="kpiOnly-card kpiOnly-card--head">
+            <div className="kpiOnly-title" title={doc.name}>{doc.name}</div>
+            <div className="kpiOnly-sub">Path: <span className="mono">{doc.path || doc.name}</span></div>
 
-            <div className="qd-chips">
+            <div className="kpiOnly-chips">
               <span className="chip">CP: <b>{q.counterparts.length}</b></span>
               <span className="chip">Dates: <b>{q.dates.length}</b></span>
               <span className="chip">Money: <b>{q.money.length}</b></span>
@@ -153,12 +162,12 @@ export default function QuickDash() {
               <span className={`chip ${q.errors.length ? 'chip--warn' : ''}`}>Flags: <b>{q.errors.length}</b></span>
             </div>
 
-            <div className="qd-actions button-flex-scope" role="group" aria-label="KPI actions">
+            <div className="kpiOnly-actions button-flex-scope" role="group" aria-label="KPI actions">
               <button className="button-flex btn--violet btn--sm has-left-icon" onClick={onRefresh} type="button" title="Refresh KPIs">
                 <span className="button-flex__icon button-flex__icon--left" aria-hidden><PiArrowsClockwiseDuotone /></span>
                 <span>Refresh</span>
               </button>
-              <button className="button-flex btn--indigo btn--sm has-left-icon" onClick={onCopy} type="button" disabled={!hasData} title="Copy KPIs">
+              <button className="button-flex btn--indigo  btn--sm has-left-icon" onClick={onCopy}   type="button" disabled={!hasData} title="Copy KPIs">
                 <span className="button-flex__icon button-flex__icon--left" aria-hidden><PiClipboardTextDuotone /></span>
                 <span>Copy</span>
               </button>
@@ -171,14 +180,14 @@ export default function QuickDash() {
 
           {/* Content */}
           {!hasData ? (
-            <div className="qd-card">
+            <div className="kpiOnly-card">
               <div className="muted">No KPIs extracted yet.</div>
               <div className="muted" style={{ fontSize: 12 }}>
                 Run analysis or ask the model to summarize key fields.
               </div>
             </div>
           ) : (
-            <div className="qd-grid">
+            <div className="kpiOnly-grid">
               <Section title="Counterparties" items={q.counterparts} />
               <Section title="Dates"         items={q.dates} />
               <Section

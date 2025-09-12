@@ -1,87 +1,108 @@
-/* ── Right sidebar container (use grid, not flex) ───────────────────────── */
-.sidebar.rightdash{
-  /* was: display:flex; flex-direction:column; */
+/* Only styles inside the dashboard block — no sidebar/container rules here */
+.qd { display: grid; gap: 8px; padding: 0; }
+
+.qd-card {
+  background: var(--panel,#fff);
+  border: 1px solid var(--line,#ececf6);
+  border-radius: 12px;
+  padding: 10px;
+  margin: 0;
+}
+.qd-card--head { display: grid; gap: 8px; }
+
+.qd-title { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qd-sub { color: var(--muted,#9aa3b2); font-size: 12px; }
+
+.qd-empty { color: var(--muted,#9aa3b2); padding: 12px; font-size: 12px; }
+
+.qd-grid {
   display: grid;
-  grid-template-rows: auto 1fr;  /* header + scroll area */
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 1240px) {
+  .qd-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.qd-card h4 { margin: 0 0 6px; font-size: 13px; font-weight: 700; }
+.qd-card ul { margin: 0; padding-left: 18px; }
+
+.qd .muted { color: var(--muted,#9aa3b2); }
+.qd .mono  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+.qd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.qd .chip {
+  background: #f0effc;
+  border: 1px solid #e7e3ff;
+  color: #5b5f75;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.qd .chip--warn { background: #fff4f6; border-color: #ffd1d8; color: #a63b4d; }
+
+.qd-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* “Show more” link */
+.qd .linklike {
+  border: 0;
+  background: none;
+  color: var(--accent, #7b61ff);
+  cursor: pointer;
+  padding: 4px 0 0;
+  font: inherit;
+}
+.qd .linklike:hover { text-decoration: underline; }
+/* --- Hardening: prevent overflow and weird stretching --- */
+.qd,
+.qd-card,
+.qd-actions,
+.qd-chips {
+  min-width: 0;                 /* allow children to actually shrink */
+}
+
+/* Chips: keep them tidy and same line-height */
+.qd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.qd .chip {
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+/* Actions: flex that never stretches children */
+.qd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.qd-actions > * {
+  flex: 0 0 auto;               /* prevents unintended stretching */
+}
+
+/* If you place icons in these buttons, keep them sane-sized */
+.qd .button-flex__icon {
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+.qd .button-flex__icon svg {
+  width: 100%;
   height: 100%;
-  min-height: 0;
-  border-left: 1px solid var(--line, #e5e7eb);
-  background: var(--panel, #fff);
+  display: block;
 }
 
-/* Header */
-.rd-head{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:10px; padding:10px 12px;
-  border-bottom:1px solid var(--line, #ececf6);
-  background: linear-gradient(180deg,#fff,#fcfbff);
+/* Long values (paths, money lines, etc.) won’t blow the card width */
+.qd-card ul {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
-.rd-title{ font-weight:700; }
-.rd-filename{ font-weight:600; color: var(--accent, #7b61ff); }
-
-/* Tabs (plain buttons). Won’t affect Yamato buttons */
-.rd-tabs{ display:flex; gap:8px; align-items:center; }
-.rd-tabs > button:not(.button-flex){
-  padding:6px 10px; border-radius:10px; border:1px solid var(--line, #ececf6);
-  background:#fff; cursor:pointer; font-weight:600; color:#5b5f75;
-}
-.rd-tabs > button:not(.button-flex).active{
-  background:linear-gradient(180deg, var(--accent, #7b61ff), var(--accent-2, #9c6bff));
-  color:#fff; border-color:transparent;
-}
-
-/* Yamato tabs sizing (only .button-flex) */
-.rd-tabs.button-flex-scope .button-flex{
-  --label-size:.9rem; --pad-x:.8em; --gap:.3em;
-}
-
-/* Normalize Yamato icon size in the sidebar */
-.rightdash .button-flex__icon{ width:1.1em; height:1.1em; flex:0 0 auto; line-height:1; }
-.rightdash .button-flex__icon svg{ width:100%; height:100%; display:block; }
-.rightdash .button-flex > span{ line-height:1; }
-
-/* Scroll area (now the 2nd grid row) */
-.rd-scroll{
-  min-height: 0;     /* critical for internal scrolling */
-  overflow: auto;
-  padding: 12px;
-  display: grid;
-  gap: 12px;
-}
-
-/* KPI tab */
-.rd-kpis{ display:grid; gap:12px; }
-.rd-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
-
-/* Chat tab */
-.rd-chat{ display:grid; grid-template-rows: 1fr auto; gap:8px; min-height:0; }
-.chatlog{
-  min-height:120px; overflow:auto; padding:8px;
-  background:#fafaff; border:1px solid var(--line, #ececf6); border-radius:12px;
-  display:grid; gap:8px;
-}
-.bubble{
-  max-width:85%;
-  padding:8px 10px; border-radius:12px;
-  border:1px solid var(--line, #ececf6); background:#f6f5ff;
-}
-.bubble--user{
-  justify-self:end;
-  background:linear-gradient(180deg, var(--accent, #7b61ff), #9c6bff);
-  color:#fff; border-color:transparent;
-}
-
-/* Composer */
-.chatform{ display:grid; gap:8px; border-top:1px solid var(--line, #ececf6); padding-top:8px; }
-.chatform textarea{
-  width:100%; resize:vertical; min-height:80px; max-height:38vh;
-  padding:10px 12px; border:1px solid var(--line, #ececf6); border-radius:10px;
-  font:inherit; background:#fff;
-}
-.chatform .row{ display:flex; justify-content:flex-end; }
-
-/* Responsive */
-@media (max-width: 980px){
-  .rd-scroll{ padding:8px; }
-  .rd-actions{ gap:6px; }
+.qd .mono {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
