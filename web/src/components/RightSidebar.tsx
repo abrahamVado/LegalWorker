@@ -13,36 +13,45 @@ export default function RightSidebar() {
   const canSend = useMemo(() => Boolean(selectedId && text.trim().length > 0), [selectedId, text])
 
   return (
-    <div className="sidebar rightdash" aria-label="Details">
+    <aside className="sidebar rightdash" aria-label="Details">
       <header className="rd-head">
-        <strong>Details</strong>
-        <div className="rd-tabs" role="tablist" aria-label="Details tabs">
+        <div className="rd-title">
+          <strong>Details</strong>
+        </div>
+
+        {/* Tabs – Yamato buttons (falls back gracefully if you don’t load Yamato CSS elsewhere) */}
+        <div className="rd-tabs button-flex-scope" role="tablist" aria-label="Details tabs">
           <button
             role="tab"
             aria-selected={tab === 'kpis'}
-            className={tab === 'kpis' ? 'active' : ''}
+            aria-controls="panel-kpis"
+            className={`button-flex btn--sm ${tab === 'kpis' ? 'btn--violet' : 'btn--white'}`}
             onClick={() => setTab('kpis')}
+            type="button"
           >
-            KPIs
+            <span>KPIs</span>
           </button>
+
           <button
             role="tab"
             aria-selected={tab === 'chat'}
-            className={tab === 'chat' ? 'active' : ''}
+            aria-controls="panel-chat"
+            className={`button-flex btn--sm ${tab === 'chat' ? 'btn--indigo' : 'btn--white'}`}
             onClick={() => setTab('chat')}
+            type="button"
           >
-            Chat
+            <span>Chat</span>
           </button>
         </div>
       </header>
 
       <div className="rd-scroll">
         {tab === 'kpis' ? (
-          <div className="rd-kpis" role="tabpanel" aria-label="KPIs">
+          <div id="panel-kpis" className="rd-kpis" role="tabpanel" aria-labelledby="kpis-tab">
             <QuickDash />
           </div>
         ) : (
-          <div className="rd-chat" role="tabpanel" aria-label="Chat with model">
+          <div id="panel-chat" className="rd-chat" role="tabpanel" aria-labelledby="chat-tab">
             <div className="chatlog" aria-live="polite">
               {messages.length === 0 ? (
                 <div className="muted">Ask anything about the selected PDF.</div>
@@ -54,8 +63,9 @@ export default function RightSidebar() {
                 ))
               )}
             </div>
+
             <form
-              className="chatform"
+              className="chatform button-flex-scope"
               onSubmit={e => {
                 e.preventDefault()
                 if (!canSend) return
@@ -70,14 +80,14 @@ export default function RightSidebar() {
                 rows={3}
               />
               <div className="row">
-                <button type="submit" className="btn btn--primary" disabled={!canSend}>
-                  Ask
+                <button type="submit" className="button-flex btn--indigo btn--sm" disabled={!canSend}>
+                  <span>Ask</span>
                 </button>
               </div>
             </form>
           </div>
         )}
       </div>
-    </div>
+    </aside>
   )
 }
