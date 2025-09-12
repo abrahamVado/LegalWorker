@@ -13,6 +13,9 @@ from app.services.pdf_service import get_document_path
 
 from dataclasses import dataclass
 from typing import Optional
+from datetime import datetime
+from datetime import datetime  # if not already imported
+import re as _re               # for JSON extraction helper
 
 
 # -------- Paths --------
@@ -343,3 +346,198 @@ async def answer_question(
         {"role": "system", "content": system},
         {"role": "user", "content": user},
     ])
+
+def _vector_dim(embeds: List[List[float]]) -> int:
+    try:
+        return int(len(embeds[0])) if embeds and isinstance(embeds[0], list) else 0
+    except Exception:
+        return 0
+
+async def digest_document(doc_id: str, strategy: str = "fast", max_chars: int = 16000) -> Dict[str, Any]:
+    """
+    Quick, non-LLM digest for a single document. Returns a base payload that your
+    /api/digest endpoint can enrich (e.g., with summarize_document_llm()).
+
+    Fields match the DigestDoc shape expected by contract.py.
+    """
+    # Locate file
+    pdf_path = get_document_path(doc_id)
+    name = os.path.basename(pdf_path) if pdf_path else f"{doc_id}.pdf"
+
+    # File stats
+    try:
+        size_bytes = os.path.getsize(pdf_path) if pdf_path and os.path.exists(pdf_path) else 0
+    except Exception:
+        size_bytes = 0
+    size_kb = max(0, int(round(size_bytes / 1024)))  # integer KB
+
+    try:
+        mtime = os.path.getmtime(pdf_path) if pdf_path and os.path.exists(pdf_path) else None
+        last_iso = datetime.fromtimestamp(mtime).isoformat() if mtime else datetime.utcnow().isoformat()
+    except Exception:
+        last_iso = datetime.utcnow().isoformat()
+
+    # Index stats (from embedding index built in ingest)
+    idx = _load_index(doc_id)
+    texts: List[str] = idx.get("texts", []) or []
+    pages_arr: List[int] = idx.get("pages", []) or []
+    embeds: List[List[float]] = idx.get("embeddings", []) or []
+
+    # Heuristics for quick KPIs
+    num_chunks = len(texts)
+    vec_dim = _vector_dim(embeds)
+
+    # Base digest fields (no LLM yet — your /api/digest can add LLM summary later)
+    base: Dict[str, Any] = {
+        "id": str(doc_id),
+        "name": name,
+        "sizeKB": size_kb,
+        "durationMs": 0,                 # measured on client; leave 0 here
+        "type": "Contrato",              # default; /api/digest can refine via LLM
+        "counterparties": [],            # will be filled by LLM if desired
+        "riskFlags": [],                 # will be filled by LLM if desired
+        "spellingMistakes": 0,           # optional heuristic; 0 by default
+        "classification": "unknown",     # default; LLM can refine
+        "lastModifiedISO": last_iso,
+
+        # Extra helpful fields (not required, but nice to have)
+        "chunks": num_chunks,
+        "vector_dim": vec_dim,
+        "pages_indexed": len(set(pages_arr)),
+    }
+
+    # If you want to trim content for downstream LLM, you can also include a light preview:
+    # (kept small to avoid heavy payloads)
+    if texts:
+        preview_chars = 1200
+        joined = " ".join(texts)
+        base["preview"] = joined[:preview_chars]
+
+    return base
+
+# Fast metadata only (no embeddings) — used by /api/ingest to return quickly
+async def build_index_metadata(doc_id: str) -> Dict[str, Any]:
+    pdf = get_document_path(doc_id)
+    if not pdf or not os.path.exists(pdf):
+        return {"chunks": 0, "overview": []}
+
+    # Read PDF text per page
+    pages: List[str] = []
+    try:
+        reader = PdfReader(pdf)
+        for p in reader.pages:
+            try:
+                pages.append(p.extract_text() or "")
+            except Exception:
+                pages.append("")
+    except Exception:
+        pages = []
+
+    total_pages = len(pages)
+    chars_per_page = [len((t or "").strip()) for t in pages]
+    text_pages = sum(1 for c in chars_per_page if c >= 30)
+    empty_pages = max(0, total_pages - text_pages)
+    coverage = round(100 * text_pages / max(1, total_pages), 1)
+    needs_ocr = (text_pages / max(1, total_pages)) < 0.4
+
+    chunks = _chunk_pages(pages)
+    texts = [c[1] for c in chunks]
+
+    avg_chars_page = int((sum(chars_per_page) / total_pages) if total_pages else 0)
+    avg_chars_chunk = int((sum(len(t) for t in texts) / len(texts)) if texts else 0)
+
+    overview = [
+        {"key": "pages", "label": "Pages", "value": total_pages},
+        {"key": "text_pages", "label": "Pages with text", "value": text_pages},
+        {"key": "empty_pages", "label": "Empty pages", "value": empty_pages},
+        {"key": "text_coverage", "label": "Text coverage", "value": coverage, "unit": "%"},
+        {"key": "chunks", "label": "Chunks", "value": len(texts)},
+        {"key": "avg_chars_page", "label": "Avg chars/page", "value": avg_chars_page},
+        {"key": "avg_chars_chunk", "label": "Avg chars/chunk", "value": avg_chars_chunk},
+        {"key": "needs_ocr", "label": "Needs OCR", "value": needs_ocr},
+    ]
+    return {"chunks": len(texts), "overview": overview}
+
+
+# Helper to extract the first JSON object from an LLM response
+def _first_json_blob(text: str) -> Dict[str, Any]:
+    try:
+        return json.loads(text)
+    except Exception:
+        pass
+    m = _re.search(r"\{[\s\S]*\}", text)
+    if not m:
+        return {}
+    try:
+        return json.loads(m.group(0))
+    except Exception:
+        return {}
+
+
+# LLM-based structured summary (used by /api/digest when strategy='llm')
+async def summarize_document_llm(doc_id: str, max_chars: int = 16000) -> Dict[str, Any]:
+    idx = _load_index(doc_id)
+    texts: List[str] = idx.get("texts", []) or []
+    pages: List[int] = idx.get("pages", []) or []
+
+    if not texts:
+        return {
+            "type": "Contrato",
+            "classification": "unknown",
+            "summary": "",
+            "key_points": [],
+            "entities": {"counterparties": [], "jurisdictions": []},
+            "salient_pages": [],
+        }
+
+    # cap total chars while preserving chunk boundaries
+    acc = 0
+    chosen: List[Tuple[int, str]] = []
+    for i, t in enumerate(texts):
+        if acc + len(t) > max_chars:
+            break
+        chosen.append((i, t))
+        acc += len(t)
+
+    NL = "\n"
+    lines = []
+    for i, t in chosen:
+        p = pages[i] if i < len(pages) else None
+        lines.append(f"(p.{p}) " + t.replace(NL, " "))
+
+    system = (
+        "Eres un asistente legal. Devuelve SOLO JSON con: "
+        "type (Contrato/NDA/Factura/Poder/Aviso de privacidad), "
+        "classification (company_creation, association_creation, contract_amendment, privacy_notice, service_agreement), "
+        "summary (≤3 oraciones), key_points (lista), "
+        "entities.counterparties (≤4), entities.jurisdictions (≤3), salient_pages (lista de enteros)."
+    )
+    user = (
+        "Texto (con páginas):\n---\n" + "\n".join(lines) + "\n---\n"
+        'JSON esperado: {"type":"...","classification":"...","summary":"...","key_points":["..."],'
+        '"entities":{"counterparties":["..."],"jurisdictions":["..."]},"salient_pages":[1,2]}'
+    )
+
+    try:
+        raw = await ollama_chat([
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ])
+        data = _first_json_blob(str(raw)) or {}
+    except Exception:
+        data = {}
+
+    # sanitize
+    out = {
+        "type": (data.get("type") or "Contrato")[:64],
+        "classification": (data.get("classification") or "unknown")[:64],
+        "summary": (data.get("summary") or "")[:1000],
+        "key_points": [str(x)[:200] for x in (data.get("key_points") or []) if isinstance(x, str)][:8],
+        "entities": {
+            "counterparties": [str(x)[:100] for x in (data.get("entities", {}).get("counterparties") or [])][:4],
+            "jurisdictions": [str(x)[:60] for x in (data.get("entities", {}).get("jurisdictions") or [])][:3],
+        },
+        "salient_pages": [int(x) for x in (data.get("salient_pages") or []) if isinstance(x, int)][:10],
+    }
+    return out
+# ---------- END ADDITIONS ----------

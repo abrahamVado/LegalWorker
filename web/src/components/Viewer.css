@@ -1,43 +1,90 @@
-/* 3-column shell */
-.viewer.viewer--3col {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
+:root {
+  --panel: #fff;
+  --line: #ececf6;
+  --radius: 12px;
+  --purple-soft: #f1efff;
 }
 
+/* ===== Viewer Shell ===== */
+.viewer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* critical for 100% children */
+}
+
+/* Top bar */
 .viewer__bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  border-bottom: 1px solid var(--line, #ececf6);
-  background: var(--panel, #fff);
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  flex: 0 0 auto;
 }
 
+/* Content grid (1/2/3 col) */
+.viewer__content {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  gap: 12px;
+  overflow: hidden; /* columns manage their own scroll */
+  padding: 12px;
+}
+
+/* When set via className on the same node as viewer__content */
+.viewer__content.viewer--1col { grid-template-columns: 1fr; }
+.viewer__content.viewer--2col { grid-template-columns: 1fr 320px; }
+viewer__content.viewer--3col { grid-template-columns: 280px 1fr 340px; }
+
+/* When you use a separate modifier class name */
+.viewer__content--1col { grid-template-columns: 1fr; }
+.viewer__content--2col { grid-template-columns: 1fr 320px; }
+.viewer__content--3col { grid-template-columns: 280px 1fr 340px; }
+
+/* Back-compat with your pasted CSS (kept for safety) */
+.viewer.viewer--3col {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  min-height: 0;
+}
 .viewer__content.viewer__content--3col {
   display: grid;
   grid-template-columns: 280px 1fr 340px;
   gap: 12px;
   height: 100%;
-  min-height: 0; /* allow children to shrink */
+  min-height: 0;
   padding: 12px;
+  overflow: hidden;
 }
 
 /* Columns */
 .col {
   min-width: 0;
+  min-height: 0; /* allow children to be 100% high */
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+.col--left,
+.col--right {
+  overflow: hidden; /* inner sidebars handle scroll */
+}
+.col--center {
+  overflow: hidden; /* PDF manages its own UI/scrolling */
+}
 
-/* Left tree */
+/* ===== Left: Folder Tree ===== */
 .tree {
-  background: var(--panel, #fff);
-  border: 1px solid var(--line, #ececf6);
-  border-radius: var(--radius, 12px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   padding: 8px;
   overflow: auto;
+  min-height: 0;
 }
 .tree-row {
   width: 100%;
@@ -48,52 +95,75 @@
   background: transparent;
   cursor: pointer;
 }
-.tree-item.is-selected > .tree-row {
-  background: var(--purple-soft, #f1efff);
-}
-.tree-row:hover {
-  background: rgba(0,0,0,.04);
-}
+.tree-item.is-selected > .tree-row { background: var(--purple-soft); }
+.tree-row:hover { background: rgba(0,0,0,.04); }
 .tree-icon { margin-right: 8px; }
 
-/* Center report */
+/* ===== Center: Report (PDF) ===== */
 .report {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: var(--panel, #fff);
-  border: 1px solid var(--line, #ececf6);
-  border-radius: var(--radius, 12px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   overflow: hidden;
+  min-height: 0;
 }
 .report__header {
   padding: 8px 12px;
-  border-bottom: 1px solid var(--line, #ececf6);
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
 }
 .report__body {
-  flex: 1;
+  display: flex;     /* let iframe/canvas stretch */
+  flex: 1 1 auto;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;  /* PDF inside manages scroll / controls */
 }
 
-/* Right KPI panel */
+/* If you render an iframe (native PDF viewer) */
+.report__body > iframe.pdf-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* If you render a canvas-based viewer wrapper */
+.report__body > .pdf-canvas,
+.report__body > canvas {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== Right: KPI / Chat wrapper (if you keep .kpi card style) ===== */
 .kpi {
-  background: var(--panel, #fff);
-  border: 1px solid var(--line, #ececf6);
-  border-radius: var(--radius, 12px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   padding: 12px;
   overflow: auto;
+  min-height: 0;
 }
-.kpi__list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 8px; }
+.kpi__list {
+  list-style: none;
+  padding: 0; margin: 8px 0 0;
+  display: grid; gap: 8px;
+}
 .kpi__item {
   display: flex;
   justify-content: space-between;
   padding: 8px 10px;
-  border: 1px dashed var(--line, #ececf6);
+  border: 1px dashed var(--line);
   border-radius: 10px;
 }
 
-/* Empty/placeholder cards */
+/* ===== Empty placeholders ===== */
 .empty, .empty--center {
   display: grid;
   place-items: center;
@@ -101,20 +171,22 @@
 }
 .card--ghost {
   background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f4f4f8 8px, #f4f4f8 16px);
-  border: 1px dashed var(--line, #ececf6);
+  border: 1px dashed var(--line);
   border-radius: 12px;
   padding: 16px;
   text-align: center;
 }
 
-/* Responsive: collapse to 2 / 1 columns as needed */
+/* ===== Responsive ===== */
 @media (max-width: 1200px) {
-  .viewer__content.viewer__content--3col {
+  .viewer__content.viewer__content--3col,
+  .viewer__content--3col {
     grid-template-columns: 240px 1fr 300px;
   }
 }
 @media (max-width: 980px) {
-  .viewer__content.viewer__content--3col {
+  .viewer__content.viewer__content--3col,
+  .viewer__content--3col {
     grid-template-columns: 1fr;
   }
   .col--right { order: 3; }

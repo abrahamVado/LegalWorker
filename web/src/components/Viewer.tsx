@@ -1,19 +1,35 @@
-import React from 'react'
+// components/Viewer.tsx
+import React, { useMemo } from 'react'
 import { useStore, buildTreeFromDocs } from '@/store/useStore'
 import { PdfCanvas } from '@/components/PdfCanvas'
 import FolderTree from '@/components/FolderTree'
-import KpiPanel from '@/components/KpiPanel'
-import '@/components/Viewer.css'
+import './Viewer.css'
 
-export function Viewer() {
+type ViewerProps = {
+  showLeft?: boolean
+  showRight?: boolean
+  rightSlot?: React.ReactNode
+  /** 'native' uses the browser PDF viewer (iframe), 'canvas' uses pdf.js canvas */
+  pdfMode?: 'native' | 'canvas'
+}
+
+export default function Viewer({
+  showLeft = true,
+  showRight = true,
+  rightSlot = null,
+  pdfMode = 'native',
+}: ViewerProps) {
   const docs = useStore(s => s.docs)
   const order = useStore(s => s.order)
   const selectedId = useStore(s => s.selectedId)
   const setSelectedId = useStore(s => s.setSelectedId ?? s.select)
 
   const doc = selectedId ? docs[selectedId] : undefined
-  const treeRoot = buildTreeFromDocs(docs, order)
+  const treeRoot = useMemo(() => buildTreeFromDocs(docs, order), [docs, order])
   const selectedNodeId = selectedId ? `f:${selectedId}` : undefined
+
+  // Build grid columns based on which sidebars are shown
+  const gridCols = `${showLeft ? '280px ' : ''}1fr${showRight ? ' 340px' : ''}`
 
   return (
     <section className="viewer viewer--3col" aria-label="Document workspace">
@@ -26,17 +42,26 @@ export function Viewer() {
         </div>
       </header>
 
-      <div className="viewer__content viewer__content--3col">
-        <aside className="col col--left" aria-label="Folder tree">
-          <FolderTree
-            root={treeRoot}
-            selectedId={selectedNodeId}
-            onSelect={(nodeId: string) => {
-              if (nodeId.startsWith('f:')) setSelectedId(nodeId.slice(2))
-            }}
-          />
-        </aside>
+      <div
+        className="viewer__content viewer__content--3col"
+        style={{ gridTemplateColumns: gridCols }}
+      >
+        {/* LEFT: Folder tree */}
+        {showLeft && (
+          <aside className="col col--left" aria-label="Folder tree">
+            <nav className="tree" aria-label="Workspace">
+              <FolderTree
+                root={treeRoot}
+                selectedId={selectedNodeId}
+                onSelect={(nodeId: string) => {
+                  if (nodeId.startsWith('f:')) setSelectedId(nodeId.slice(2))
+                }}
+              />
+            </nav>
+          </aside>
+        )}
 
+        {/* CENTER: PDF report */}
         <main className="col col--center" aria-label="Report">
           {!doc ? (
             <div className="empty empty--center">
@@ -51,15 +76,26 @@ export function Viewer() {
                 <strong title={doc.name}>{doc.name}</strong>
               </div>
               <div className="report__body">
-                <PdfCanvas blobUrl={doc.blobUrl || undefined} />
+                {pdfMode === 'native' ? (
+                  <iframe
+                    className="pdf-frame"
+                    src={doc.blobUrl || undefined}
+                    title={doc.name}
+                  />
+                ) : (
+                  <PdfCanvas blobUrl={doc.blobUrl || undefined} />
+                )}
               </div>
             </section>
           )}
         </main>
 
-        <aside className="col col--right" aria-label="KPI settings">
-          <KpiPanel docId={doc?.id ?? null} />
-        </aside>
+        {/* RIGHT: Whatever you pass in rightSlot (KPIs/Chat) */}
+        {showRight && (
+          <aside className="col col--right" aria-label="Details">
+            {rightSlot /* e.g. <RightPanel/> from your WorkspaceStep */}
+          </aside>
+        )}
       </div>
     </section>
   )

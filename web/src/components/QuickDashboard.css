@@ -1,11 +1,87 @@
-/* /src/components/QuickDash.css */
-.sidebar.rightdash { width: 320px; border-left: 1px solid var(--line,#ececf6); display:flex; flex-direction:column; }
-.qd-head { padding: 10px 12px; font-weight: 700; }
-.qd-empty { color: var(--muted,#9aa3b2); padding: 12px; font-size: 12px; }
-.qd-card { background: var(--panel,#fff); border:1px solid var(--line,#ececf6); border-radius:12px; padding:10px; margin: 8px 12px; }
-.qd-title { font-weight: 700; }
-.qd-sub { color: var(--muted,#9aa3b2); font-size: 12px; }
-.qd-grid { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 0 8px 12px; }
-.qd-card h4 { margin: 0 0 6px; font-size: 13px; }
-.qd-card ul { margin: 0; padding-left: 18px; }
-.muted { color: var(--muted,#9aa3b2); }
+/* ── Right sidebar container (use grid, not flex) ───────────────────────── */
+.sidebar.rightdash{
+  /* was: display:flex; flex-direction:column; */
+  display: grid;
+  grid-template-rows: auto 1fr;  /* header + scroll area */
+  height: 100%;
+  min-height: 0;
+  border-left: 1px solid var(--line, #e5e7eb);
+  background: var(--panel, #fff);
+}
+
+/* Header */
+.rd-head{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:10px 12px;
+  border-bottom:1px solid var(--line, #ececf6);
+  background: linear-gradient(180deg,#fff,#fcfbff);
+}
+.rd-title{ font-weight:700; }
+.rd-filename{ font-weight:600; color: var(--accent, #7b61ff); }
+
+/* Tabs (plain buttons). Won’t affect Yamato buttons */
+.rd-tabs{ display:flex; gap:8px; align-items:center; }
+.rd-tabs > button:not(.button-flex){
+  padding:6px 10px; border-radius:10px; border:1px solid var(--line, #ececf6);
+  background:#fff; cursor:pointer; font-weight:600; color:#5b5f75;
+}
+.rd-tabs > button:not(.button-flex).active{
+  background:linear-gradient(180deg, var(--accent, #7b61ff), var(--accent-2, #9c6bff));
+  color:#fff; border-color:transparent;
+}
+
+/* Yamato tabs sizing (only .button-flex) */
+.rd-tabs.button-flex-scope .button-flex{
+  --label-size:.9rem; --pad-x:.8em; --gap:.3em;
+}
+
+/* Normalize Yamato icon size in the sidebar */
+.rightdash .button-flex__icon{ width:1.1em; height:1.1em; flex:0 0 auto; line-height:1; }
+.rightdash .button-flex__icon svg{ width:100%; height:100%; display:block; }
+.rightdash .button-flex > span{ line-height:1; }
+
+/* Scroll area (now the 2nd grid row) */
+.rd-scroll{
+  min-height: 0;     /* critical for internal scrolling */
+  overflow: auto;
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+/* KPI tab */
+.rd-kpis{ display:grid; gap:12px; }
+.rd-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+
+/* Chat tab */
+.rd-chat{ display:grid; grid-template-rows: 1fr auto; gap:8px; min-height:0; }
+.chatlog{
+  min-height:120px; overflow:auto; padding:8px;
+  background:#fafaff; border:1px solid var(--line, #ececf6); border-radius:12px;
+  display:grid; gap:8px;
+}
+.bubble{
+  max-width:85%;
+  padding:8px 10px; border-radius:12px;
+  border:1px solid var(--line, #ececf6); background:#f6f5ff;
+}
+.bubble--user{
+  justify-self:end;
+  background:linear-gradient(180deg, var(--accent, #7b61ff), #9c6bff);
+  color:#fff; border-color:transparent;
+}
+
+/* Composer */
+.chatform{ display:grid; gap:8px; border-top:1px solid var(--line, #ececf6); padding-top:8px; }
+.chatform textarea{
+  width:100%; resize:vertical; min-height:80px; max-height:38vh;
+  padding:10px 12px; border:1px solid var(--line, #ececf6); border-radius:10px;
+  font:inherit; background:#fff;
+}
+.chatform .row{ display:flex; justify-content:flex-end; }
+
+/* Responsive */
+@media (max-width: 980px){
+  .rd-scroll{ padding:8px; }
+  .rd-actions{ gap:6px; }
+}

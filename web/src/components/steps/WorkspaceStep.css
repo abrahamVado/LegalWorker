@@ -1,1 +1,63 @@
-/* Additional styles for workspace step if needed */
+/* Root stretch */
+html, body, #root { height: 100%; }
+
+/* Whole workspace grid: external left sidebar + viewer (center+right) */
+.window--workspace {
+  height: 100dvh;              /* full viewport, mobile-safe */
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 0;
+  overflow: hidden;            /* prevent extra scrollbars */
+}
+
+/* Left sidebar container (where FileTreeSidebar mounts) */
+[data-file-tree-sidebar] {
+  height: 100%;
+  min-height: 0;
+}
+
+/* Match left file tree internal layout (if not already in its own CSS) */
+.sidebar.filetree {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.sidebar.filetree .ft-head { flex: 0 0 auto; }
+.sidebar.filetree .ft-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* Viewer container */
+.workspace-center {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden; /* hand off to Viewer grid */
+}
+
+/* Drop overlay */
+.drop-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(80, 90, 120, 0.12);
+  pointer-events: none;
+}
+.drop-overlay.active {
+  display: flex;
+  pointer-events: auto;
+}
+.drop-overlay .box {
+  background: #fff;
+  border: 2px dashed #b9c1cc;
+  color: #3b455a;
+  padding: 18px 22px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+}
+.drop-overlay small { color: #6b7280; }

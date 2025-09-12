@@ -129,16 +129,34 @@ export type QuickDash = {
   errors: string[]
 }
 
-export function mapOverviewToQuick(ov?: Overview[]): QuickDash {
+export function mapOverviewToQuick(ov?: any[]): QuickDash {
   const quick: QuickDash = { counterparts: [], dates: [], money: [], places: [], errors: [] }
-  if (!ov?.length) return quick
+  if (!Array.isArray(ov) || ov.length === 0) return quick
 
   const moneyRx = /\b(\$|MXN|USD|EUR)\s?([0-9]{1,3}(?:[.,][0-9]{3})*(?:[.,][0-9]{2})?|[0-9]+)\b/gi
-  const dateRx = /\b(20[0-9]{2}[-/](?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12][0-9]|3[01])|(?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12][0-9]|3[01])[-/]20[0-9]{2})\b/g
+  const dateRx  = /\b(20[0-9]{2}[-/](?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12][0-9]|3[01])|(?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12][0-9]|3[01])[-/]20[0-9]{2})\b/g
 
-  for (const item of ov) {
-    const t = item.topic.toLowerCase()
-    const a = item.answer || ''
+  const toText = (item: any): { topic: string; text: string } => {
+    // Shape A: { topic, answer }
+    if (typeof item?.answer === 'string' && typeof item?.topic === 'string') {
+      return { topic: item.topic, text: item.answer }
+    }
+    // Shape B: { key, label, value, unit, topic? }
+    const topic = String(item?.topic ?? item?.key ?? item?.label ?? 'doc_stats')
+    const val   = item?.value
+    const unit  = item?.unit
+    let text = ''
+    if (typeof val === 'boolean') text = val ? 'true' : 'false'
+    else if (typeof val === 'number') text = unit ? `${val} ${unit}` : String(val)
+    else if (typeof val === 'string') text = val
+    else text = '' // unknown
+    return { topic, text }
+  }
+
+  for (const raw of ov) {
+    const { topic, text } = toText(raw)
+    const t = topic.toLowerCase()
+    const a = text || ''
 
     if (t.includes('counterpart') || t.includes('partes') || t.includes('contraparte')) {
       quick.counterparts.push(...a.split(/[;,•\n]/).map(s => s.trim()).filter(Boolean))
@@ -149,10 +167,9 @@ export function mapOverviewToQuick(ov?: Overview[]): QuickDash {
     if (t.includes('monto') || t.includes('cantidad') || t.includes('importe') || t.includes('amount')) {
       for (const m of a.matchAll(moneyRx)) {
         const sym = (m[1] || '').toUpperCase()
-        const raw = (m[2] || '').replace(/[.,](?=[0-9]{3}\b)/g, '').replace(',', '.')
-        const amount = Number(raw)
+        const rawNum = (m[2] || '').replace(/[.,](?=[0-9]{3}\b)/g, '').replace(',', '.')
+        const amount = Number(rawNum)
         if (!Number.isFinite(amount)) continue
-        // prefer explicit code in the text; else map $ -> USD by default
         const currency = /MXN/i.test(m[0]) ? 'MXN'
           : /EUR/i.test(m[0]) ? 'EUR'
           : /USD/i.test(m[0]) ? 'USD'
@@ -169,10 +186,11 @@ export function mapOverviewToQuick(ov?: Overview[]): QuickDash {
   }
 
   quick.counterparts = Array.from(new Set(quick.counterparts))
-  quick.dates = Array.from(new Set(quick.dates))
-  quick.places = Array.from(new Set(quick.places))
+  quick.dates        = Array.from(new Set(quick.dates))
+  quick.places       = Array.from(new Set(quick.places))
   return quick
 }
+
 
 export const useStore = create<State>((set, get) => ({
   docs: {},
