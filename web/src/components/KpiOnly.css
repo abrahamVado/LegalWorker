@@ -1,0 +1,56 @@
+/* Root block */
+.kpiOnly { display: grid; gap: 12px; padding: 0; }
+
+/* Cards */
+.kpiOnly-card {
+  background: var(--panel,#fff);
+  border: 1px solid var(--line,#ececf6);
+  border-radius: 12px;
+  padding: 10px;
+  margin: 0;
+}
+.kpiOnly-card--head { display: grid; gap: 8px; }
+
+.kpiOnly-title { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpiOnly-sub   { color: var(--muted,#9aa3b2); font-size: 12px; }
+.kpiOnly-empty { color: var(--muted,#9aa3b2); padding: 12px; font-size: 12px; }
+
+/* Grid of sections */
+.kpiOnly-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 1240px) {
+  .kpiOnly-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Section internals */
+.kpiOnly-card h4 { margin: 0 0 6px; font-size: 13px; font-weight: 700; }
+.kpiOnly-card ul { margin: 0; padding-left: 18px; }
+.kpiOnly .muted  { color: var(--muted,#9aa3b2); }
+.kpiOnly .mono   { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* Chips */
+.kpiOnly-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.kpiOnly .chip {
+  background: #f0effc;
+  border: 1px solid #e7e3ff;
+  color: #5b5f75;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.kpiOnly .chip--warn { background: #fff4f6; border-color: #ffd1d8; color: #a63b4d; }
+
+/* Actions (uses Yamato buttons but keeps icons sane) */
+.kpiOnly-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.kpiOnly .button-flex__icon { width: 1.1em; height: 1.1em; line-height: 1; flex: 0 0 auto; }
+.kpiOnly .button-flex__icon svg { width: 100%; height: 100%; display: block; }
+
+/* “Show more/less” link */
+.kpiOnly .linklike {
+  border: 0; background: none; color: var(--accent,#7b61ff);
+  cursor: pointer; padding: 4px 0 0; font: inherit;
+}
+.kpiOnly .linklike:hover { text-decoration: underline; }

@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react'
-import QuickDash from '@components/QuickDash'
+
 import { useStore } from '@/store/useStore'
 import './RightSidebar.css'
+import KpiOnly from '@/components/KpiOnly'
 
 export default function RightSidebar() {
   const [tab, setTab] = useState<'kpis' | 'chat'>('kpis')
@@ -48,7 +49,7 @@ export default function RightSidebar() {
       <div className="rd-scroll">
         {tab === 'kpis' ? (
           <div id="panel-kpis" className="rd-kpis" role="tabpanel" aria-labelledby="kpis-tab">
-            <QuickDash />
+            <KpiOnly />
           </div>
         ) : (
           <div id="panel-chat" className="rd-chat" role="tabpanel" aria-labelledby="chat-tab">
