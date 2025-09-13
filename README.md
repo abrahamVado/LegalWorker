@@ -83,7 +83,7 @@ graph TB
     RS[RightSidebar]
   end
 
-  RS --> KPI[KpiOnly (bento tiles)]
+  RS --> KPI["KpiOnly (bento tiles)"]
 ```
 
 ### Component responsibilities
