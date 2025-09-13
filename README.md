@@ -1,4 +1,3 @@
-
 # PDF Workspace
 
 A small project that pairs a FastAPI backend with a React, Vite, and TypeScript frontend. It previews PDFs in a three pane workspace and surfaces document KPIs in a bento grid. This README provides a deeper look at the architecture and data flow, plus setup steps.
@@ -46,10 +45,10 @@ graph TB
   C --> H[(data)]
 ```
 
-* /health returns a simple status object.
-* /files returns a list of files found in the data folder, with name and size.
-* /upload accepts a single PDF as multipart form data and writes it to the data folder.
-* /static serves files directly from the data folder.
+* `/health` returns a simple status object.  
+* `/files` returns a list of files found in the data folder, with name and size.  
+* `/upload` accepts a single PDF as multipart form data and writes it to the data folder.  
+* `/static` serves files directly from the data folder.
 
 ### Typical upload flow
 
@@ -89,10 +88,10 @@ graph TB
 
 ### Component responsibilities
 
-* FileTreeSidebar shows the list of loaded PDFs and lets you select one.
-* Viewer renders the active PDF inside an iframe.
-* RightSidebar hosts KPI tiles and details.
-* The store keeps a map of docs, an ordered list, the selected id, and simple message history.
+* FileTreeSidebar shows the list of loaded PDFs and lets you select one.  
+* Viewer renders the active PDF inside an iframe.  
+* RightSidebar hosts KPI tiles and details.  
+* The store keeps a map of docs, an ordered list, the selected id, and simple message history.  
 
 ### Resizing logic at a glance
 
@@ -112,42 +111,6 @@ sequenceDiagram
 
 The grid recalculates the available maximum widths when the container resizes to keep the center area above its minimum width.
 
-## Folder structure
-
-```
-pdf-workspace/
-  backend/
-    app.py
-    requirements.txt
-  frontend/
-    index.html
-    vite.config.ts
-    package.json
-    tsconfig.json
-    src/
-      App.tsx
-      main.tsx
-      store/
-        useStore.ts
-      components/
-        Viewer.tsx
-        Viewer.css
-        RightSidebar.tsx
-        steps/
-          WorkspaceStep.tsx
-          FileTreeSidebar.tsx
-          FileTreeSidebar.css
-      kpis/
-        KpiOnly.tsx
-        KpiOnly.css
-      styles/
-        global.css
-        WorkspaceStep.css
-  data/
-    Sample_KPI_Rich_Contract.pdf
-  README.md
-```
-
 ## Setup
 
 ### Backend
@@ -161,7 +124,7 @@ source .venv/bin/activate
 # .venv\Scripts\activate
 
 pip install -r requirements.txt
-uvicorn app:app
+uvicorn app:app --reload --host 127.0.0.1 --port 8000
 ```
 
 The API listens on port 8000 by default. Visit http://localhost:8000/health
@@ -176,36 +139,36 @@ npm run dev
 
 Open http://localhost:5173
 
-If the API is running, the app attempts to preload the sample PDF found at http://localhost:8000/static/Sample_KPI_Rich_Contract.pdf
+If the API is running and you drop a PDF in `data/`, it will appear in the list at runtime.
 
 ## How to use
 
-1. Start the backend and the frontend.
-2. Drop one or more PDFs onto the window or use the sample that preloads.
-3. Resize side panes by dragging the two vertical handles.
-4. Click KPI tiles on the right to open the detail panel for each metric.
+1. Start the backend and the frontend.  
+2. Drop one or more PDFs onto the window or use the "Upload" button (also uploads to backend).  
+3. Resize side panes by dragging the two vertical handles.  
+4. Click KPI tiles on the right to open the detail panel for each metric.  
 
 ## Notes on KPIs
 
 The demo shows counters for counterparts, dates, places, and currency totals. When real extraction is not available, the UI seeds stable pseudo values per document. You can connect a parser by populating overview fields in the store:
 
-* counterparts: string array
-* dates: string array
-* places: string array
-* errors: string array
-* money: array of objects with amount and optional currency code
+* counterparts: string array  
+* dates: string array  
+* places: string array  
+* errors: string array  
+* money: array of objects with amount and optional currency code  
 
 ## Accessibility
 
-* Handles are reachable and operable with pointer, mouse, and touch.
-* Toggle buttons and dialog controls include labels.
-* Live regions announce empty states and chat messages where present.
+* Handles are reachable and operable with pointer, mouse, and touch.  
+* Toggle buttons and dialog controls include labels.  
+* Live regions announce empty states and chat messages where present.  
 
 ## Troubleshooting
 
-* If PDFs do not display, verify the file type is application/pdf.
-* If the sample is not preloading, ensure the backend is running and that cors is allowed.
-* When resizing does not react, confirm the workspace grid element exists and has height.
+* If PDFs do not display, verify the file type is application/pdf.  
+* If the sample is not showing, ensure the backend is running and that CORS is allowed.  
+* When resizing does not react, confirm the workspace grid element exists and has height.  
 
 ## Licensing
 
