@@ -39,9 +39,9 @@ graph TB
   A --> C[StaticFiles mount at /static]
   A --> D[Router]
 
-  D --> E[/health]
-  D --> F[/files]
-  D --> G[/upload]
+  D --> E[health]
+  D --> F[files]
+  D --> G[upload]
   C --> H[(data)]
 ```
 
