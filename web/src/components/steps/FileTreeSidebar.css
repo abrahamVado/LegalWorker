@@ -1,9 +1,54 @@
-/* /src/components/FileTreeSidebar.css */
-.sidebar.filetree { width: 280px; border-right: 1px solid var(--line,#ececf6); display:flex; flex-direction:column; }
-.ft-head { padding: 10px 12px; font-weight: 700; }
-.ft-scroll { overflow:auto; padding: 6px 6px 12px; }
-.ft-row { display:flex; align-items:center; gap:8px; height:28px; border-radius:8px; cursor:pointer; user-select:none; }
-.ft-row:hover { background: var(--purple-soft,#f1efff); }
+/* Sidebar container must stretch and not fix its width */
+.sidebar.filetree {
+  /* REMOVE the fixed width */
+  /* width: 280px; */
+
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  /* let the grid track width define the width */
+  width: auto;
+  max-width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  /* keep your border; background can come from your global .sidebar rule
+     or set it explicitly here if you want the same gray/soft gradient */
+  border-right: 1px solid var(--line, #ececf6);
+  /* Optional explicit background if your global .sidebar isn't applied: */
+  /* background: linear-gradient(180deg, #fbfbff, #f6f6fb); */
+}
+
+/* Header stays natural height */
+.ft-head {
+  padding: 10px 12px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+/* Scroll area must flex to fill remaining height */
+.ft-scroll {
+  flex: 1 1 auto;
+  min-height: 0;            /* critical for nested flex/grid */
+  overflow: auto;
+  padding: 6px 6px 12px;
+}
+
+/* Rows & misc (unchanged) */
+.ft-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.ft-row:hover { background: var(--purple-soft, #f1efff); }
 .ft-file.active { background: #e8faf0; }
-.ft-icon { width: 18px; text-align:center; }
-.ft-empty { color: var(--muted,#9aa3b2); padding: 12px; font-size: 12px; }
+.ft-icon { width: 18px; text-align: center; }
+.ft-empty { color: var(--muted, #9aa3b2); padding: 12px; font-size: 12px; }
+
+/* Ensure the host grid cell stretches too (in case this file loads before global) */
+[data-file-tree-sidebar] { height: 100%; min-height: 0; }

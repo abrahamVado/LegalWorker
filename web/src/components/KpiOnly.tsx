@@ -1,20 +1,22 @@
 import React, { useMemo, useState } from 'react'
 import { useStore, mapOverviewToQuick } from '@/store/useStore'
+import {
+  FiUsers, FiCalendar, FiDollarSign, FiMapPin, FiFlag, FiFileText,
+  FiHardDrive, FiBookOpen, FiCheckSquare, FiLayers, FiType,
+  FiPenTool, FiPaperclip, FiGitPullRequest
+} from 'react-icons/fi'
+import { FaBalanceScale } from 'react-icons/fa'
 import './KpiOnly.css'
 
 function fmtMoney(n: number, ccy: string) {
   try {
     return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: (ccy || 'USD').toUpperCase(),
+      style: 'currency', currency: (ccy || 'USD').toUpperCase(),
       maximumFractionDigits: 2,
     }).format(n)
-  } catch {
-    return `${ccy || '¤'} ${n.toLocaleString()}`
-  }
+  } catch { return `${ccy || '¤'} ${n.toLocaleString()}` }
 }
 
-// tiny stable numbers for “demo” KPIs (replace with real values later)
 function seedInt(s: string, min=0, max=9) {
   let h = 2166136261 >>> 0
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0 }
@@ -52,7 +54,7 @@ export default function KpiOnly() {
       .sort((a, b) => b.amount - a.amount)
   }, [q.money])
 
-  // demo-ish numbers (swap with real ones when available)
+  // demo fallbacks
   const seed = (doc?.id || doc?.name || 'x') + 'nano'
   const pages        = doc?.pages ?? seedInt(seed+'pg', 1, 18)
   const sizeMB       = doc?.size ? Math.max(0.1, doc.size / (1024*1024)) : (seedInt(seed+'mb', 1, 9) / 2 + 0.5)
@@ -65,95 +67,121 @@ export default function KpiOnly() {
   const redlines     = seedInt(seed+'red', 0, 7)
   const jurs         = Math.max(1, Math.min(3, seedInt(seed+'jur', 1, 3)))
 
-  // tiny tiles
   const tiles = [
-    { key:'CP',  label:'Counterparties', value:q.counterparts.length, accent:'violet' },
-    { key:'DT',  label:'Dates',          value:q.dates.length,       accent:'indigo' },
-    { key:'$#',  label:'Money items',    value:q.money.length,       accent:'emerald' },
-    { key:'CCY', label:'Currencies',     value:currencies.length,    accent:'teal' },
-    { key:'PLC', label:'Places',         value:q.places.length,      accent:'sky' },
-    { key:'FLG', label:'Flags',          value:q.errors.length,      accent:'red' },
-    { key:'PG',  label:'Pages',          value:pages,                accent:'slate' },
-    { key:'MB',  label:'Size (MB)',      value:Math.round(sizeMB*10)/10, accent:'stone' },
-    { key:'CLS', label:'Clauses',        value:clauses,              accent:'amber' },
-    { key:'OBL', label:'Obligations',    value:obligations,          accent:'orange' },
-    { key:'SEC', label:'Sections',       value:sections,             accent:'blue' },
-    { key:'DEF', label:'Defined terms',  value:definedTerms,         accent:'violet' },
-    { key:'SIG', label:'Signatures',     value:signatures,           accent:'green' },
-    { key:'ATT', label:'Attachments',    value:attachments,          accent:'cyan' },
-    { key:'RED', label:'Redlines',       value:redlines,             accent:'rose' },
-    { key:'JUR', label:'Jurisdictions',  value:jurs,                 accent:'purple' },
+    { key:'CP',  label:'Counterparties', value:q.counterparts.length, accent:'violet',  Icon: FiUsers },
+    { key:'DT',  label:'Dates',          value:q.dates.length,        accent:'indigo',  Icon: FiCalendar },
+    { key:'$#',  label:'Money Items',    value:q.money.length,        accent:'emerald', Icon: FiDollarSign },
+    { key:'CCY', label:'Currencies',     value:currencies.length,     accent:'teal',    Icon: FiDollarSign },
+    { key:'PLC', label:'Places',         value:q.places.length,       accent:'sky',     Icon: FiMapPin },
+    { key:'FLG', label:'Flags',          value:q.errors.length,       accent:'red',     Icon: FiFlag },
+    { key:'PG',  label:'Pages',          value:pages,                 accent:'slate',   Icon: FiFileText },
+    { key:'MB',  label:'Size (MB)',      value:Math.round(sizeMB*10)/10, accent:'stone', Icon: FiHardDrive },
+    { key:'CLS', label:'Clauses',        value:clauses,               accent:'amber',   Icon: FiBookOpen },
+    { key:'OBL', label:'Obligations',    value:obligations,           accent:'orange',  Icon: FiCheckSquare },
+    { key:'SEC', label:'Sections',       value:sections,              accent:'blue',    Icon: FiLayers },
+    { key:'DEF', label:'Defined Terms',  value:definedTerms,          accent:'violet',  Icon: FiType },
+    { key:'SIG', label:'Signatures',     value:signatures,            accent:'green',   Icon: FiPenTool },
+    { key:'ATT', label:'Attachments',    value:attachments,           accent:'cyan',    Icon: FiPaperclip },
+    { key:'RED', label:'Redlines',       value:redlines,              accent:'rose',    Icon: FiGitPullRequest },
+    { key:'JUR', label:'Jurisdictions',  value:jurs,                  accent:'purple',  Icon: FaBalanceScale },
   ] as const
 
   const [active, setActive] = useState<string | null>(null)
   const open = (k: string) => setActive(prev => (prev === k ? null : k))
+  const activeTile = active ? tiles.find(t => t.key === active) : undefined
 
-  if (!doc) return <div className="kpiNano kpiNano--empty">Select a PDF</div>
+  if (!doc) return <div className="kpiNano kpiNano--xl kpiNano--empty">Select a PDF</div>
 
   return (
-    <div className="kpiNano" aria-live="polite">
-      <div className="kn-grid" role="grid">
-        {tiles.map(t => (
-          <button
-            key={t.key}
-            type="button"
-            role="gridcell"
-            className={`kn-tile kn-${t.accent} ${active === t.key ? 'is-active' : ''}`}
-            title={t.label}
-            aria-pressed={active === t.key}
-            onClick={() => open(t.key)}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(t.key) } }}
-          >
-            <span className="kn-tag" aria-hidden>{t.key}</span>
-            <span className="kn-val">{String(t.value)}</span>
-          </button>
-        ))}
+    <div className="kpiNano kpiNano--xl" aria-live="polite">
+      {/* UNIFORM tiles: add kn-bento--uniform; no span classes */}
+      <div className="button-flex-scope kn-bento kn-bento--uniform" role="grid" aria-label="Document KPIs">
+        {tiles.map(t => {
+          const Icon = t.Icon
+          return (
+            <button
+              key={t.key}
+              type="button"
+              role="gridcell"
+              data-accent={t.accent}
+              className={`button-flex btn-kpi-bento ${active === t.key ? 'is-active' : ''}`}
+              title={t.label}
+              aria-pressed={active === t.key}
+              onClick={() => open(t.key)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(t.key) } }}
+            >
+              <div className="kpb">
+                <div className="kpb-top">
+                  <i className="kpb-icon" aria-hidden><Icon /></i>
+                  <code className="kpb-key">{t.key}</code>
+                </div>
+                <div className="kpb-main">
+                  <div className="kpb-val">{String(t.value)}</div>
+                  <div className="kpb-label" title={t.label}>{t.label}</div>
+                </div>
+              </div>
+            </button>
+          )
+        })}
       </div>
 
-      {/* detail card */}
-      <div className={`kn-detail ${active ? 'is-open' : ''}`}>
+      {/* Detail */}
+      <div className={`kn-detail kn-detail--rich ${active ? 'is-open' : ''}`} data-accent={activeTile?.accent || 'indigo'}>
+        <div className="kn-detail__bar" aria-hidden />
         <div className="kn-detail__head">
           <div className="kn-detail__title">
-            {active ? tiles.find(x => x.key === active)?.label : ''}
+            {activeTile ? (<><i className="kpb-icon" aria-hidden><activeTile.Icon /></i> {activeTile.label}</>) : ''}
           </div>
-          {active && (
-            <button className="kn-close" type="button" onClick={() => setActive(null)} aria-label="Close">×</button>
-          )}
+          {active && <button className="kn-close" type="button" onClick={() => setActive(null)} aria-label="Close">×</button>}
         </div>
 
         <div className="kn-detail__body">
+          {activeTile && (
+            <div className="kn-detail__hero">
+              <div className="hero-value">{tiles.find(x => x.key === active)?.value}</div>
+              <div className="hero-sub">in <b>{doc?.name || 'Current document'}</b></div>
+            </div>
+          )}
+
           {active === 'CP'  && (
-            <ul>{(q.counterparts.length ? q.counterparts : ['Acme Corp','Globex LLC','Initech S.A.']).map((v,i)=><li key={i}>{v}</li>)}</ul>
+            <ul className="list">{(q.counterparts.length ? q.counterparts : ['Acme Corp','Globex LLC','Initech S.A.']).map((v,i)=><li key={i}>{v}</li>)}</ul>
           )}
           {active === 'DT'  && (
-            <ul>{(q.dates.length ? q.dates : ['2024-09-12','2025-01-15']).map((v,i)=><li key={i}>{v}</li>)}</ul>
+            <ul className="chips">{(q.dates.length ? q.dates : ['2024-09-12','2025-01-15']).map((v,i)=><li key={i} className="chip">{v}</li>)}</ul>
           )}
           {active === '$#' && (
-            <>
-              {totalsByCurrency.length
-                ? <ul className="mono">{totalsByCurrency.map((r,i)=><li key={i}><b>{r.currency}</b> {fmtMoney(r.amount, r.currency)}</li>)}</ul>
-                : <div className="muted">No amounts detected</div>}
-            </>
+            totalsByCurrency.length
+              ? (
+                <div className="money-grid">
+                  {totalsByCurrency.map((r,i)=>(
+                    <div key={i} className="money-item">
+                      <div className="ccy">{r.currency}</div>
+                      <div className="amt">{fmtMoney(r.amount, r.currency)}</div>
+                    </div>
+                  ))}
+                </div>
+              )
+              : <div className="muted">No amounts detected</div>
           )}
           {active === 'CCY' && (
-            <ul>{(currencies.length ? currencies : ['USD','MXN']).map((v,i)=><li key={i}>{v}</li>)}</ul>
+            <ul className="chips">{(currencies.length ? currencies : ['USD','MXN']).map((v,i)=><li key={i} className="chip">{v}</li>)}</ul>
           )}
           {active === 'PLC' && (
-            <ul>{(q.places.length ? q.places : ['Mexico City','Austin, TX']).map((v,i)=><li key={i}>{v}</li>)}</ul>
+            <ul className="list">{(q.places.length ? q.places : ['Mexico City','Austin, TX']).map((v,i)=><li key={i}>{v}</li>)}</ul>
           )}
           {active === 'FLG' && (
-            q.errors.length ? <ul>{q.errors.map((v,i)=><li key={i}>{v}</li>)}</ul> : <div className="muted">None</div>
+            q.errors.length ? <ul className="list">{q.errors.map((v,i)=><li key={i}>{v}</li>)}</ul> : <div className="muted">None</div>
           )}
-          {active === 'PG'   && <div>{pages} page(s) estimated</div>}
-          {active === 'MB'   && <div>{(Math.round(sizeMB*10)/10)} MB</div>}
-          {active === 'CLS'  && <div>~{clauses} clause(s)</div>}
-          {active === 'OBL'  && <div>~{obligations} obligation(s) detected</div>}
-          {active === 'SEC'  && <div>~{sections} section(s)</div>}
-          {active === 'DEF'  && <div>~{definedTerms} defined term(s)</div>}
-          {active === 'SIG'  && <div>~{signatures} signature block(s)</div>}
-          {active === 'ATT'  && <div>{attachments} attachment(s)</div>}
-          {active === 'RED'  && <div>{redlines} redline(s)</div>}
-          {active === 'JUR'  && <div>{jurs} likely jurisdiction(s)</div>}
+          {active === 'PG'   && <div className="kv"><b>Pages</b><span>{pages}</span></div>}
+          {active === 'MB'   && <div className="kv"><b>Size</b><span>{(Math.round(sizeMB*10)/10)} MB</span></div>}
+          {active === 'CLS'  && <div className="kv"><b>Clauses</b><span>~{clauses}</span></div>}
+          {active === 'OBL'  && <div className="kv"><b>Obligations</b><span>~{obligations}</span></div>}
+          {active === 'SEC'  && <div className="kv"><b>Sections</b><span>~{sections}</span></div>}
+          {active === 'DEF'  && <div className="kv"><b>Defined terms</b><span>~{definedTerms}</span></div>}
+          {active === 'SIG'  && <div className="kv"><b>Signature blocks</b><span>~{signatures}</span></div>}
+          {active === 'ATT'  && <div className="kv"><b>Attachments</b><span>{attachments}</span></div>}
+          {active === 'RED'  && <div className="kv"><b>Redlines</b><span>{redlines}</span></div>}
+          {active === 'JUR'  && <div className="kv"><b>Likely jurisdictions</b><span>{jurs}</span></div>}
         </div>
       </div>
     </div>

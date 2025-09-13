@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Viewer from '@/components/Viewer'
 import { useStore } from '@/store/useStore'
-import QuickDash from '@components/QuickDash'
 import FileTreeSidebar from '@/components/steps/FileTreeSidebar'
-import './WorkspaceStep.css'
-import RightSidebar from '@components/RightSidebar';
+import RightSidebar from '@components/RightSidebar'
+import './WorkspaceStep.css' // keep your base SCSS; add the CSS snippet below
 
 const ACCEPT = ['application/pdf']
 const ACCEPT_EXT = ['.pdf']
+const STORE_KEY = 'workspace-cols-v1'
+const HANDLE = 6
 
 function isPdfFile(f: File) {
   const nameOk = f.name?.toLowerCase().endsWith('.pdf')
@@ -26,99 +27,144 @@ async function extractFilesFromDataTransfer(dt: DataTransfer): Promise<File[]> {
     }
     return out
   }
-  if (dt.files && dt.files.length) {
-    for (const f of Array.from(dt.files)) if (isPdfFile(f)) out.push(f)
-  }
+  if (dt.files && dt.files.length) for (const f of Array.from(dt.files)) if (isPdfFile(f)) out.push(f)
   return out
-}
-
-/** ------- Right panel with tabs (KPIs | Chat) ------- */
-function RightPanel() {
-  const [tab, setTab] = useState<'kpis' | 'chat'>('kpis')
-  const selectedId = useStore(s => s.selectedId)
-  const messages = useStore(s => (selectedId ? (s.messages[selectedId] || []) : []))
-  const send = useStore(s => s.send)
-
-  const [text, setText] = useState('')
-  const canSend = useMemo(() => (selectedId && text.trim().length > 0), [selectedId, text])
-
-  return (
-    <div className="rp">
-      <div className="rp__tabs" role="tablist" aria-label="Details">
-        <button
-          role="tab"
-          aria-selected={tab === 'kpis'}
-          className={tab === 'kpis' ? 'active' : ''}
-          onClick={() => setTab('kpis')}
-        >
-          KPIs
-        </button>
-        <button
-          role="tab"
-          aria-selected={tab === 'chat'}
-          className={tab === 'chat' ? 'active' : ''}
-          onClick={() => setTab('chat')}
-        >
-          Chat
-        </button>
-      </div>
-
-      <div className="rp__body">
-        {tab === 'kpis' ? (
-          <div className="rp__kpis" role="tabpanel" aria-label="KPIs">
-            <QuickDash />
-          </div>
-        ) : (
-          <div className="rp__chat" role="tabpanel" aria-label="Chat with model">
-            <div className="chatlog" aria-live="polite">
-              {messages.length === 0 ? (
-                <div className="muted">Ask anything about the selected PDF.</div>
-              ) : (
-                messages.map((m, i) => (
-                  <div key={i} className={`bubble bubble--${m.role}`}>
-                    {m.text}
-                  </div>
-                ))
-              )}
-            </div>
-            <form
-              className="chatform"
-              onSubmit={e => {
-                e.preventDefault()
-                if (!canSend) return
-                void send(text)
-                setText('')
-              }}
-            >
-              <textarea
-                value={text}
-                onChange={e => setText(e.target.value)}
-                placeholder="Ask the model about this PDF…"
-                rows={3}
-              />
-              <div className="row">
-                <button type="submit" className="btn btn--primary" disabled={!canSend}>
-                  Ask
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-      </div>
-    </div>
-  )
 }
 
 export default function WorkspaceStep() {
   const addFiles = useStore(s => s.addFiles)
+
+  // === Refs for layout pieces
+  const outerRef = useRef<HTMLElement>(null)     // <section class="window window--workspace">
+  const innerRef = useRef<HTMLDivElement>(null)  // inner Center|Handle|Right grid
+  const outerHandleRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // === Load/persist sizes (outer left + inner right)
+  const load = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}') } catch { return {} } }
+  const init = load()
+  const [outerLeft, setOuterLeft] = useState<number>(Number.isFinite(init.outerLeft) ? init.outerLeft : 260)
+  const [rightW, setRightW]       = useState<number>(Number.isFinite(init.right) ? init.right : 340)
+
+  // Minimums (tune as needed)
+  const MIN = { left: 120, center: 240, right: 120 }
+
+  useEffect(() => {
+    localStorage.setItem(STORE_KEY, JSON.stringify({ outerLeft, right: rightW }))
+  }, [outerLeft, rightW])
+
+  // Apply OUTER grid override + place outer handle
+  useEffect(() => {
+    if (!outerRef.current) return
+    outerRef.current.style.gridTemplateColumns = `${Math.round(outerLeft)}px 1fr`
+    if (outerHandleRef.current) {
+      outerHandleRef.current.style.left = `${Math.round(outerLeft - HANDLE / 2)}px`
+      outerHandleRef.current.style.width = `${HANDLE}px`
+    }
+  }, [outerLeft])
+
+  // Clamp helpers
+  const clampOuter = useCallback(() => {
+    if (!outerRef.current) return
+    const total = outerRef.current.clientWidth
+    const maxOuter = total - (MIN.center + HANDLE + rightW)    // leave room for center min + inner handle + right
+    setOuterLeft(v => Math.max(MIN.left, Math.min(v, maxOuter)))
+  }, [rightW])
+
+  const clampRight = useCallback(() => {
+    if (!innerRef.current) return
+    const innerWidth = innerRef.current.clientWidth
+    const maxRight = innerWidth - (HANDLE + MIN.center)
+    setRightW(v => Math.max(MIN.right, Math.min(v, maxRight)))
+  }, [])
+
+  // Observe container size changes
+  useEffect(() => {
+    const ros: ResizeObserver[] = []
+    if (outerRef.current) {
+      const ro = new ResizeObserver(clampOuter)
+      ro.observe(outerRef.current); ros.push(ro)
+    }
+    if (innerRef.current) {
+      const ro = new ResizeObserver(clampRight)
+      ro.observe(innerRef.current); ros.push(ro)
+    }
+    return () => ros.forEach(r => r.disconnect())
+  }, [clampOuter, clampRight])
+
+  // === Drag logic (pointer + mouse + touch)
+  const drag = useRef<{
+    which: 'outer'|'right'
+    startX: number
+    startOuter: number
+    startRight: number
+    outerW: number
+    innerW: number
+  } | null>(null)
+
+  const getX = (ev: any) =>
+    typeof ev.clientX === 'number' ? ev.clientX
+    : ev.touches?.[0]?.clientX ?? ev.changedTouches?.[0]?.clientX ?? 0
+
+  const begin = (which: 'outer'|'right', x: number) => {
+    drag.current = {
+      which,
+      startX: x,
+      startOuter: outerLeft,
+      startRight: rightW,
+      outerW: outerRef.current?.clientWidth ?? 0,
+      innerW: innerRef.current?.clientWidth ?? 0,
+    }
+    window.addEventListener('pointermove', onMove as any, { passive: false })
+    window.addEventListener('pointerup', onUp as any, { passive: true })
+    window.addEventListener('mousemove', onMove as any, { passive: false })
+    window.addEventListener('mouseup', onUp as any, { passive: true })
+    window.addEventListener('touchmove', onMove as any, { passive: false })
+    window.addEventListener('touchend', onUp as any, { passive: true })
+    window.addEventListener('touchcancel', onUp as any, { passive: true })
+  }
+
+  const onMove = (ev: Event) => {
+    const s = drag.current
+    if (!s) return
+    const dx = getX(ev) - s.startX
+    if (s.which === 'outer') {
+      const maxOuter = s.outerW - (MIN.center + HANDLE + rightW)
+      setOuterLeft(Math.max(MIN.left, Math.min(s.startOuter + dx, maxOuter)))
+    } else {
+      const maxRight = s.innerW - (HANDLE + MIN.center)
+      setRightW(Math.max(MIN.right, Math.min(s.startRight - dx, maxRight)))
+    }
+  }
+
+  const onUp = () => {
+    drag.current = null
+    window.removeEventListener('pointermove', onMove as any)
+    window.removeEventListener('pointerup', onUp as any)
+    window.removeEventListener('mousemove', onMove as any)
+    window.removeEventListener('mouseup', onUp as any)
+    window.removeEventListener('touchmove', onMove as any)
+    window.removeEventListener('touchend', onUp as any)
+    window.removeEventListener('touchcancel', onUp as any)
+    clampOuter(); clampRight()
+  }
+
+  // Bindings
+  const outerPointerDown = (e: React.PointerEvent) => { (e.target as Element).setPointerCapture?.(e.pointerId); begin('outer', e.clientX) }
+  const outerMouseDown   = (e: React.MouseEvent)   => begin('outer', e.clientX)
+  const outerTouchStart  = (e: React.TouchEvent)   => begin('outer', e.touches[0]?.clientX ?? 0)
+
+  const rightPointerDown = (e: React.PointerEvent) => { (e.target as Element).setPointerCapture?.(e.pointerId); begin('right', e.clientX) }
+  const rightMouseDown   = (e: React.MouseEvent)   => begin('right', e.clientX)
+  const rightTouchStart  = (e: React.TouchEvent)   => begin('right', e.touches[0]?.clientX ?? 0)
+
+  // === DnD + paste
   const [isDragging, setDragging] = useState(false)
   const [dragCount, setDragCount] = useState(0)
-  const overlayRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const onDragEnter = (e: DragEvent) => { e.preventDefault(); setDragCount(c => (c === 0 && setDragging(true), c + 1)) }
-    const onDragOver = (e: DragEvent) => { e.preventDefault() }
+    const onDragOver  = (e: DragEvent) => { e.preventDefault() }
     const onDragLeave = (e: DragEvent) => { e.preventDefault(); setDragCount(c => { const n = Math.max(0, c - 1); if (n === 0) setDragging(false); return n }) }
     const onDrop = async (e: DragEvent) => {
       e.preventDefault(); setDragCount(0); setDragging(false)
@@ -165,31 +211,67 @@ export default function WorkspaceStep() {
 
   return (
     <main className="canvas">
-      <section className="window window--workspace" role="group" aria-label="PDF workspace">
-        {/* External left sidebar (keep this – you said it's nice) */}
+      {/* Outer 2-col grid comes from your base SCSS: .window.window--workspace { grid-template-columns: 260px 1fr; } */}
+      <section ref={outerRef} className="window window--workspace" role="group" aria-label="PDF workspace">
+        {/* OUTER LEFT column */}
         <div data-file-tree-sidebar>
           <FileTreeSidebar />
         </div>
 
-        {/* Center + Right live inside Viewer; left disabled; right hosts KPIs+Chat */}
+        {/* OUTER RIGHT cell → inner Center|Handle|Right */}
         <div className="workspace-center">
-          <Viewer showLeft={false} showRight={true} rightSlot={<RightSidebar />} pdfMode="native" />
+          <div
+            ref={innerRef}
+            className="center-right-grid"
+            style={
+              {
+                ['--right' as any]: `${rightW}px`,
+                ['--handle' as any]: `${HANDLE}px`,
+                ['--center-min' as any]: `${MIN.center}px`,
+              } as React.CSSProperties
+            }
+          >
+            {/* Center */}
+            <section className="cr-col cr-col--center">
+              <Viewer showLeft={false} showRight={false} pdfMode="native" />
+            </section>
+
+            {/* Inner handle */}
+            <div
+              className="cr-handle"
+              role="separator"
+              aria-orientation="vertical"
+              aria-label="Resize right panel"
+              tabIndex={0}
+              onPointerDown={rightPointerDown}
+              onMouseDown={rightMouseDown}
+              onTouchStart={rightTouchStart}
+            />
+
+            {/* Right */}
+            <aside className="cr-col cr-col--right">
+              <RightSidebar />
+            </aside>
+          </div>
         </div>
 
-        {/* Drop Overlay */}
+        {/* OUTER handle overlaying the outer split */}
         <div
-          ref={overlayRef}
-          className={`drop-overlay ${isDragging ? 'active' : ''}`}
-          aria-hidden={!isDragging}
-          aria-live="polite"
-          onClick={() => inputRef.current?.click()}
-          title="Click to pick PDFs, or drop them here"
-        >
-          <div className="box">Drop PDFs or folders anywhere<br/><small>(or click to pick)</small></div>
-        </div>
+          ref={outerHandleRef}
+          className="ws-handle"
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize left sidebar"
+          tabIndex={0}
+          onPointerDown={outerPointerDown}
+          onMouseDown={outerMouseDown}
+          onTouchStart={outerTouchStart}
+          title="Drag to resize left sidebar"
+        />
 
-        {/* Hidden input */}
+        {/* Hidden input for click-to-upload */}
         <input
+          id="hidden-file-input"
           ref={inputRef}
           type="file"
           accept={[...ACCEPT, ...ACCEPT_EXT].join(',')}
@@ -199,6 +281,17 @@ export default function WorkspaceStep() {
           style={{ display: 'none' }}
           onChange={onPick}
         />
+
+        {/* Drop overlay (optional) */}
+        <div
+          className={`drop-overlay ${isDragging ? 'active' : ''}`}
+          aria-hidden={!isDragging}
+          aria-live="polite"
+          title="Click to pick PDFs, or drop them here"
+          onClick={() => inputRef.current?.click()}
+        >
+          <div className="box">Drop PDFs or folders anywhere<br/><small>(or click to pick)</small></div>
+        </div>
       </section>
     </main>
   )

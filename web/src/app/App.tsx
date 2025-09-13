@@ -3,6 +3,7 @@ import { useStore } from "@/store/useStore";
 import IntroStep from "@/components/steps/IntroStep";
 import ReviewStep from "@/components/steps/ReviewStep";
 import WorkspaceStep from "@/components/steps/WorkspaceStep";
+
 import { ErrorBoundary } from '@/components/steps/ErrorBoundary'
 
 /*─────────────────────────────────────────────────────────────────────────────

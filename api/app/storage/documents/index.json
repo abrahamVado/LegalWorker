@@ -21158,6 +21158,2175 @@
       "created_at": 1757656215,
       "file": "f726b6de486c4b31889af91048cf2b0e__company_creation_ES.pdf",
       "overview": []
+    },
+    "4632d3408a9742ccb72cf6c7d8969224": {
+      "id": "4632d3408a9742ccb72cf6c7d8969224",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "4632d3408a9742ccb72cf6c7d8969224__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "1e7ec02cf8a84e1c9025e85fa3f9a06f": {
+      "id": "1e7ec02cf8a84e1c9025e85fa3f9a06f",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "1e7ec02cf8a84e1c9025e85fa3f9a06f__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "c5d61618db04417f8bc4bd2887e9685a": {
+      "id": "c5d61618db04417f8bc4bd2887e9685a",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "c5d61618db04417f8bc4bd2887e9685a__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "555a4b116b5149988c405c6c927ca95c": {
+      "id": "555a4b116b5149988c405c6c927ca95c",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "555a4b116b5149988c405c6c927ca95c__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "7e83eb4a88ab47688b14d1b8f0b759f7": {
+      "id": "7e83eb4a88ab47688b14d1b8f0b759f7",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "7e83eb4a88ab47688b14d1b8f0b759f7__association_creation_ES.pdf",
+      "overview": []
+    },
+    "86aecd7fa51b43c6ab1be6017dea52c6": {
+      "id": "86aecd7fa51b43c6ab1be6017dea52c6",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "86aecd7fa51b43c6ab1be6017dea52c6__company_creation_ES.pdf",
+      "overview": []
+    },
+    "a53971b39aa74aea8944e7955ca1b8c5": {
+      "id": "a53971b39aa74aea8944e7955ca1b8c5",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757701370,
+      "file": "a53971b39aa74aea8944e7955ca1b8c5__company_creation_ES.pdf",
+      "overview": []
+    },
+    "9e55a8a5a3e545a4921885cf70974e5c": {
+      "id": "9e55a8a5a3e545a4921885cf70974e5c",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757704293,
+      "file": "9e55a8a5a3e545a4921885cf70974e5c__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "8ba9895cd2c94c2e8abe4888fdb2bfc8": {
+      "id": "8ba9895cd2c94c2e8abe4888fdb2bfc8",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757704307,
+      "file": "8ba9895cd2c94c2e8abe4888fdb2bfc8__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "60699a9ef2df48ce851840a798773c4c": {
+      "id": "60699a9ef2df48ce851840a798773c4c",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757704327,
+      "file": "60699a9ef2df48ce851840a798773c4c__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "cb1dc2e7bad04ae2a1e85ed100565b5e": {
+      "id": "cb1dc2e7bad04ae2a1e85ed100565b5e",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757706967,
+      "file": "cb1dc2e7bad04ae2a1e85ed100565b5e__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "4c838e1616df469c994c3227d74c02e7": {
+      "id": "4c838e1616df469c994c3227d74c02e7",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757706967,
+      "file": "4c838e1616df469c994c3227d74c02e7__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "eb5a2a64325545d4b95c896146ee012a": {
+      "id": "eb5a2a64325545d4b95c896146ee012a",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757706967,
+      "file": "eb5a2a64325545d4b95c896146ee012a__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "9c3a3cdabec04bc88efc2b482afb1018": {
+      "id": "9c3a3cdabec04bc88efc2b482afb1018",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757706967,
+      "file": "9c3a3cdabec04bc88efc2b482afb1018__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "ed4a1bbc24df42eda2de7ac033aa653f": {
+      "id": "ed4a1bbc24df42eda2de7ac033aa653f",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757706967,
+      "file": "ed4a1bbc24df42eda2de7ac033aa653f__association_creation_ES.pdf",
+      "overview": []
+    },
+    "b66de562b640400bbfda1c326da10a29": {
+      "id": "b66de562b640400bbfda1c326da10a29",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757706968,
+      "file": "b66de562b640400bbfda1c326da10a29__company_creation_ES.pdf",
+      "overview": []
+    },
+    "0494e775b1d94d77a406c29eb04d398c": {
+      "id": "0494e775b1d94d77a406c29eb04d398c",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757706968,
+      "file": "0494e775b1d94d77a406c29eb04d398c__company_creation_ES.pdf",
+      "overview": []
+    },
+    "29bee5b5beef4e51b21e12fda1bc69d3": {
+      "id": "29bee5b5beef4e51b21e12fda1bc69d3",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757706968,
+      "file": "29bee5b5beef4e51b21e12fda1bc69d3__company_creation_ES.pdf",
+      "overview": []
+    },
+    "4b28a535ce0f47f18671d7bce2173e70": {
+      "id": "4b28a535ce0f47f18671d7bce2173e70",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713157,
+      "file": "4b28a535ce0f47f18671d7bce2173e70__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "c988c7706047435590f3c9fcb85681b3": {
+      "id": "c988c7706047435590f3c9fcb85681b3",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713157,
+      "file": "c988c7706047435590f3c9fcb85681b3__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "274c249bd7684eb489c41fee75889872": {
+      "id": "274c249bd7684eb489c41fee75889872",
+      "name": "rag_classification_samples/privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713157,
+      "file": "274c249bd7684eb489c41fee75889872__rag_classification_samples/privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "5157f17e788b4270920eac24cb2ad4f9": {
+      "id": "5157f17e788b4270920eac24cb2ad4f9",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713158,
+      "file": "5157f17e788b4270920eac24cb2ad4f9__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "7c47805939c44ad7bbf280bfb7a15606": {
+      "id": "7c47805939c44ad7bbf280bfb7a15606",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713158,
+      "file": "7c47805939c44ad7bbf280bfb7a15606__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "504a7c3c69f3426e922c18fb18913941": {
+      "id": "504a7c3c69f3426e922c18fb18913941",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713158,
+      "file": "504a7c3c69f3426e922c18fb18913941__company_creation_ES.pdf",
+      "overview": []
+    },
+    "25731eba6ea0408bad47577c075e65db": {
+      "id": "25731eba6ea0408bad47577c075e65db",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713158,
+      "file": "25731eba6ea0408bad47577c075e65db__company_creation_ES.pdf",
+      "overview": []
+    },
+    "04748071722740c192541dec649970f3": {
+      "id": "04748071722740c192541dec649970f3",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713485,
+      "file": "04748071722740c192541dec649970f3__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "dbf655d22d114da681baa67fc9051b03": {
+      "id": "dbf655d22d114da681baa67fc9051b03",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713485,
+      "file": "dbf655d22d114da681baa67fc9051b03__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "465dbc67bd7e4d37a2b6884afa1fa83e": {
+      "id": "465dbc67bd7e4d37a2b6884afa1fa83e",
+      "name": "rag_classification_samples/privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713486,
+      "file": "465dbc67bd7e4d37a2b6884afa1fa83e__rag_classification_samples/privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "720d41e8ddbc4d6eb77da4bc22039ae2": {
+      "id": "720d41e8ddbc4d6eb77da4bc22039ae2",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713486,
+      "file": "720d41e8ddbc4d6eb77da4bc22039ae2__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "238cfdfc7fa144bd8c530a995e300707": {
+      "id": "238cfdfc7fa144bd8c530a995e300707",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713486,
+      "file": "238cfdfc7fa144bd8c530a995e300707__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "9df099ba03f94761abbea7b66fb44aa1": {
+      "id": "9df099ba03f94761abbea7b66fb44aa1",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713486,
+      "file": "9df099ba03f94761abbea7b66fb44aa1__association_creation_ES.pdf",
+      "overview": []
+    },
+    "d23e8ae4e22d4a69b07fb8c7e8447742": {
+      "id": "d23e8ae4e22d4a69b07fb8c7e8447742",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713486,
+      "file": "d23e8ae4e22d4a69b07fb8c7e8447742__company_creation_ES.pdf",
+      "overview": []
+    },
+    "d70b42bce098453f9092516e632a2980": {
+      "id": "d70b42bce098453f9092516e632a2980",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713486,
+      "file": "d70b42bce098453f9092516e632a2980__company_creation_ES.pdf",
+      "overview": []
+    },
+    "7e27c45546564114a29dd94f3aecb52b": {
+      "id": "7e27c45546564114a29dd94f3aecb52b",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713550,
+      "file": "7e27c45546564114a29dd94f3aecb52b__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "1ee1f36cc1fe4d9f8e64122be23984be": {
+      "id": "1ee1f36cc1fe4d9f8e64122be23984be",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713550,
+      "file": "1ee1f36cc1fe4d9f8e64122be23984be__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "0d9b7ed1fec34c5a9e0e62b46bd3c54c": {
+      "id": "0d9b7ed1fec34c5a9e0e62b46bd3c54c",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713550,
+      "file": "0d9b7ed1fec34c5a9e0e62b46bd3c54c__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "9c97142c494e4395b6151237c2726286": {
+      "id": "9c97142c494e4395b6151237c2726286",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713550,
+      "file": "9c97142c494e4395b6151237c2726286__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "0c07ab0f7d6a4a2092885fa887175203": {
+      "id": "0c07ab0f7d6a4a2092885fa887175203",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713550,
+      "file": "0c07ab0f7d6a4a2092885fa887175203__association_creation_ES.pdf",
+      "overview": []
+    },
+    "8d3baff3d6694154b66c39119a8c71c3": {
+      "id": "8d3baff3d6694154b66c39119a8c71c3",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713550,
+      "file": "8d3baff3d6694154b66c39119a8c71c3__company_creation_ES.pdf",
+      "overview": []
+    },
+    "355771eb6275434da4639a43710e8bc9": {
+      "id": "355771eb6275434da4639a43710e8bc9",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713551,
+      "file": "355771eb6275434da4639a43710e8bc9__company_creation_ES.pdf",
+      "overview": []
+    },
+    "41c482df5a49452e83ee627690070bf3": {
+      "id": "41c482df5a49452e83ee627690070bf3",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713602,
+      "file": "41c482df5a49452e83ee627690070bf3__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "0c4b02dedb204e229fae04ea8c460772": {
+      "id": "0c4b02dedb204e229fae04ea8c460772",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713602,
+      "file": "0c4b02dedb204e229fae04ea8c460772__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "fc4eacb4914548b197100bbad90fa2ac": {
+      "id": "fc4eacb4914548b197100bbad90fa2ac",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713602,
+      "file": "fc4eacb4914548b197100bbad90fa2ac__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "98c39019dd234a83b577c4f0ab391b4f": {
+      "id": "98c39019dd234a83b577c4f0ab391b4f",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713602,
+      "file": "98c39019dd234a83b577c4f0ab391b4f__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "6684919d4805464f81d548086be216ae": {
+      "id": "6684919d4805464f81d548086be216ae",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713602,
+      "file": "6684919d4805464f81d548086be216ae__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "e4c4aae0cbfc40fc9b750d1368a13374": {
+      "id": "e4c4aae0cbfc40fc9b750d1368a13374",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713603,
+      "file": "e4c4aae0cbfc40fc9b750d1368a13374__association_creation_ES.pdf",
+      "overview": []
+    },
+    "6b5d2d654bb34b36a052ee05c44c2168": {
+      "id": "6b5d2d654bb34b36a052ee05c44c2168",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713603,
+      "file": "6b5d2d654bb34b36a052ee05c44c2168__company_creation_ES.pdf",
+      "overview": []
+    },
+    "8eea62b5211e46caa546e8d62f04b790": {
+      "id": "8eea62b5211e46caa546e8d62f04b790",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713603,
+      "file": "8eea62b5211e46caa546e8d62f04b790__company_creation_ES.pdf",
+      "overview": []
+    },
+    "6c8d5c5752544925aa3f8e958d68c368": {
+      "id": "6c8d5c5752544925aa3f8e958d68c368",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713652,
+      "file": "6c8d5c5752544925aa3f8e958d68c368__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "fa0d3cd330c4436a82de7033208daec8": {
+      "id": "fa0d3cd330c4436a82de7033208daec8",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713652,
+      "file": "fa0d3cd330c4436a82de7033208daec8__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "e16b588384eb45ddbd57aa647654fd4a": {
+      "id": "e16b588384eb45ddbd57aa647654fd4a",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713652,
+      "file": "e16b588384eb45ddbd57aa647654fd4a__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "53c3dfdec2b7471ca7fa7bcfb3f0fd6a": {
+      "id": "53c3dfdec2b7471ca7fa7bcfb3f0fd6a",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713653,
+      "file": "53c3dfdec2b7471ca7fa7bcfb3f0fd6a__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "6a077ab0e8f54e29b6ebfdd7467ac71c": {
+      "id": "6a077ab0e8f54e29b6ebfdd7467ac71c",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713653,
+      "file": "6a077ab0e8f54e29b6ebfdd7467ac71c__association_creation_ES.pdf",
+      "overview": []
+    },
+    "763dcc0611224c26a4f25873e7d3a628": {
+      "id": "763dcc0611224c26a4f25873e7d3a628",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713653,
+      "file": "763dcc0611224c26a4f25873e7d3a628__company_creation_ES.pdf",
+      "overview": []
+    },
+    "dc07b8135b8f4374a8a81e9b21f8339c": {
+      "id": "dc07b8135b8f4374a8a81e9b21f8339c",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713653,
+      "file": "dc07b8135b8f4374a8a81e9b21f8339c__company_creation_ES.pdf",
+      "overview": []
+    },
+    "c42b164dd3174add8b51bacf89d5034e": {
+      "id": "c42b164dd3174add8b51bacf89d5034e",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713653,
+      "file": "c42b164dd3174add8b51bacf89d5034e__company_creation_ES.pdf",
+      "overview": []
+    },
+    "1dd87c29ba5241febe6d8bbbcd43c841": {
+      "id": "1dd87c29ba5241febe6d8bbbcd43c841",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "1dd87c29ba5241febe6d8bbbcd43c841__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "85b7d9f0d49147258b5ff7e5f39c22d7": {
+      "id": "85b7d9f0d49147258b5ff7e5f39c22d7",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "85b7d9f0d49147258b5ff7e5f39c22d7__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "d3352a916cf64199a426c72768b3855c": {
+      "id": "d3352a916cf64199a426c72768b3855c",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "d3352a916cf64199a426c72768b3855c__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "f1d3db15487b4550aa75046f892d9293": {
+      "id": "f1d3db15487b4550aa75046f892d9293",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "f1d3db15487b4550aa75046f892d9293__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "94c55be920b446968067930b7d67f6c7": {
+      "id": "94c55be920b446968067930b7d67f6c7",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "94c55be920b446968067930b7d67f6c7__association_creation_ES.pdf",
+      "overview": []
+    },
+    "74725596c53a4924acd2a7771b1bf9f0": {
+      "id": "74725596c53a4924acd2a7771b1bf9f0",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "74725596c53a4924acd2a7771b1bf9f0__company_creation_ES.pdf",
+      "overview": []
+    },
+    "83cabf80a5fe4e12a6e1d6fe7b860eb4": {
+      "id": "83cabf80a5fe4e12a6e1d6fe7b860eb4",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757713748,
+      "file": "83cabf80a5fe4e12a6e1d6fe7b860eb4__company_creation_ES.pdf",
+      "overview": []
+    },
+    "b34c0e7472c543e792b51763a5e5e3eb": {
+      "id": "b34c0e7472c543e792b51763a5e5e3eb",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757715493,
+      "file": "b34c0e7472c543e792b51763a5e5e3eb__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "4623de53da364f128527f169799e5dfb": {
+      "id": "4623de53da364f128527f169799e5dfb",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757715493,
+      "file": "4623de53da364f128527f169799e5dfb__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "e4da975aa82944be8d0d870f817e5a8c": {
+      "id": "e4da975aa82944be8d0d870f817e5a8c",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757715494,
+      "file": "e4da975aa82944be8d0d870f817e5a8c__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "8b1e24cb98e2429587c228e56098a060": {
+      "id": "8b1e24cb98e2429587c228e56098a060",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757715494,
+      "file": "8b1e24cb98e2429587c228e56098a060__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "1a318201deae4c16adeb0e17f4d641bf": {
+      "id": "1a318201deae4c16adeb0e17f4d641bf",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757715494,
+      "file": "1a318201deae4c16adeb0e17f4d641bf__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "ea479acd70b343e198cb49d919b35132": {
+      "id": "ea479acd70b343e198cb49d919b35132",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757715494,
+      "file": "ea479acd70b343e198cb49d919b35132__company_creation_ES.pdf",
+      "overview": []
+    },
+    "e309f180a14d40b4995d072ef06a5b98": {
+      "id": "e309f180a14d40b4995d072ef06a5b98",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757715494,
+      "file": "e309f180a14d40b4995d072ef06a5b98__company_creation_ES.pdf",
+      "overview": []
+    },
+    "f9434a22008c410a95aa6a78c4494eb1": {
+      "id": "f9434a22008c410a95aa6a78c4494eb1",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757716014,
+      "file": "f9434a22008c410a95aa6a78c4494eb1__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "2f0a3ac4f3f247f4aa29ac89d33f1d15": {
+      "id": "2f0a3ac4f3f247f4aa29ac89d33f1d15",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757716015,
+      "file": "2f0a3ac4f3f247f4aa29ac89d33f1d15__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "99b85c4aaa3741de8f71c66047bd8f75": {
+      "id": "99b85c4aaa3741de8f71c66047bd8f75",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757716015,
+      "file": "99b85c4aaa3741de8f71c66047bd8f75__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "e8a7eb5b7989417b98cf93543657371b": {
+      "id": "e8a7eb5b7989417b98cf93543657371b",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757716015,
+      "file": "e8a7eb5b7989417b98cf93543657371b__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "f7915ec5e2e04a4c835eb1a582d74fc6": {
+      "id": "f7915ec5e2e04a4c835eb1a582d74fc6",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757716015,
+      "file": "f7915ec5e2e04a4c835eb1a582d74fc6__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "72e219fbf6bd465fa553a0dbde7e341d": {
+      "id": "72e219fbf6bd465fa553a0dbde7e341d",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757716015,
+      "file": "72e219fbf6bd465fa553a0dbde7e341d__company_creation_ES.pdf",
+      "overview": []
+    },
+    "5b6697b14b594cad82a8abb340ba1bef": {
+      "id": "5b6697b14b594cad82a8abb340ba1bef",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757716015,
+      "file": "5b6697b14b594cad82a8abb340ba1bef__company_creation_ES.pdf",
+      "overview": []
+    },
+    "b548848ada9340dfb525a98337447274": {
+      "id": "b548848ada9340dfb525a98337447274",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757716395,
+      "file": "b548848ada9340dfb525a98337447274__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "b6a21ec6637d446b8b794edd2d5ff2fe": {
+      "id": "b6a21ec6637d446b8b794edd2d5ff2fe",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "b6a21ec6637d446b8b794edd2d5ff2fe__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "a23aa05987404bea9f5af7414d09ac91": {
+      "id": "a23aa05987404bea9f5af7414d09ac91",
+      "name": "rag_classification_samples/privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "a23aa05987404bea9f5af7414d09ac91__rag_classification_samples/privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "0a913370f406493aa8f11ca11e02486f": {
+      "id": "0a913370f406493aa8f11ca11e02486f",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "0a913370f406493aa8f11ca11e02486f__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "f8e15c154918483aa0b0303584a19a0a": {
+      "id": "f8e15c154918483aa0b0303584a19a0a",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "f8e15c154918483aa0b0303584a19a0a__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "f125533dfee545a7941adea0623824c0": {
+      "id": "f125533dfee545a7941adea0623824c0",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "f125533dfee545a7941adea0623824c0__association_creation_ES.pdf",
+      "overview": []
+    },
+    "cebd257e3af54e3b87d660e023477f74": {
+      "id": "cebd257e3af54e3b87d660e023477f74",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "cebd257e3af54e3b87d660e023477f74__company_creation_ES.pdf",
+      "overview": []
+    },
+    "058e29fd1da446bfa805b68d8bb309b4": {
+      "id": "058e29fd1da446bfa805b68d8bb309b4",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757716396,
+      "file": "058e29fd1da446bfa805b68d8bb309b4__company_creation_ES.pdf",
+      "overview": []
+    },
+    "2cd99115ec494cc5971e4d96588630b4": {
+      "id": "2cd99115ec494cc5971e4d96588630b4",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757719638,
+      "file": "2cd99115ec494cc5971e4d96588630b4__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "85f7fae11d034695a55b810748774fc8": {
+      "id": "85f7fae11d034695a55b810748774fc8",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757719638,
+      "file": "85f7fae11d034695a55b810748774fc8__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "fb39834ec1204e92a14dab75015fa8a1": {
+      "id": "fb39834ec1204e92a14dab75015fa8a1",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757719638,
+      "file": "fb39834ec1204e92a14dab75015fa8a1__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "095cb25ea01843349fa138ba47015ac3": {
+      "id": "095cb25ea01843349fa138ba47015ac3",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757719638,
+      "file": "095cb25ea01843349fa138ba47015ac3__association_creation_ES.pdf",
+      "overview": []
+    },
+    "e6a18cc74e844ba79c14feee697c1292": {
+      "id": "e6a18cc74e844ba79c14feee697c1292",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757719639,
+      "file": "e6a18cc74e844ba79c14feee697c1292__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "a339cca6caeb4c73b23675fdb5625e62": {
+      "id": "a339cca6caeb4c73b23675fdb5625e62",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757719639,
+      "file": "a339cca6caeb4c73b23675fdb5625e62__company_creation_ES.pdf",
+      "overview": []
+    },
+    "891dbf035424440a8d8e602cdac82a1a": {
+      "id": "891dbf035424440a8d8e602cdac82a1a",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720237,
+      "file": "891dbf035424440a8d8e602cdac82a1a__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "c16e1e71247b42f980491bfa58ea30ed": {
+      "id": "c16e1e71247b42f980491bfa58ea30ed",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757720237,
+      "file": "c16e1e71247b42f980491bfa58ea30ed__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "5e2a146176e04834bc910bb6506caf4f": {
+      "id": "5e2a146176e04834bc910bb6506caf4f",
+      "name": "rag_classification_samples/privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720237,
+      "file": "5e2a146176e04834bc910bb6506caf4f__rag_classification_samples/privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "79aa63c85cf94f2f946062e28fb3620a": {
+      "id": "79aa63c85cf94f2f946062e28fb3620a",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720237,
+      "file": "79aa63c85cf94f2f946062e28fb3620a__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "85d5be1852614c5c85c00bd51ebed5c3": {
+      "id": "85d5be1852614c5c85c00bd51ebed5c3",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757720238,
+      "file": "85d5be1852614c5c85c00bd51ebed5c3__association_creation_ES.pdf",
+      "overview": []
+    },
+    "c82e22bf406a4cc08d7ef93478a3c9be": {
+      "id": "c82e22bf406a4cc08d7ef93478a3c9be",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720238,
+      "file": "c82e22bf406a4cc08d7ef93478a3c9be__company_creation_ES.pdf",
+      "overview": []
+    },
+    "19c93d19d3014e9a9194d634228d5253": {
+      "id": "19c93d19d3014e9a9194d634228d5253",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720238,
+      "file": "19c93d19d3014e9a9194d634228d5253__company_creation_ES.pdf",
+      "overview": []
+    },
+    "b95667fcb46942e2964fca1dd3eeeb67": {
+      "id": "b95667fcb46942e2964fca1dd3eeeb67",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720303,
+      "file": "b95667fcb46942e2964fca1dd3eeeb67__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "56e2a5c3591a48ab9f6caa7c9b9049f6": {
+      "id": "56e2a5c3591a48ab9f6caa7c9b9049f6",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720303,
+      "file": "56e2a5c3591a48ab9f6caa7c9b9049f6__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "ac39bca05beb480eab25678f52dc2789": {
+      "id": "ac39bca05beb480eab25678f52dc2789",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720303,
+      "file": "ac39bca05beb480eab25678f52dc2789__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "5606e175047c4017a0122cf4bad77720": {
+      "id": "5606e175047c4017a0122cf4bad77720",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720303,
+      "file": "5606e175047c4017a0122cf4bad77720__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "c1c4f5f2736044fead79c562eb803c41": {
+      "id": "c1c4f5f2736044fead79c562eb803c41",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757720303,
+      "file": "c1c4f5f2736044fead79c562eb803c41__association_creation_ES.pdf",
+      "overview": []
+    },
+    "24ce516473ff482da68c5f71c3ef6f42": {
+      "id": "24ce516473ff482da68c5f71c3ef6f42",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720303,
+      "file": "24ce516473ff482da68c5f71c3ef6f42__company_creation_ES.pdf",
+      "overview": []
+    },
+    "0a6aa85cff8f49ab923f24a8431ba305": {
+      "id": "0a6aa85cff8f49ab923f24a8431ba305",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720422,
+      "file": "0a6aa85cff8f49ab923f24a8431ba305__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "788d92c7168149b0ad0038dae872cfd9": {
+      "id": "788d92c7168149b0ad0038dae872cfd9",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757720422,
+      "file": "788d92c7168149b0ad0038dae872cfd9__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "e0179606b26a4d149173416c7f3caf69": {
+      "id": "e0179606b26a4d149173416c7f3caf69",
+      "name": "rag_classification_samples/privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720422,
+      "file": "e0179606b26a4d149173416c7f3caf69__rag_classification_samples/privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "3bba43a07d644625ab649afc8d98dc9d": {
+      "id": "3bba43a07d644625ab649afc8d98dc9d",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720422,
+      "file": "3bba43a07d644625ab649afc8d98dc9d__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "660c522c23bc4fbfbe7b31f698e12fee": {
+      "id": "660c522c23bc4fbfbe7b31f698e12fee",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720422,
+      "file": "660c522c23bc4fbfbe7b31f698e12fee__company_creation_ES.pdf",
+      "overview": []
+    },
+    "51202cbb1315465b8f3e5c5d783561ba": {
+      "id": "51202cbb1315465b8f3e5c5d783561ba",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720423,
+      "file": "51202cbb1315465b8f3e5c5d783561ba__company_creation_ES.pdf",
+      "overview": []
+    },
+    "63cc0280f67440bd82711fddb0c7124f": {
+      "id": "63cc0280f67440bd82711fddb0c7124f",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720662,
+      "file": "63cc0280f67440bd82711fddb0c7124f__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "068a9ebcb69c48afb62b8856b711324d": {
+      "id": "068a9ebcb69c48afb62b8856b711324d",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757720663,
+      "file": "068a9ebcb69c48afb62b8856b711324d__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "b6bdd59a62ed46aebda4765cab524ff7": {
+      "id": "b6bdd59a62ed46aebda4765cab524ff7",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757720663,
+      "file": "b6bdd59a62ed46aebda4765cab524ff7__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "c2874faa02d041d980a70209c7e92c4f": {
+      "id": "c2874faa02d041d980a70209c7e92c4f",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757720663,
+      "file": "c2874faa02d041d980a70209c7e92c4f__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "8191cc0f6eae4dac90536ada8fb4833e": {
+      "id": "8191cc0f6eae4dac90536ada8fb4833e",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720663,
+      "file": "8191cc0f6eae4dac90536ada8fb4833e__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "826c5bd8142a43ce9afc3be71f56e88c": {
+      "id": "826c5bd8142a43ce9afc3be71f56e88c",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720663,
+      "file": "826c5bd8142a43ce9afc3be71f56e88c__company_creation_ES.pdf",
+      "overview": []
+    },
+    "b4f0849c67124895b4ea8d68ad9dddad": {
+      "id": "b4f0849c67124895b4ea8d68ad9dddad",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720663,
+      "file": "b4f0849c67124895b4ea8d68ad9dddad__company_creation_ES.pdf",
+      "overview": []
+    },
+    "ef49eaaa788d4d3486b13da773747fd9": {
+      "id": "ef49eaaa788d4d3486b13da773747fd9",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720837,
+      "file": "ef49eaaa788d4d3486b13da773747fd9__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "9646984d168d4118a2c5fc043f623496": {
+      "id": "9646984d168d4118a2c5fc043f623496",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757720837,
+      "file": "9646984d168d4118a2c5fc043f623496__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "e67361805ed34ddbbf1230426c8bb7f2": {
+      "id": "e67361805ed34ddbbf1230426c8bb7f2",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757720837,
+      "file": "e67361805ed34ddbbf1230426c8bb7f2__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "3f3ec8c75cd14c4faffa5fb17889ee94": {
+      "id": "3f3ec8c75cd14c4faffa5fb17889ee94",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757720838,
+      "file": "3f3ec8c75cd14c4faffa5fb17889ee94__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "638c1294dd7540d4b27c5a818f5e26fd": {
+      "id": "638c1294dd7540d4b27c5a818f5e26fd",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720838,
+      "file": "638c1294dd7540d4b27c5a818f5e26fd__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "5cc9127291e04a9e9e6e941a40b4c159": {
+      "id": "5cc9127291e04a9e9e6e941a40b4c159",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757720838,
+      "file": "5cc9127291e04a9e9e6e941a40b4c159__association_creation_ES.pdf",
+      "overview": []
+    },
+    "a3250f9738164cfd819bfd37fc4985a0": {
+      "id": "a3250f9738164cfd819bfd37fc4985a0",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720838,
+      "file": "a3250f9738164cfd819bfd37fc4985a0__company_creation_ES.pdf",
+      "overview": []
+    },
+    "2d15c54931234b6a813c3ff8d6f72ed1": {
+      "id": "2d15c54931234b6a813c3ff8d6f72ed1",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757720838,
+      "file": "2d15c54931234b6a813c3ff8d6f72ed1__company_creation_ES.pdf",
+      "overview": []
+    },
+    "79a6c59a9ed642fcaba9fa657fd1fdde": {
+      "id": "79a6c59a9ed642fcaba9fa657fd1fdde",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757721642,
+      "file": "79a6c59a9ed642fcaba9fa657fd1fdde__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "70e576b6d7e943d2b1e33dd64f634b3c": {
+      "id": "70e576b6d7e943d2b1e33dd64f634b3c",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757721642,
+      "file": "70e576b6d7e943d2b1e33dd64f634b3c__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "a60acf53c77b415c80f2f34f41b179de": {
+      "id": "a60acf53c77b415c80f2f34f41b179de",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757721642,
+      "file": "a60acf53c77b415c80f2f34f41b179de__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "ac0f1434cc914c8783a77cc85060e2cc": {
+      "id": "ac0f1434cc914c8783a77cc85060e2cc",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757721642,
+      "file": "ac0f1434cc914c8783a77cc85060e2cc__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "4b9fac2304b240a6803d95e4621115fc": {
+      "id": "4b9fac2304b240a6803d95e4621115fc",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757721642,
+      "file": "4b9fac2304b240a6803d95e4621115fc__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "3cd665e7620d456f8922a0469517b0ff": {
+      "id": "3cd665e7620d456f8922a0469517b0ff",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757721642,
+      "file": "3cd665e7620d456f8922a0469517b0ff__association_creation_ES.pdf",
+      "overview": []
+    },
+    "e22d6964fc674487a68f1ff2761510ba": {
+      "id": "e22d6964fc674487a68f1ff2761510ba",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757721643,
+      "file": "e22d6964fc674487a68f1ff2761510ba__company_creation_ES.pdf",
+      "overview": []
+    },
+    "869340be0ce44439abd2c41a73b1db48": {
+      "id": "869340be0ce44439abd2c41a73b1db48",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757721643,
+      "file": "869340be0ce44439abd2c41a73b1db48__company_creation_ES.pdf",
+      "overview": []
+    },
+    "45e4dc3fb33e4b8c8f03dd38ae9e4365": {
+      "id": "45e4dc3fb33e4b8c8f03dd38ae9e4365",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757723288,
+      "file": "45e4dc3fb33e4b8c8f03dd38ae9e4365__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "5b345328f3444549bdf65de584907a07": {
+      "id": "5b345328f3444549bdf65de584907a07",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757723288,
+      "file": "5b345328f3444549bdf65de584907a07__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "49895645378f4cf8b196e99ecad50047": {
+      "id": "49895645378f4cf8b196e99ecad50047",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757723289,
+      "file": "49895645378f4cf8b196e99ecad50047__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "e76ed87c2bdd43e09c6d157c19738c33": {
+      "id": "e76ed87c2bdd43e09c6d157c19738c33",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757723289,
+      "file": "e76ed87c2bdd43e09c6d157c19738c33__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "88dfce5e9c98496d976a9020d7fc0eef": {
+      "id": "88dfce5e9c98496d976a9020d7fc0eef",
+      "name": "association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757723289,
+      "file": "88dfce5e9c98496d976a9020d7fc0eef__association_creation_ES.pdf",
+      "overview": []
+    },
+    "a2b33f71435f45ca8c1fe60c94ce15d7": {
+      "id": "a2b33f71435f45ca8c1fe60c94ce15d7",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757723289,
+      "file": "a2b33f71435f45ca8c1fe60c94ce15d7__company_creation_ES.pdf",
+      "overview": []
+    },
+    "b5b50cb13c0944189a351e00b51668ea": {
+      "id": "b5b50cb13c0944189a351e00b51668ea",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757723289,
+      "file": "b5b50cb13c0944189a351e00b51668ea__company_creation_ES.pdf",
+      "overview": []
+    },
+    "564b53ed3a2f49f3a6534d8abdded8cd": {
+      "id": "564b53ed3a2f49f3a6534d8abdded8cd",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757724457,
+      "file": "564b53ed3a2f49f3a6534d8abdded8cd__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "8cfcc49bbaba404aa7906bc950121455": {
+      "id": "8cfcc49bbaba404aa7906bc950121455",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757724457,
+      "file": "8cfcc49bbaba404aa7906bc950121455__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "f18781a37f79452f814b05782489359b": {
+      "id": "f18781a37f79452f814b05782489359b",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757724458,
+      "file": "f18781a37f79452f814b05782489359b__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "67f2d8ebeefb4103a12e115c36258f51": {
+      "id": "67f2d8ebeefb4103a12e115c36258f51",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757724458,
+      "file": "67f2d8ebeefb4103a12e115c36258f51__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "c26b749dc5e8461bac639d55091fb182": {
+      "id": "c26b749dc5e8461bac639d55091fb182",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757724458,
+      "file": "c26b749dc5e8461bac639d55091fb182__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "c103d6a0036c4e5ebb0d345f3e85d0a6": {
+      "id": "c103d6a0036c4e5ebb0d345f3e85d0a6",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757724458,
+      "file": "c103d6a0036c4e5ebb0d345f3e85d0a6__company_creation_ES.pdf",
+      "overview": []
+    },
+    "0b8362b6084f4770be012cb2fad95435": {
+      "id": "0b8362b6084f4770be012cb2fad95435",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757724458,
+      "file": "0b8362b6084f4770be012cb2fad95435__company_creation_ES.pdf",
+      "overview": []
+    },
+    "273ebc392cf749e0a069f64b3442ea74": {
+      "id": "273ebc392cf749e0a069f64b3442ea74",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757724910,
+      "file": "273ebc392cf749e0a069f64b3442ea74__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "8620a35ced2445d2a49abc4d6f005383": {
+      "id": "8620a35ced2445d2a49abc4d6f005383",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757724929,
+      "file": "8620a35ced2445d2a49abc4d6f005383__Despacho-Legal-MX/ArchivosHistoricos/2024/codvig001.pdf",
+      "overview": []
+    },
+    "2dfdae14ca7c494c826db7ada35dc335": {
+      "id": "2dfdae14ca7c494c826db7ada35dc335",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757724943,
+      "file": "2dfdae14ca7c494c826db7ada35dc335__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "eea74ae699bd48f1941e369263b738ec": {
+      "id": "eea74ae699bd48f1941e369263b738ec",
+      "name": "codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757724963,
+      "file": "eea74ae699bd48f1941e369263b738ec__codvig001.pdf",
+      "overview": []
+    },
+    "604d557673c5402c81b224267281b4fe": {
+      "id": "604d557673c5402c81b224267281b4fe",
+      "name": "CPEUM.pdf",
+      "size": 3042393,
+      "pages": 400,
+      "created_at": 1757724978,
+      "file": "604d557673c5402c81b224267281b4fe__CPEUM.pdf",
+      "overview": []
+    },
+    "c697ccf1d0614eec83585d0c2e0256ae": {
+      "id": "c697ccf1d0614eec83585d0c2e0256ae",
+      "name": "2.pdf",
+      "size": 18338665,
+      "pages": 28,
+      "created_at": 1757725002,
+      "file": "c697ccf1d0614eec83585d0c2e0256ae__2.pdf",
+      "overview": []
+    },
+    "7597679853064c1e9db60573e626fe87": {
+      "id": "7597679853064c1e9db60573e626fe87",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757725004,
+      "file": "7597679853064c1e9db60573e626fe87__Despacho-Legal-MX/ArchivosHistoricos/2024/Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "9fffa99b7e104980a2b54705fe48d93f": {
+      "id": "9fffa99b7e104980a2b54705fe48d93f",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/mesicic3_mex_anexo7.pdf",
+      "size": 695437,
+      "pages": 153,
+      "created_at": 1757725004,
+      "file": "9fffa99b7e104980a2b54705fe48d93f__Despacho-Legal-MX/ArchivosHistoricos/2024/mesicic3_mex_anexo7.pdf",
+      "overview": []
+    },
+    "87c5370ee9784ffe9528e1ce10f4fc4c": {
+      "id": "87c5370ee9784ffe9528e1ce10f4fc4c",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757725013,
+      "file": "87c5370ee9784ffe9528e1ce10f4fc4c__Despacho-Legal-MX/ArchivosHistoricos/2024/Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "0f6c571b856243b4b7a40fd8e28c086b": {
+      "id": "0f6c571b856243b4b7a40fd8e28c086b",
+      "name": "mesicic3_mex_anexo7.pdf",
+      "size": 695437,
+      "pages": 153,
+      "created_at": 1757725020,
+      "file": "0f6c571b856243b4b7a40fd8e28c086b__mesicic3_mex_anexo7.pdf",
+      "overview": []
+    },
+    "12c544427406498da9bb277427319070": {
+      "id": "12c544427406498da9bb277427319070",
+      "name": "mesicic3_mex_anexo7.pdf",
+      "size": 695437,
+      "pages": 153,
+      "created_at": 1757725023,
+      "file": "12c544427406498da9bb277427319070__mesicic3_mex_anexo7.pdf",
+      "overview": []
+    },
+    "0781e2a8398443098b0dfbb2f6ec0858": {
+      "id": "0781e2a8398443098b0dfbb2f6ec0858",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/LFD.pdf",
+      "size": 5149057,
+      "pages": 564,
+      "created_at": 1757725026,
+      "file": "0781e2a8398443098b0dfbb2f6ec0858__Despacho-Legal-MX/ArchivosHistoricos/2024/LFD.pdf",
+      "overview": []
+    },
+    "543855c7e59c43018a92f876e26477d5": {
+      "id": "543855c7e59c43018a92f876e26477d5",
+      "name": "Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757725027,
+      "file": "543855c7e59c43018a92f876e26477d5__Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "c6d9d8a02118406898df23eb616f1a7e": {
+      "id": "c6d9d8a02118406898df23eb616f1a7e",
+      "name": "LFD.pdf",
+      "size": 5149057,
+      "pages": 564,
+      "created_at": 1757725031,
+      "file": "c6d9d8a02118406898df23eb616f1a7e__LFD.pdf",
+      "overview": []
+    },
+    "94a17806c0914d67a47ec618d495545d": {
+      "id": "94a17806c0914d67a47ec618d495545d",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/1044_Ley_Federal_del_Trabajo.pdf",
+      "size": 1739855,
+      "pages": 236,
+      "created_at": 1757725075,
+      "file": "94a17806c0914d67a47ec618d495545d__Despacho-Legal-MX/ArchivosHistoricos/2024/1044_Ley_Federal_del_Trabajo.pdf",
+      "overview": []
+    },
+    "fa6d7a075daa4e958d6fd151867c13c2": {
+      "id": "fa6d7a075daa4e958d6fd151867c13c2",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757729033,
+      "file": "fa6d7a075daa4e958d6fd151867c13c2__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "22a5aba0359f4bfd8ed7c7b45417092c": {
+      "id": "22a5aba0359f4bfd8ed7c7b45417092c",
+      "name": "rag_classification_samples/service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757729033,
+      "file": "22a5aba0359f4bfd8ed7c7b45417092c__rag_classification_samples/service_agreement_EN.pdf",
+      "overview": []
+    },
+    "01002e233daa4fc79bf2dc6f998082b8": {
+      "id": "01002e233daa4fc79bf2dc6f998082b8",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757729033,
+      "file": "01002e233daa4fc79bf2dc6f998082b8__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "6f49342492fe4ff59ec82d3a621dff29": {
+      "id": "6f49342492fe4ff59ec82d3a621dff29",
+      "name": "privacy_notice_ES.pdf",
+      "size": 1340,
+      "pages": 1,
+      "created_at": 1757729033,
+      "file": "6f49342492fe4ff59ec82d3a621dff29__privacy_notice_ES.pdf",
+      "overview": []
+    },
+    "ba92ffc99597403a9835ab6f16ada0a4": {
+      "id": "ba92ffc99597403a9835ab6f16ada0a4",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757729033,
+      "file": "ba92ffc99597403a9835ab6f16ada0a4__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "53390b3264944f70b96ecfd040243255": {
+      "id": "53390b3264944f70b96ecfd040243255",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757729034,
+      "file": "53390b3264944f70b96ecfd040243255__company_creation_ES.pdf",
+      "overview": []
+    },
+    "9170141c5dcb40f19765847fa36b29cb": {
+      "id": "9170141c5dcb40f19765847fa36b29cb",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757729034,
+      "file": "9170141c5dcb40f19765847fa36b29cb__company_creation_ES.pdf",
+      "overview": []
+    },
+    "ad3f63db50104fd5bd0b10550ca60a8b": {
+      "id": "ad3f63db50104fd5bd0b10550ca60a8b",
+      "name": "Sample_KPI_Rich_Contract.pdf",
+      "size": 45241,
+      "pages": 10,
+      "created_at": 1757731545,
+      "file": "ad3f63db50104fd5bd0b10550ca60a8b__Sample_KPI_Rich_Contract.pdf",
+      "overview": []
+    },
+    "f7f19dabb07e49c99c5a1e7f3449e7f1": {
+      "id": "f7f19dabb07e49c99c5a1e7f3449e7f1",
+      "name": "Sample_KPI_Rich_Contract.pdf",
+      "size": 45241,
+      "pages": 10,
+      "created_at": 1757731545,
+      "file": "f7f19dabb07e49c99c5a1e7f3449e7f1__Sample_KPI_Rich_Contract.pdf",
+      "overview": []
+    },
+    "96b0060f39a4424291e21551efc6fafc": {
+      "id": "96b0060f39a4424291e21551efc6fafc",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757732916,
+      "file": "96b0060f39a4424291e21551efc6fafc__Despacho-Legal-MX/ArchivosHistoricos/2024/Elderechoagrario.pdf",
+      "overview": []
+    },
+    "5d52f670843246bb9d981f097a5858a5": {
+      "id": "5d52f670843246bb9d981f097a5858a5",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757732917,
+      "file": "5d52f670843246bb9d981f097a5858a5__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "004945cb16464eec8a8e7ad443c8a57b": {
+      "id": "004945cb16464eec8a8e7ad443c8a57b",
+      "name": "codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757732944,
+      "file": "004945cb16464eec8a8e7ad443c8a57b__codvig001.pdf",
+      "overview": []
+    },
+    "ffcccd97093448eb9bbc975201b57c6a": {
+      "id": "ffcccd97093448eb9bbc975201b57c6a",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757732960,
+      "file": "ffcccd97093448eb9bbc975201b57c6a__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "0400bdb4943d46a4862d295f3b00f64f": {
+      "id": "0400bdb4943d46a4862d295f3b00f64f",
+      "name": "codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757732977,
+      "file": "0400bdb4943d46a4862d295f3b00f64f__codvig001.pdf",
+      "overview": []
+    },
+    "cbb66f20a73b46b8b88e731546524eb6": {
+      "id": "cbb66f20a73b46b8b88e731546524eb6",
+      "name": "CPEUM.pdf",
+      "size": 3042393,
+      "pages": 400,
+      "created_at": 1757732998,
+      "file": "cbb66f20a73b46b8b88e731546524eb6__CPEUM.pdf",
+      "overview": []
+    },
+    "5e9a691b3d4345cd9cf8c43a169f1c7d": {
+      "id": "5e9a691b3d4345cd9cf8c43a169f1c7d",
+      "name": "2.pdf",
+      "size": 18338665,
+      "pages": 28,
+      "created_at": 1757733027,
+      "file": "5e9a691b3d4345cd9cf8c43a169f1c7d__2.pdf",
+      "overview": []
+    },
+    "46e3ef4b89944d5d81ee10fafc3f87ea": {
+      "id": "46e3ef4b89944d5d81ee10fafc3f87ea",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733031,
+      "file": "46e3ef4b89944d5d81ee10fafc3f87ea__Despacho-Legal-MX/ArchivosHistoricos/2024/Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "6beb2e4858174e4ebaa693ca77d8edd8": {
+      "id": "6beb2e4858174e4ebaa693ca77d8edd8",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733031,
+      "file": "6beb2e4858174e4ebaa693ca77d8edd8__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "8ece3021726d4363a6f604c04c5d96e9": {
+      "id": "8ece3021726d4363a6f604c04c5d96e9",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733042,
+      "file": "8ece3021726d4363a6f604c04c5d96e9__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "95a6141f2a634fef91593f50626d5514": {
+      "id": "95a6141f2a634fef91593f50626d5514",
+      "name": "mesicic3_mex_anexo7.pdf",
+      "size": 695437,
+      "pages": 153,
+      "created_at": 1757733052,
+      "file": "95a6141f2a634fef91593f50626d5514__mesicic3_mex_anexo7.pdf",
+      "overview": []
+    },
+    "31e31ff343924a93b9cdc9b54fa8b732": {
+      "id": "31e31ff343924a93b9cdc9b54fa8b732",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/LFD.pdf",
+      "size": 5149057,
+      "pages": 564,
+      "created_at": 1757733061,
+      "file": "31e31ff343924a93b9cdc9b54fa8b732__Despacho-Legal-MX/ArchivosHistoricos/2024/LFD.pdf",
+      "overview": []
+    },
+    "005ea3e71a6d4c90979d938ee88a354d": {
+      "id": "005ea3e71a6d4c90979d938ee88a354d",
+      "name": "Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757733062,
+      "file": "005ea3e71a6d4c90979d938ee88a354d__Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "169da7c177b54203a79c9dc03079ae9a": {
+      "id": "169da7c177b54203a79c9dc03079ae9a",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "size": 5323199,
+      "pages": 400,
+      "created_at": 1757733064,
+      "file": "169da7c177b54203a79c9dc03079ae9a__Despacho-Legal-MX/ArchivosHistoricos/2024/Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "overview": []
+    },
+    "ccc0be6007494bd48999eb1684877c46": {
+      "id": "ccc0be6007494bd48999eb1684877c46",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/1044_Ley_Federal_del_Trabajo.pdf",
+      "size": 1739855,
+      "pages": 236,
+      "created_at": 1757733091,
+      "file": "ccc0be6007494bd48999eb1684877c46__Despacho-Legal-MX/ArchivosHistoricos/2024/1044_Ley_Federal_del_Trabajo.pdf",
+      "overview": []
+    },
+    "93fb7d36ae8248409ffb0500a2054936": {
+      "id": "93fb7d36ae8248409ffb0500a2054936",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/1836.pdf",
+      "size": 165586,
+      "pages": 41,
+      "created_at": 1757733115,
+      "file": "93fb7d36ae8248409ffb0500a2054936__Despacho-Legal-MX/ArchivosHistoricos/2024/1836.pdf",
+      "overview": []
+    },
+    "2fe2688a281245b5900838a25950c278": {
+      "id": "2fe2688a281245b5900838a25950c278",
+      "name": "Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "size": 5323199,
+      "pages": 400,
+      "created_at": 1757733115,
+      "file": "2fe2688a281245b5900838a25950c278__Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "overview": []
+    },
+    "30783fa69a054a52a7ccfef59383ccd9": {
+      "id": "30783fa69a054a52a7ccfef59383ccd9",
+      "name": "Despacho-Legal-MX/ArchivosHistoricos/2024/DH_22.pdf",
+      "size": 370633,
+      "pages": 92,
+      "created_at": 1757733115,
+      "file": "30783fa69a054a52a7ccfef59383ccd9__Despacho-Legal-MX/ArchivosHistoricos/2024/DH_22.pdf",
+      "overview": []
+    },
+    "06a05265120c4bd1a306c848f19f71c1": {
+      "id": "06a05265120c4bd1a306c848f19f71c1",
+      "name": "Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "size": 5323199,
+      "pages": 400,
+      "created_at": 1757733115,
+      "file": "06a05265120c4bd1a306c848f19f71c1__Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "overview": []
+    },
+    "3e482ef843e64ce5b2903c5d60d6cc6c": {
+      "id": "3e482ef843e64ce5b2903c5d60d6cc6c",
+      "name": "Despacho-Legal-MX/Recursos/Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757733116,
+      "file": "3e482ef843e64ce5b2903c5d60d6cc6c__Despacho-Legal-MX/Recursos/Elderechoagrario.pdf",
+      "overview": []
+    },
+    "6a77949a2bf3497fa398a60d3bf63eb0": {
+      "id": "6a77949a2bf3497fa398a60d3bf63eb0",
+      "name": "1044_Ley_Federal_del_Trabajo.pdf",
+      "size": 1739855,
+      "pages": 236,
+      "created_at": 1757733116,
+      "file": "6a77949a2bf3497fa398a60d3bf63eb0__1044_Ley_Federal_del_Trabajo.pdf",
+      "overview": []
+    },
+    "b7cfc1ca58e844ca93939272cfe5f8a8": {
+      "id": "b7cfc1ca58e844ca93939272cfe5f8a8",
+      "name": "DH_22.pdf",
+      "size": 370633,
+      "pages": 92,
+      "created_at": 1757733130,
+      "file": "b7cfc1ca58e844ca93939272cfe5f8a8__DH_22.pdf",
+      "overview": []
+    },
+    "899340da364947368cf5f450782006a3": {
+      "id": "899340da364947368cf5f450782006a3",
+      "name": "Despacho-Legal-MX/Recursos/CPEUM.pdf",
+      "size": 3042393,
+      "pages": 400,
+      "created_at": 1757733131,
+      "file": "899340da364947368cf5f450782006a3__Despacho-Legal-MX/Recursos/CPEUM.pdf",
+      "overview": []
+    },
+    "eea423a22e1b47b7b5fcc9876743ecf9": {
+      "id": "eea423a22e1b47b7b5fcc9876743ecf9",
+      "name": "rag_classification_samples/contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757733167,
+      "file": "eea423a22e1b47b7b5fcc9876743ecf9__rag_classification_samples/contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "65ed12fbd8344b02b3e087ef5d756849": {
+      "id": "65ed12fbd8344b02b3e087ef5d756849",
+      "name": "contract_amendment_EN.pdf",
+      "size": 1317,
+      "pages": 1,
+      "created_at": 1757733167,
+      "file": "65ed12fbd8344b02b3e087ef5d756849__contract_amendment_EN.pdf",
+      "overview": []
+    },
+    "a51c964705314e999468d34a9ce0f29e": {
+      "id": "a51c964705314e999468d34a9ce0f29e",
+      "name": "service_agreement_EN.pdf",
+      "size": 1281,
+      "pages": 1,
+      "created_at": 1757733167,
+      "file": "a51c964705314e999468d34a9ce0f29e__service_agreement_EN.pdf",
+      "overview": []
+    },
+    "3e21879dcf01449cb10bf55f869149a6": {
+      "id": "3e21879dcf01449cb10bf55f869149a6",
+      "name": "rag_classification_samples/association_creation_ES.pdf",
+      "size": 1196,
+      "pages": 1,
+      "created_at": 1757733168,
+      "file": "3e21879dcf01449cb10bf55f869149a6__rag_classification_samples/association_creation_ES.pdf",
+      "overview": []
+    },
+    "d2bc75e3d13f45c3b9251c196dd96447": {
+      "id": "d2bc75e3d13f45c3b9251c196dd96447",
+      "name": "rag_classification_samples/company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757733168,
+      "file": "d2bc75e3d13f45c3b9251c196dd96447__rag_classification_samples/company_creation_ES.pdf",
+      "overview": []
+    },
+    "e52c07ca11ab47b084f438d0a36cd508": {
+      "id": "e52c07ca11ab47b084f438d0a36cd508",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757733168,
+      "file": "e52c07ca11ab47b084f438d0a36cd508__company_creation_ES.pdf",
+      "overview": []
+    },
+    "e5bf3f026d234eb48c41a23d73f42337": {
+      "id": "e5bf3f026d234eb48c41a23d73f42337",
+      "name": "company_creation_ES.pdf",
+      "size": 1451,
+      "pages": 1,
+      "created_at": 1757733168,
+      "file": "e5bf3f026d234eb48c41a23d73f42337__company_creation_ES.pdf",
+      "overview": []
+    },
+    "acc8d7f8edd24b29b4d35a17b3d88aaf": {
+      "id": "acc8d7f8edd24b29b4d35a17b3d88aaf",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757733190,
+      "file": "acc8d7f8edd24b29b4d35a17b3d88aaf__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/Elderechoagrario.pdf",
+      "overview": []
+    },
+    "1f5add5165f4454eab0e0b1aacbfafc8": {
+      "id": "1f5add5165f4454eab0e0b1aacbfafc8",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757733200,
+      "file": "1f5add5165f4454eab0e0b1aacbfafc8__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "7bc3ed899e7446f18b1c2794fc0a4841": {
+      "id": "7bc3ed899e7446f18b1c2794fc0a4841",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757733226,
+      "file": "7bc3ed899e7446f18b1c2794fc0a4841__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/codvig001.pdf",
+      "overview": []
+    },
+    "b9c53188c9d04e369b27c6e888a55534": {
+      "id": "b9c53188c9d04e369b27c6e888a55534",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757733234,
+      "file": "b9c53188c9d04e369b27c6e888a55534__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "868fe83bb1e54d36a1f2cb38fc71a6ae": {
+      "id": "868fe83bb1e54d36a1f2cb38fc71a6ae",
+      "name": "codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757733261,
+      "file": "868fe83bb1e54d36a1f2cb38fc71a6ae__codvig001.pdf",
+      "overview": []
+    },
+    "5a0293ea504149ed9848d9ea8195802f": {
+      "id": "5a0293ea504149ed9848d9ea8195802f",
+      "name": "CPEUM.pdf",
+      "size": 3042393,
+      "pages": 400,
+      "created_at": 1757733279,
+      "file": "5a0293ea504149ed9848d9ea8195802f__CPEUM.pdf",
+      "overview": []
+    },
+    "0e1eb7c7860c45e580bd9d52dee5f05e": {
+      "id": "0e1eb7c7860c45e580bd9d52dee5f05e",
+      "name": "2.pdf",
+      "size": 18338665,
+      "pages": 28,
+      "created_at": 1757733307,
+      "file": "0e1eb7c7860c45e580bd9d52dee5f05e__2.pdf",
+      "overview": []
+    },
+    "dde442673fcb4ec7ae72fab614818c43": {
+      "id": "dde442673fcb4ec7ae72fab614818c43",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733312,
+      "file": "dde442673fcb4ec7ae72fab614818c43__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "a23e172cfbd94667a02b5f8e794c4369": {
+      "id": "a23e172cfbd94667a02b5f8e794c4369",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733312,
+      "file": "a23e172cfbd94667a02b5f8e794c4369__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "ad2c3a78b7f244cd8585701ec341f5de": {
+      "id": "ad2c3a78b7f244cd8585701ec341f5de",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757733325,
+      "file": "ad2c3a78b7f244cd8585701ec341f5de__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "d377b1357b8b4c6a9534db5197772f71": {
+      "id": "d377b1357b8b4c6a9534db5197772f71",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733326,
+      "file": "d377b1357b8b4c6a9534db5197772f71__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "11ba9aa2f9ff4ffc9b6e83d04ce31c01": {
+      "id": "11ba9aa2f9ff4ffc9b6e83d04ce31c01",
+      "name": "mesicic3_mex_anexo7.pdf",
+      "size": 695437,
+      "pages": 153,
+      "created_at": 1757733339,
+      "file": "11ba9aa2f9ff4ffc9b6e83d04ce31c01__mesicic3_mex_anexo7.pdf",
+      "overview": []
+    },
+    "8dcb62d327744d76b130fd019ac6ce73": {
+      "id": "8dcb62d327744d76b130fd019ac6ce73",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/LFD.pdf",
+      "size": 5149057,
+      "pages": 564,
+      "created_at": 1757733343,
+      "file": "8dcb62d327744d76b130fd019ac6ce73__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/LFD.pdf",
+      "overview": []
+    },
+    "818e1570e6704c0894278f4d7f499a96": {
+      "id": "818e1570e6704c0894278f4d7f499a96",
+      "name": "Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757733346,
+      "file": "818e1570e6704c0894278f4d7f499a96__Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "b46ce6ab2f374a9e98f6893adb263d94": {
+      "id": "b46ce6ab2f374a9e98f6893adb263d94",
+      "name": "Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757733347,
+      "file": "b46ce6ab2f374a9e98f6893adb263d94__Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "6e3e5e92970c45b599fb3c99a60cfcdd": {
+      "id": "6e3e5e92970c45b599fb3c99a60cfcdd",
+      "name": "2.pdf",
+      "size": 18338665,
+      "pages": 28,
+      "created_at": 1757733349,
+      "file": "6e3e5e92970c45b599fb3c99a60cfcdd__2.pdf",
+      "overview": []
+    },
+    "6761c883310143c69666c37e55d1976a": {
+      "id": "6761c883310143c69666c37e55d1976a",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/1044_Ley_Federal_del_Trabajo.pdf",
+      "size": 1739855,
+      "pages": 236,
+      "created_at": 1757733351,
+      "file": "6761c883310143c69666c37e55d1976a__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/1044_Ley_Federal_del_Trabajo.pdf",
+      "overview": []
+    },
+    "313583689f6e48dda132366c07ed9be7": {
+      "id": "313583689f6e48dda132366c07ed9be7",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/1836.pdf",
+      "size": 165586,
+      "pages": 41,
+      "created_at": 1757733406,
+      "file": "313583689f6e48dda132366c07ed9be7__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/1836.pdf",
+      "overview": []
+    },
+    "d0570edfba6d4b08b6c1e83d1c4ba445": {
+      "id": "d0570edfba6d4b08b6c1e83d1c4ba445",
+      "name": "mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/8.pdf",
+      "size": 861056,
+      "pages": 32,
+      "created_at": 1757733406,
+      "file": "d0570edfba6d4b08b6c1e83d1c4ba445__mx-legal-infra/Despacho-Legal-MX/ArchivosHistoricos/2024/8.pdf",
+      "overview": []
+    },
+    "ebbb8eaf4076471991dc88915ce49e4b": {
+      "id": "ebbb8eaf4076471991dc88915ce49e4b",
+      "name": "Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "size": 5323199,
+      "pages": 400,
+      "created_at": 1757733407,
+      "file": "ebbb8eaf4076471991dc88915ce49e4b__Constitución Política de los Estados Unidos Mexicanos - CPEUM.pdf",
+      "overview": []
+    },
+    "1f20d1aab848457a9ccaace7f3b9c6ad": {
+      "id": "1f20d1aab848457a9ccaace7f3b9c6ad",
+      "name": "1044_Ley_Federal_del_Trabajo.pdf",
+      "size": 1739855,
+      "pages": 236,
+      "created_at": 1757733408,
+      "file": "1f20d1aab848457a9ccaace7f3b9c6ad__1044_Ley_Federal_del_Trabajo.pdf",
+      "overview": []
+    },
+    "6cb9ecf12085427cace9e7afe4ca5167": {
+      "id": "6cb9ecf12085427cace9e7afe4ca5167",
+      "name": "1836.pdf",
+      "size": 165586,
+      "pages": 41,
+      "created_at": 1757733422,
+      "file": "6cb9ecf12085427cace9e7afe4ca5167__1836.pdf",
+      "overview": []
+    },
+    "5d5361a6c3014a3b9321b274f1719f07": {
+      "id": "5d5361a6c3014a3b9321b274f1719f07",
+      "name": "8.pdf",
+      "size": 861056,
+      "pages": 32,
+      "created_at": 1757733423,
+      "file": "5d5361a6c3014a3b9321b274f1719f07__8.pdf",
+      "overview": []
+    },
+    "d9f9f3246197411db2b2cb7e29c9339c": {
+      "id": "d9f9f3246197411db2b2cb7e29c9339c",
+      "name": "DH_22.pdf",
+      "size": 370633,
+      "pages": 92,
+      "created_at": 1757733425,
+      "file": "d9f9f3246197411db2b2cb7e29c9339c__DH_22.pdf",
+      "overview": []
+    },
+    "6dc5fe87c1674d1dac3825bd737990e9": {
+      "id": "6dc5fe87c1674d1dac3825bd737990e9",
+      "name": "DH_22.pdf",
+      "size": 370633,
+      "pages": 92,
+      "created_at": 1757733427,
+      "file": "6dc5fe87c1674d1dac3825bd737990e9__DH_22.pdf",
+      "overview": []
+    },
+    "2241df9a4f3f4f8ba5074f02735d2579": {
+      "id": "2241df9a4f3f4f8ba5074f02735d2579",
+      "name": "Elderechoagrario.pdf",
+      "size": 3887255,
+      "pages": 234,
+      "created_at": 1757733428,
+      "file": "2241df9a4f3f4f8ba5074f02735d2579__Elderechoagrario.pdf",
+      "overview": []
+    },
+    "1dc8d99d67e24c858ed36cfae90563a2": {
+      "id": "1dc8d99d67e24c858ed36cfae90563a2",
+      "name": "codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757733448,
+      "file": "1dc8d99d67e24c858ed36cfae90563a2__codvig001.pdf",
+      "overview": []
+    },
+    "86cfb0a9054b4788be89a9391a5899dc": {
+      "id": "86cfb0a9054b4788be89a9391a5899dc",
+      "name": "codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757733478,
+      "file": "86cfb0a9054b4788be89a9391a5899dc__codvig001.pdf",
+      "overview": []
+    },
+    "e94fb8f51ae14dd6992f4c1988f49a9b": {
+      "id": "e94fb8f51ae14dd6992f4c1988f49a9b",
+      "name": "CPEUM.pdf",
+      "size": 3042393,
+      "pages": 400,
+      "created_at": 1757733506,
+      "file": "e94fb8f51ae14dd6992f4c1988f49a9b__CPEUM.pdf",
+      "overview": []
+    },
+    "5a2e24fb37874daab46e7b9310f2fc6b": {
+      "id": "5a2e24fb37874daab46e7b9310f2fc6b",
+      "name": "2.pdf",
+      "size": 18338665,
+      "pages": 28,
+      "created_at": 1757733535,
+      "file": "5a2e24fb37874daab46e7b9310f2fc6b__2.pdf",
+      "overview": []
+    },
+    "f4d19bb639974f059e15f23431363dd4": {
+      "id": "f4d19bb639974f059e15f23431363dd4",
+      "name": "mx-legal-infra/Despacho-Legal-MX/Recursos/Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733538,
+      "file": "f4d19bb639974f059e15f23431363dd4__mx-legal-infra/Despacho-Legal-MX/Recursos/Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "66980f06f6cc4a119500c45a9d7b4d6e": {
+      "id": "66980f06f6cc4a119500c45a9d7b4d6e",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733539,
+      "file": "66980f06f6cc4a119500c45a9d7b4d6e__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "23fe6553640a44d7b0d4a64fd922568d": {
+      "id": "23fe6553640a44d7b0d4a64fd922568d",
+      "name": "mx-legal-infra/Despacho-Legal-MX/Recursos/Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757733549,
+      "file": "23fe6553640a44d7b0d4a64fd922568d__mx-legal-infra/Despacho-Legal-MX/Recursos/Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "bef9a4fce45d426aa17fae0b52134bde": {
+      "id": "bef9a4fce45d426aa17fae0b52134bde",
+      "name": "Constitucion_ Politica_CDMX.pdf",
+      "size": 1358106,
+      "pages": 177,
+      "created_at": 1757733550,
+      "file": "bef9a4fce45d426aa17fae0b52134bde__Constitucion_ Politica_CDMX.pdf",
+      "overview": []
+    },
+    "b674e222f5674f7287867910cedec5e0": {
+      "id": "b674e222f5674f7287867910cedec5e0",
+      "name": "mesicic3_mex_anexo7.pdf",
+      "size": 695437,
+      "pages": 153,
+      "created_at": 1757733560,
+      "file": "b674e222f5674f7287867910cedec5e0__mesicic3_mex_anexo7.pdf",
+      "overview": []
+    },
+    "0d750f68464c4c52913c264937c0373f": {
+      "id": "0d750f68464c4c52913c264937c0373f",
+      "name": "mx-legal-infra/Despacho-Legal-MX/Recursos/LFD.pdf",
+      "size": 5149057,
+      "pages": 564,
+      "created_at": 1757733564,
+      "file": "0d750f68464c4c52913c264937c0373f__mx-legal-infra/Despacho-Legal-MX/Recursos/LFD.pdf",
+      "overview": []
+    },
+    "eb1eeb30d5e94a7c81086e541ebbd2d9": {
+      "id": "eb1eeb30d5e94a7c81086e541ebbd2d9",
+      "name": "Sistema-Juridico-Mexicano.pdf",
+      "size": 1136757,
+      "pages": 33,
+      "created_at": 1757733567,
+      "file": "eb1eeb30d5e94a7c81086e541ebbd2d9__Sistema-Juridico-Mexicano.pdf",
+      "overview": []
+    },
+    "07a5e41dce5e4b8f8fc4fbd43f311ee3": {
+      "id": "07a5e41dce5e4b8f8fc4fbd43f311ee3",
+      "name": "2.pdf",
+      "size": 18338665,
+      "pages": 28,
+      "created_at": 1757733569,
+      "file": "07a5e41dce5e4b8f8fc4fbd43f311ee3__2.pdf",
+      "overview": []
+    },
+    "a2813bc4f27440b58f8fe504035eb2b1": {
+      "id": "a2813bc4f27440b58f8fe504035eb2b1",
+      "name": "mx-legal-infra/Despacho-Legal-MX/Recursos/Jurisprudencia/codvig001.pdf",
+      "size": 2240845,
+      "pages": 342,
+      "created_at": 1757733572,
+      "file": "a2813bc4f27440b58f8fe504035eb2b1__mx-legal-infra/Despacho-Legal-MX/Recursos/Jurisprudencia/codvig001.pdf",
+      "overview": []
+    },
+    "765994484db94a87a5b13074b5874628": {
+      "id": "765994484db94a87a5b13074b5874628",
+      "name": "LFD.pdf",
+      "size": 5149057,
+      "pages": 564,
+      "created_at": 1757733572,
+      "file": "765994484db94a87a5b13074b5874628__LFD.pdf",
+      "overview": []
     }
   }
 }
